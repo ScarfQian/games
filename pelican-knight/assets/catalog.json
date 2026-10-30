@@ -1,0 +1,2109 @@
+{
+  "schemaVersion": 1,
+  "libraryVersion": "1.1.0",
+  "date": "2026-10-27",
+  "creator": "ScarfQian",
+  "baselineGameVersion": "0.3.0",
+  "source": "assets/sprites.svg",
+  "gameVersion": "0.3.2",
+  "policy": {
+    "status": "按用户要求优化现有造型，r2 待用户确认；历史素材保留原样",
+    "identity": "id 与 runtimeKey 不改名、不复用；外观变化递增条目 revision 并记录修改编号",
+    "edit": "改 canonical 源后运行 python3 tools/sync_assets.py；游戏入口生成区与图鉴不直接改",
+    "reference": "需要新姿态、地图、敌潮、装备组合时优先实例化现有资产。重新设计轮廓须由用户明确提出；日常数值调整不自动改外形。"
+  },
+  "styleGuide": {
+    "palette": {
+      "outline": "#426558",
+      "body": "#fff9e6",
+      "sage": "#8faa91",
+      "coral": "#d88a65",
+      "wood": "#b89c6c",
+      "metal": "#78988a",
+      "magic": "#75b5a5",
+      "brass": "#dfb466"
+    },
+    "line": "圆头圆角的闭合轮廓；角色/装备外轮廓约 1.5—2 SVG 单位，建筑约 2—3；内部线条较细。按实际展示尺寸保留识别细节，避免过密装饰。",
+    "perspective": "鹈鹕、武器和车辆朝右侧面；NPC与建筑为正面插画；怪物保留原朝向，补足羽毛、尖刺、关节与壳体结构。",
+    "units": "游戏 SVG 设计单位。卡片 viewBox 仅负责展示，不作为碰撞尺寸。人物(0,0)为地面脚点，Y向下、z向上。",
+    "layers": [
+      "地面影子",
+      "车辆",
+      "腿",
+      "躯干",
+      "围巾",
+      "帽子",
+      "手持武器",
+      "前臂"
+    ],
+    "rules": [
+      "人物与装备分层；不为换装复制整个人物",
+      "精英蟹与普通蟹有明确变体关系，居民在建筑和对话中共享",
+      "卡片仅列实际存在的姿态；缺失姿态标待设计，不能凭说明宣称帧动画齐全",
+      "历史卡不自动接入当前玩法；海贝货币无独立图形，不虚构图标",
+      "上喙和喉囊为相接的闭合形状，嘴根在眼睛前下方，不从眼睛引线",
+      "用单层阴影与少量高光区分羽毛、木、金属、织物；不增加光晕或写实纹理",
+      "围巾动画只改变 tail 图层变换，轮廓与纹样由资产源保持",
+      "轮廓改变只影响图形；碰撞、伤害、价格、存档 ID 不随美术调整"
+    ]
+  },
+  "helpers": [
+    {
+      "id": "wheel-lines",
+      "purpose": "LEG-001 的旧轮辐"
+    },
+    {
+      "id": "water-pattern",
+      "purpose": "保留的水面纹理，当前横版背景未引用"
+    },
+    {
+      "id": "sand-pattern",
+      "purpose": "当前海滩地面纹理"
+    },
+    {
+      "id": "crab-limbs",
+      "purpose": "MON-001 / MON-005 共用蟹足与蟹钳"
+    },
+    {
+      "id": "crab-face",
+      "purpose": "MON-001 / MON-005 共用眼柄与表情"
+    },
+    {
+      "id": "wheel-city",
+      "purpose": "MNT-001 两轮共用"
+    },
+    {
+      "id": "wheel-trail",
+      "purpose": "MNT-002 两轮共用"
+    },
+    {
+      "id": "wheel-road",
+      "purpose": "MNT-003 两轮共用"
+    },
+    {
+      "id": "wheel-motor",
+      "purpose": "MNT-004 两轮共用"
+    }
+  ],
+  "entries": [
+    {
+      "id": "CHR-001",
+      "kind": "character",
+      "name": "鹈鹕骑士",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "pelican",
+      "definition": {
+        "rig": "rig-pelican",
+        "defaultLoadout": {
+          "weapon": "bow",
+          "hat": "sailor",
+          "scarf": "red",
+          "mount": "bicycle"
+        },
+        "anchors": {
+          "ground": [
+            0,
+            0
+          ],
+          "body": [
+            0,
+            -31
+          ],
+          "hand": [
+            21,
+            -40
+          ],
+          "weaponScale": 0.72,
+          "hat": "人物本地坐标，帽沿 y=-84",
+          "scarf": "人物本地坐标，颈部 y=-59"
+        },
+        "rigParts": [
+          "root",
+          "shadow",
+          "lift",
+          "facing",
+          "bike",
+          "legs",
+          "legA",
+          "legB",
+          "body",
+          "scarf",
+          "hat",
+          "hand",
+          "arm"
+        ]
+      },
+      "visual": {
+        "id": "rig-pelican",
+        "viewBox": [
+          -54,
+          -110,
+          120,
+          126
+        ],
+        "mode": "hero",
+        "loadout": {
+          "weapon": "bow",
+          "hat": "sailor",
+          "scarf": "red",
+          "mount": "bicycle"
+        },
+        "mounted": false
+      },
+      "identity": [
+        "奶油白长颈鹈鹕、带厚度的金黄上喙、连接下颌的柔软喉囊；眼睛与嘴根分离",
+        "翼羽浅阴影与尾羽纹理；身体、帽巾、武器和车辆继续独立挂载"
+      ],
+      "actions": [
+        "待机/步行：腿摆动、身体轻微起伏",
+        "骑乘：两轮旋转、踏板腿",
+        "跳跃：lift 上移，shadow 留在地面",
+        "受击闪烁/攻击摆臂/围巾飘动：由 render 驱动"
+      ],
+      "dependencies": [
+        "EQP-001",
+        "EQP-003",
+        "WPN-001",
+        "MNT-001"
+      ],
+      "integration": [
+        "makeHero",
+        "refreshAppearance",
+        "render",
+        "stats"
+      ],
+      "reuse": "克隆 rig-pelican；只改本实例的 data-part。镜像作用于 facing，跳跃作用于 lift。",
+      "revisionNote": "20261027-008 · 奶油白长颈鹈鹕、带厚度的金黄上喙、连接下颌的柔软喉囊；眼睛与嘴根分离"
+    },
+    {
+      "id": "CHR-002",
+      "kind": "character",
+      "name": "熊猫铁匠",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "panda",
+      "definition": {
+        "role": "铁匠铺老板，负责帽子/围巾强化",
+        "building": "BLD-003"
+      },
+      "visual": {
+        "id": "camp-panda",
+        "viewBox": [
+          0,
+          0,
+          90,
+          100
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "圆耳黑白熊猫、奶油白脸与深绿眼斑",
+        "皮革围裙有铆钉、缝线和工具口袋，铁锤有金属端面；保持铁匠身份"
+      ],
+      "actions": [
+        "静态立绘；没有独立行走或战斗动画"
+      ],
+      "integration": [
+        "openCampPanel",
+        "建筑内嵌 use"
+      ],
+      "reuse": "对话头像与建筑内居民共用此 symbol；修改一次同步两处。",
+      "revisionNote": "20261027-008 · 圆耳黑白熊猫、奶油白脸与深绿眼斑"
+    },
+    {
+      "id": "CHR-003",
+      "kind": "character",
+      "name": "仙鹤先生",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "crane",
+      "definition": {
+        "role": "学堂老板，负责天赋研习",
+        "building": "BLD-006"
+      },
+      "visual": {
+        "id": "camp-crane",
+        "viewBox": [
+          0,
+          0,
+          90,
+          115
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "白色修长脖颈、红色顶冠、闭合尖喙与鼠尾草绿长袍",
+        "书本有页线与书签，衣襟和下摆分层；保持静态学者立绘"
+      ],
+      "actions": [
+        "静态立绘；没有独立行走或战斗动画"
+      ],
+      "integration": [
+        "openCampPanel",
+        "建筑内嵌 use"
+      ],
+      "reuse": "对话头像与建筑内居民共用此 symbol；修改一次同步两处。",
+      "revisionNote": "20261027-008 · 白色修长脖颈、红色顶冠、闭合尖喙与鼠尾草绿长袍"
+    },
+    {
+      "id": "CHR-004",
+      "kind": "character",
+      "name": "秦始皇",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "emperor",
+      "definition": {
+        "role": "行政厅老板，发布任务",
+        "building": "BLD-002"
+      },
+      "visual": {
+        "id": "camp-emperor",
+        "viewBox": [
+          0,
+          0,
+          90,
+          115
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "方形冠冕、金色垂旒、短须与墨绿袍服",
+        "袍服有克制的金色云纹、衣褶与袖口，面部保持原比例"
+      ],
+      "actions": [
+        "静态立绘；没有独立行走或战斗动画"
+      ],
+      "integration": [
+        "openCampPanel",
+        "建筑内嵌 use"
+      ],
+      "reuse": "对话头像与建筑内居民共用此 symbol；修改一次同步两处。",
+      "revisionNote": "20261027-008 · 方形冠冕、金色垂旒、短须与墨绿袍服"
+    },
+    {
+      "id": "MON-001",
+      "kind": "monster",
+      "name": "螃蟹",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "crab",
+      "definition": {
+        "hp": 40,
+        "speed": 60,
+        "r": 21,
+        "h": 42,
+        "damage": 10,
+        "xp": 1,
+        "art": "art-crab",
+        "offset": 16
+      },
+      "visual": {
+        "id": "art-crab",
+        "viewBox": [
+          -38,
+          -30,
+          76,
+          52
+        ],
+        "mode": "group",
+        "scale": 1,
+        "sharedParts": [
+          "crab-limbs",
+          "crab-face"
+        ]
+      },
+      "identity": [
+        "珊瑚橙蟹壳、分节短足与双钳，奶油色眼柄和高光",
+        "壳体有浅亮面和下缘阴影；肢体/表情共用组件"
+      ],
+      "actions": [
+        "地面追击，近距离预警后夹击"
+      ],
+      "dependencies": [],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "artOffset": 16,
+        "height": 42,
+        "collisionRadius": 21,
+        "spawnHeight": 0
+      },
+      "integration": [
+        "enemyKinds",
+        "spawnEnemy",
+        "updateEnemies",
+        "shotHits"
+      ],
+      "reuse": "保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。",
+      "revisionNote": "20261027-008 · 珊瑚橙蟹壳、分节短足与双钳，奶油色眼柄和高光"
+    },
+    {
+      "id": "MON-002",
+      "kind": "monster",
+      "name": "海鸥",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "gull",
+      "definition": {
+        "hp": 30,
+        "speed": 100,
+        "r": 20,
+        "h": 34,
+        "z": 35,
+        "damage": 9,
+        "xp": 1,
+        "art": "art-gull",
+        "offset": 16
+      },
+      "visual": {
+        "id": "art-gull",
+        "viewBox": [
+          -34,
+          -28,
+          68,
+          50
+        ],
+        "mode": "group",
+        "scale": 1
+      },
+      "identity": [
+        "奶油白身、灰绿展开羽翼，羽尖分段、黄色闭合尖喙",
+        "侧面头尾与小爪清晰；既有浮动转角动画沿用"
+      ],
+      "actions": [
+        "离地追击，翅膀摇摆"
+      ],
+      "dependencies": [],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "artOffset": 16,
+        "height": 34,
+        "collisionRadius": 20,
+        "spawnHeight": 35
+      },
+      "integration": [
+        "enemyKinds",
+        "spawnEnemy",
+        "updateEnemies",
+        "shotHits"
+      ],
+      "reuse": "保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。",
+      "revisionNote": "20261027-008 · 奶油白身、灰绿展开羽翼，羽尖分段、黄色闭合尖喙"
+    },
+    {
+      "id": "MON-003",
+      "kind": "monster",
+      "name": "海胆",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "urchin",
+      "definition": {
+        "hp": 95,
+        "speed": 38,
+        "r": 24,
+        "h": 49,
+        "damage": 15,
+        "xp": 3,
+        "art": "art-urchin",
+        "offset": 25
+      },
+      "visual": {
+        "id": "art-urchin",
+        "viewBox": [
+          -29,
+          -29,
+          58,
+          58
+        ],
+        "mode": "group",
+        "scale": 1
+      },
+      "identity": [
+        "淡紫圆核与闭合锥形放射刺、浅色双眼",
+        "下侧阴影与少量壳面高光，尖刺在小尺寸下仍可辨认"
+      ],
+      "actions": [
+        "慢速厚血近战"
+      ],
+      "dependencies": [],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "artOffset": 25,
+        "height": 49,
+        "collisionRadius": 24,
+        "spawnHeight": 0
+      },
+      "integration": [
+        "enemyKinds",
+        "spawnEnemy",
+        "updateEnemies",
+        "shotHits"
+      ],
+      "reuse": "保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。",
+      "revisionNote": "20261027-008 · 淡紫圆核与闭合锥形放射刺、浅色双眼"
+    },
+    {
+      "id": "MON-004",
+      "kind": "monster",
+      "name": "水母",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "jelly",
+      "definition": {
+        "hp": 60,
+        "speed": 43,
+        "r": 22,
+        "h": 52,
+        "z": 10,
+        "damage": 10,
+        "xp": 2,
+        "art": "art-jelly",
+        "offset": 26
+      },
+      "visual": {
+        "id": "art-jelly",
+        "viewBox": [
+          -24,
+          -29,
+          48,
+          63
+        ],
+        "mode": "group",
+        "scale": 1
+      },
+      "identity": [
+        "薄荷绿伞盖、波浪下缘和四条弯曲触须",
+        "伞盖单层暗面与浅色反光，触须与伞盖连续相接"
+      ],
+      "actions": [
+        "保持一定距离并发射弹丸"
+      ],
+      "dependencies": [],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "artOffset": 26,
+        "height": 52,
+        "collisionRadius": 22,
+        "spawnHeight": 10
+      },
+      "integration": [
+        "enemyKinds",
+        "spawnEnemy",
+        "updateEnemies",
+        "shotHits"
+      ],
+      "reuse": "保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。",
+      "revisionNote": "20261027-008 · 薄荷绿伞盖、波浪下缘和四条弯曲触须"
+    },
+    {
+      "id": "MON-005",
+      "kind": "monster",
+      "name": "精英螃蟹",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "elite",
+      "definition": {
+        "hp": 220,
+        "speed": 60,
+        "r": 31,
+        "h": 62,
+        "damage": 18,
+        "xp": 6,
+        "art": "art-crab-elite",
+        "offset": 24,
+        "scale": 1.5
+      },
+      "visual": {
+        "id": "art-crab-elite",
+        "viewBox": [
+          -58,
+          -45,
+          116,
+          78
+        ],
+        "mode": "group",
+        "scale": 1.5,
+        "sharedParts": [
+          "crab-limbs",
+          "crab-face"
+        ]
+      },
+      "identity": [
+        "与普通蟹共用肢体和表情，保留 1.5 倍体型",
+        "独立的鼠尾草绿多面甲壳、黄铜边和铆钉，作为同编号精英外观修订"
+      ],
+      "actions": [
+        "较大尺寸、较高体力的近战变体"
+      ],
+      "dependencies": [
+        "MON-001"
+      ],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "artOffset": 24,
+        "height": 62,
+        "collisionRadius": 31,
+        "spawnHeight": 0
+      },
+      "integration": [
+        "enemyKinds",
+        "spawnEnemy",
+        "updateEnemies",
+        "shotHits"
+      ],
+      "reuse": "保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。",
+      "revisionNote": "20261027-008 · 与普通蟹共用肢体和表情，保留 1.5 倍体型"
+    },
+    {
+      "id": "MON-006",
+      "kind": "monster",
+      "name": "寄居蟹 · 滩涂霸主",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "boss",
+      "definition": {
+        "hp": 1250,
+        "speed": 43,
+        "r": 55,
+        "h": 104,
+        "damage": 22,
+        "xp": 20,
+        "art": "art-boss",
+        "offset": 46
+      },
+      "visual": {
+        "id": "art-boss",
+        "viewBox": [
+          -82,
+          -78,
+          164,
+          132
+        ],
+        "mode": "group",
+        "scale": 1
+      },
+      "identity": [
+        "紫色大蟹、奶油螺旋背壳、金色王冠和宽大双钳",
+        "背壳与脸部前后分层，关节、钳口、眼柄与口部更明确"
+      ],
+      "actions": [
+        "追击、扇形弹幕、预警冲锋；半血后加快"
+      ],
+      "dependencies": [],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "artOffset": 46,
+        "height": 104,
+        "collisionRadius": 55,
+        "spawnHeight": 0
+      },
+      "integration": [
+        "enemyKinds",
+        "spawnEnemy",
+        "updateEnemies",
+        "shotHits"
+      ],
+      "reuse": "保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。",
+      "revisionNote": "20261027-008 · 紫色大蟹、奶油螺旋背壳、金色王冠和宽大双钳"
+    },
+    {
+      "id": "WPN-001",
+      "kind": "weapon",
+      "name": "木弓",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "bow",
+      "definition": {
+        "name": "木弓",
+        "type": "弓箭",
+        "skill": "蓄力",
+        "hold": true,
+        "damage": 28,
+        "wind": 0.1,
+        "recovery": 0.32,
+        "range": 650,
+        "desc": "J 发射单箭；按住 K 蓄力，松开穿透射击。蓄力时减速，受击会中断。",
+        "art": "weapon-bow"
+      },
+      "visual": {
+        "id": "weapon-bow",
+        "viewBox": [
+          -25,
+          -50,
+          88,
+          86
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "木弓有上下弓臂、弓弦、绿握把和完整箭羽/箭头",
+        "弯曲木纹与浅色亮边；基础木弓身份不变"
+      ],
+      "anchors": {
+        "grip": [
+          0,
+          0
+        ],
+        "mount": "CHR-001.hand",
+        "heroTransform": "translate(21 -40) rotate(actionAngle) scale(.72)"
+      },
+      "actions": [
+        "J 发射单箭；按住 K 蓄力，松开穿透射击。蓄力时减速，受击会中断。"
+      ],
+      "integration": [
+        "weapons",
+        "iconWeapon",
+        "beginAttack",
+        "performAttack"
+      ],
+      "reuse": "卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。",
+      "revisionNote": "20261027-008 · 木弓有上下弓臂、弓弦、绿握把和完整箭羽/箭头"
+    },
+    {
+      "id": "WPN-002",
+      "kind": "weapon",
+      "name": "练习刀盾",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "shield",
+      "definition": {
+        "name": "练习刀盾",
+        "type": "刀盾",
+        "skill": "举盾",
+        "hold": true,
+        "damage": 25,
+        "wind": 0.12,
+        "recovery": 0.24,
+        "range": 82,
+        "desc": "J 两段劈砍；按住 K 举盾。只防正面，格挡消耗架势，耗尽时破防。",
+        "art": "weapon-shield"
+      },
+      "visual": {
+        "id": "weapon-shield",
+        "viewBox": [
+          -25,
+          -50,
+          88,
+          86
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "金属包边木盾、盾心圆钉，配有刃面和护手的短刀",
+        "刀盾仍为一套基础武器，盾面木条与短刀缠柄分别可见",
+        "图形在握点内预旋转 20°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"
+      ],
+      "anchors": {
+        "grip": [
+          0,
+          0
+        ],
+        "mount": "CHR-001.hand",
+        "heroTransform": "translate(21 -40) rotate(actionAngle) scale(.72)",
+        "drawingRotation": 20
+      },
+      "actions": [
+        "J 两段劈砍；按住 K 举盾。只防正面，格挡消耗架势，耗尽时破防。"
+      ],
+      "integration": [
+        "weapons",
+        "iconWeapon",
+        "beginAttack",
+        "performAttack"
+      ],
+      "reuse": "卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。",
+      "revisionNote": "20261027-008 · 金属包边木盾、盾心圆钉，配有刃面和护手的短刀"
+    },
+    {
+      "id": "WPN-003",
+      "kind": "weapon",
+      "name": "竹柄太刀",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "katana",
+      "definition": {
+        "name": "竹柄太刀",
+        "type": "太刀",
+        "skill": "居合",
+        "hold": true,
+        "damage": 24,
+        "wind": 0.1,
+        "recovery": 0.22,
+        "range": 112,
+        "desc": "J 三段连斩，末段更重；按住 K 蓄势，松开前向居合。",
+        "art": "weapon-katana"
+      },
+      "visual": {
+        "id": "weapon-katana",
+        "viewBox": [
+          -25,
+          -50,
+          88,
+          86
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "修长弧形刀刃、浅色刃线、黄铜护手和竹柄缠带",
+        "保持太刀长而轻的轮廓，与块状巨锤区别",
+        "图形在握点内预旋转 15°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"
+      ],
+      "anchors": {
+        "grip": [
+          0,
+          0
+        ],
+        "mount": "CHR-001.hand",
+        "heroTransform": "translate(21 -40) rotate(actionAngle) scale(.72)",
+        "drawingRotation": 15
+      },
+      "actions": [
+        "J 三段连斩，末段更重；按住 K 蓄势，松开前向居合。"
+      ],
+      "integration": [
+        "weapons",
+        "iconWeapon",
+        "beginAttack",
+        "performAttack"
+      ],
+      "reuse": "卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。",
+      "revisionNote": "20261027-008 · 修长弧形刀刃、浅色刃线、黄铜护手和竹柄缠带"
+    },
+    {
+      "id": "WPN-004",
+      "kind": "weapon",
+      "name": "木柄巨锤",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "hammer",
+      "definition": {
+        "name": "木柄巨锤",
+        "type": "巨型双手武器",
+        "skill": "蓄力",
+        "hold": true,
+        "damage": 65,
+        "wind": 0.36,
+        "recovery": 0.48,
+        "range": 135,
+        "desc": "J 大范围重砸；按住 K 蓄力，松开重击。起手较慢，击退明显。",
+        "art": "weapon-hammer"
+      },
+      "visual": {
+        "id": "weapon-hammer",
+        "viewBox": [
+          -25,
+          -50,
+          88,
+          86
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "粗木柄、灰绿块状锤头，锤面包边和铆钉明确",
+        "木柄有缠握带与黄铜尾帽，保留重型比例",
+        "图形在握点内预旋转 30°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"
+      ],
+      "anchors": {
+        "grip": [
+          0,
+          0
+        ],
+        "mount": "CHR-001.hand",
+        "heroTransform": "translate(21 -40) rotate(actionAngle) scale(.72)",
+        "drawingRotation": 30
+      },
+      "actions": [
+        "J 大范围重砸；按住 K 蓄力，松开重击。起手较慢，击退明显。"
+      ],
+      "integration": [
+        "weapons",
+        "iconWeapon",
+        "beginAttack",
+        "performAttack"
+      ],
+      "reuse": "卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。",
+      "revisionNote": "20261027-008 · 粗木柄、灰绿块状锤头，锤面包边和铆钉明确"
+    },
+    {
+      "id": "WPN-005",
+      "kind": "weapon",
+      "name": "潮汐法杖",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "staff",
+      "definition": {
+        "name": "潮汐法杖",
+        "type": "法杖",
+        "skill": "潮汐术",
+        "hold": false,
+        "damage": 27,
+        "wind": 0.12,
+        "recovery": 0.35,
+        "range": 570,
+        "desc": "J 持续法弹；K 消耗 30 法力释放前方范围法术。法力自动恢复。",
+        "art": "weapon-staff"
+      },
+      "visual": {
+        "id": "weapon-staff",
+        "viewBox": [
+          -25,
+          -50,
+          88,
+          86
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "斜向木杖、黄铜托座和青绿切面法晶",
+        "杖身有缠握带，法晶使用亮暗面区分，仍为基础潮汐法杖",
+        "图形在握点内预旋转 35°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"
+      ],
+      "anchors": {
+        "grip": [
+          0,
+          0
+        ],
+        "mount": "CHR-001.hand",
+        "heroTransform": "translate(21 -40) rotate(actionAngle) scale(.72)",
+        "drawingRotation": 35
+      },
+      "actions": [
+        "J 持续法弹；K 消耗 30 法力释放前方范围法术。法力自动恢复。"
+      ],
+      "integration": [
+        "weapons",
+        "iconWeapon",
+        "beginAttack",
+        "performAttack"
+      ],
+      "reuse": "卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。",
+      "revisionNote": "20261027-008 · 斜向木杖、黄铜托座和青绿切面法晶"
+    },
+    {
+      "id": "WPN-006",
+      "kind": "weapon",
+      "name": "木托散弹枪",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "shotgun",
+      "definition": {
+        "name": "木托散弹枪",
+        "type": "散弹枪",
+        "skill": "装填",
+        "hold": false,
+        "damage": 11,
+        "wind": 0.08,
+        "recovery": 0.52,
+        "range": 290,
+        "desc": "J 发射六枚散弹，弹仓 4 发；K 装填。近距离更强，同发后续弹片伤害递减。",
+        "art": "weapon-shotgun"
+      },
+      "visual": {
+        "id": "weapon-shotgun",
+        "viewBox": [
+          -25,
+          -50,
+          88,
+          86
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "短粗并列枪管、木枪托和前护木",
+        "枪管高光、金属箍、扳机护圈与木纹明确，不延长成步枪"
+      ],
+      "anchors": {
+        "grip": [
+          0,
+          0
+        ],
+        "mount": "CHR-001.hand",
+        "heroTransform": "translate(21 -40) rotate(actionAngle) scale(.72)"
+      },
+      "actions": [
+        "J 发射六枚散弹，弹仓 4 发；K 装填。近距离更强，同发后续弹片伤害递减。"
+      ],
+      "integration": [
+        "weapons",
+        "iconWeapon",
+        "beginAttack",
+        "performAttack"
+      ],
+      "reuse": "卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。",
+      "revisionNote": "20261027-008 · 短粗并列枪管、木枪托和前护木"
+    },
+    {
+      "id": "EQP-001",
+      "kind": "apparel",
+      "name": "水手帽",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "sailor",
+      "definition": {
+        "slot": "hat",
+        "name": "水手帽",
+        "price": 0,
+        "desc": "最大体力",
+        "effectBase": 10,
+        "effectPerLevel": 8,
+        "unit": "点",
+        "art": "wear-sailor"
+      },
+      "visual": {
+        "id": "wear-sailor",
+        "viewBox": [
+          0,
+          -105,
+          55,
+          32
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "奶油白软帽顶、鼠尾草绿帽带与小锚徽",
+        "帽顶有折面与浅阴影，帽沿仍在人物本地 y=-84 附近"
+      ],
+      "anchors": {
+        "slot": "hat",
+        "mount": "CHR-001.hat",
+        "coordinateSpace": "人物本地坐标，直接挂载，不再次平移"
+      },
+      "actions": [
+        "静态附着帽顶"
+      ],
+      "integration": [
+        "apparel",
+        "stats",
+        "refreshAppearance",
+        "render"
+      ],
+      "reuse": "沿用存档 runtimeKey；换装只替换该槽，保留身体与另一装备。升级目前只改属性，不更换外观。",
+      "revisionNote": "20261027-008 · 奶油白软帽顶、鼠尾草绿帽带与小锚徽"
+    },
+    {
+      "id": "EQP-002",
+      "kind": "apparel",
+      "name": "护航帽",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "guard",
+      "definition": {
+        "slot": "hat",
+        "name": "护航帽",
+        "price": 16,
+        "desc": "每次减伤",
+        "effectBase": 1,
+        "effectPerLevel": 1,
+        "unit": "点",
+        "art": "wear-guard"
+      },
+      "visual": {
+        "id": "wear-guard",
+        "viewBox": [
+          0,
+          -105,
+          55,
+          32
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "灰绿加厚帽体、黄铜纵向加强条与帽沿",
+        "铆钉、侧面阴影和小圆扣使其区别于水手帽"
+      ],
+      "anchors": {
+        "slot": "hat",
+        "mount": "CHR-001.hat",
+        "coordinateSpace": "人物本地坐标，直接挂载，不再次平移"
+      },
+      "actions": [
+        "静态附着帽顶"
+      ],
+      "integration": [
+        "apparel",
+        "stats",
+        "refreshAppearance",
+        "render"
+      ],
+      "reuse": "沿用存档 runtimeKey；换装只替换该槽，保留身体与另一装备。升级目前只改属性，不更换外观。",
+      "revisionNote": "20261027-008 · 灰绿加厚帽体、黄铜纵向加强条与帽沿"
+    },
+    {
+      "id": "EQP-003",
+      "kind": "apparel",
+      "name": "红帆围巾",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "red",
+      "definition": {
+        "slot": "scarf",
+        "name": "红帆围巾",
+        "price": 0,
+        "desc": "武器伤害",
+        "effectBase": 6,
+        "effectPerLevel": 4,
+        "unit": "%",
+        "art": "wear-red"
+      },
+      "visual": {
+        "id": "wear-red",
+        "viewBox": [
+          -30,
+          -73,
+          62,
+          29
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "珊瑚红颈巾、短开叉飘带、浅色缝线和包结",
+        "纹样与飘带作为同一 tail 图层运动，不再仅换色"
+      ],
+      "anchors": {
+        "slot": "scarf",
+        "mount": "CHR-001.scarf",
+        "coordinateSpace": "人物本地坐标，直接挂载，不再次平移",
+        "tailPivot": [
+          10,
+          -55
+        ]
+      },
+      "actions": [
+        "data-part=tail 随角色相位轻摆"
+      ],
+      "integration": [
+        "apparel",
+        "stats",
+        "refreshAppearance",
+        "render"
+      ],
+      "reuse": "克隆原图形；颈圈固定，tail 为包含轮廓和纹样的组，绕 (10,-55) 摆动，不写回统一路径。",
+      "revisionNote": "20261027-008 · 珊瑚红颈巾、短开叉飘带、浅色缝线和包结"
+    },
+    {
+      "id": "EQP-004",
+      "kind": "apparel",
+      "name": "海风围巾",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "breeze",
+      "definition": {
+        "slot": "scarf",
+        "name": "海风围巾",
+        "price": 16,
+        "desc": "移动速度",
+        "effectBase": 6,
+        "effectPerLevel": 3,
+        "unit": "%",
+        "art": "wear-breeze"
+      },
+      "visual": {
+        "id": "wear-breeze",
+        "viewBox": [
+          -39,
+          -74,
+          71,
+          31
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "青绿颈巾、较长尖尾与奶油色海浪纹",
+        "飘带使用独立轮廓，包结和边线与红帆围巾区分"
+      ],
+      "anchors": {
+        "slot": "scarf",
+        "mount": "CHR-001.scarf",
+        "coordinateSpace": "人物本地坐标，直接挂载，不再次平移",
+        "tailPivot": [
+          10,
+          -55
+        ]
+      },
+      "actions": [
+        "data-part=tail 随角色相位轻摆"
+      ],
+      "integration": [
+        "apparel",
+        "stats",
+        "refreshAppearance",
+        "render"
+      ],
+      "reuse": "克隆原图形；颈圈固定，tail 为包含轮廓和纹样的组，绕 (10,-55) 摆动，不写回统一路径。",
+      "revisionNote": "20261027-008 · 青绿颈巾、较长尖尾与奶油色海浪纹"
+    },
+    {
+      "id": "MNT-001",
+      "kind": "mount",
+      "name": "普通自行车",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "bicycle",
+      "definition": {
+        "name": "普通自行车",
+        "speed": 1.3,
+        "stomp": false,
+        "ram": false,
+        "auto": false,
+        "color": "#d77f61",
+        "desc": "经典红车架。骑乘速度 ×1.30，保留普通跳跃与闪避。",
+        "art": "mount-bicycle"
+      },
+      "visual": {
+        "id": "mount-bicycle",
+        "viewBox": [
+          -51,
+          -57,
+          106,
+          66
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "珊瑚红经典车架、奶油轮胎、直把、链罩和挡泥板",
+        "木色握把、座垫亮边与链轮踏板；两轮中心沿用既定坐标"
+      ],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "rearWheel": [
+          -29,
+          -13
+        ],
+        "frontWheel": [
+          29,
+          -13
+        ],
+        "seat": [
+          -12,
+          -39
+        ]
+      },
+      "actions": [
+        "经典红车架。骑乘速度 ×1.30，保留普通跳跃与闪避。",
+        "轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"
+      ],
+      "integration": [
+        "mounts",
+        "bikeArt",
+        "refreshAppearance",
+        "jump",
+        "dash",
+        "updatePlayer",
+        "render"
+      ],
+      "reuse": "车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。",
+      "revisionNote": "20261027-008 · 珊瑚红经典车架、奶油轮胎、直把、链罩和挡泥板"
+    },
+    {
+      "id": "MNT-002",
+      "kind": "mount",
+      "name": "山地车",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "mountain",
+      "definition": {
+        "name": "山地车",
+        "speed": 1.35,
+        "stomp": true,
+        "ram": false,
+        "auto": false,
+        "color": "#73916d",
+        "desc": "粗胎与避震。速度 ×1.35；空格跳起并落地震击，冷却 4 秒。",
+        "art": "mount-mountain"
+      },
+      "visual": {
+        "id": "mount-mountain",
+        "viewBox": [
+          -51,
+          -57,
+          106,
+          66
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "鼠尾草绿车架、颗粒粗胎、前叉避震和中置弹簧",
+        "粗轮、金属前叉与宽直把构成山地轮廓；不新增机械玩法"
+      ],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "rearWheel": [
+          -29,
+          -13
+        ],
+        "frontWheel": [
+          29,
+          -13
+        ],
+        "seat": [
+          -12,
+          -39
+        ]
+      },
+      "actions": [
+        "粗胎与避震。速度 ×1.35；空格跳起并落地震击，冷却 4 秒。",
+        "轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"
+      ],
+      "integration": [
+        "mounts",
+        "bikeArt",
+        "refreshAppearance",
+        "jump",
+        "dash",
+        "updatePlayer",
+        "render"
+      ],
+      "reuse": "车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。",
+      "revisionNote": "20261027-008 · 鼠尾草绿车架、颗粒粗胎、前叉避震和中置弹簧"
+    },
+    {
+      "id": "MNT-003",
+      "kind": "mount",
+      "name": "公路车",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "road",
+      "definition": {
+        "name": "公路车",
+        "speed": 1.65,
+        "stomp": false,
+        "ram": true,
+        "auto": false,
+        "color": "#6497a2",
+        "desc": "轻量弯把。常规速度最快，×1.65；Shift 前向冲撞，冷却 5 秒。",
+        "art": "mount-road"
+      },
+      "visual": {
+        "id": "mount-road",
+        "viewBox": [
+          -51,
+          -57,
+          106,
+          66
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "青蓝细车架、细胎密辐条与公路弯把",
+        "小水壶、轻座垫和轻链轮；保持速度型轮廓"
+      ],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "rearWheel": [
+          -29,
+          -13
+        ],
+        "frontWheel": [
+          29,
+          -13
+        ],
+        "seat": [
+          -12,
+          -39
+        ]
+      },
+      "actions": [
+        "轻量弯把。常规速度最快，×1.65；Shift 前向冲撞，冷却 5 秒。",
+        "轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"
+      ],
+      "integration": [
+        "mounts",
+        "bikeArt",
+        "refreshAppearance",
+        "jump",
+        "dash",
+        "updatePlayer",
+        "render"
+      ],
+      "reuse": "车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。",
+      "revisionNote": "20261027-008 · 青蓝细车架、细胎密辐条与公路弯把"
+    },
+    {
+      "id": "MNT-004",
+      "kind": "mount",
+      "name": "摩托车",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "motor",
+      "definition": {
+        "name": "摩托车",
+        "speed": 1.5,
+        "stomp": true,
+        "ram": true,
+        "auto": true,
+        "color": "#b7905a",
+        "desc": "速度 ×1.50；兼具跳击与冲撞。前方有敌人时每 3 秒自动远射。",
+        "art": "mount-motor"
+      },
+      "visual": {
+        "id": "mount-motor",
+        "viewBox": [
+          -51,
+          -57,
+          106,
+          66
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "黄褐油箱、散热发动机、排气管、车灯与长座垫",
+        "厚胎、避震、挡泥板与小型前向射口；四种能力定义沿用"
+      ],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "rearWheel": [
+          -29,
+          -13
+        ],
+        "frontWheel": [
+          29,
+          -13
+        ],
+        "seat": [
+          -12,
+          -39
+        ]
+      },
+      "actions": [
+        "速度 ×1.50；兼具跳击与冲撞。前方有敌人时每 3 秒自动远射。",
+        "轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"
+      ],
+      "integration": [
+        "mounts",
+        "bikeArt",
+        "refreshAppearance",
+        "jump",
+        "dash",
+        "updatePlayer",
+        "render"
+      ],
+      "reuse": "车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。",
+      "revisionNote": "20261027-008 · 黄褐油箱、散热发动机、排气管、车灯与长座垫"
+    },
+    {
+      "id": "BLD-001",
+      "kind": "building",
+      "name": "公告栏",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "board",
+      "definition": {
+        "x": 180,
+        "name": "公告栏",
+        "owner": "海风镇 · 更新日志",
+        "art": "camp-board-art",
+        "draw": {
+          "mode": "symbol",
+          "dx": -123,
+          "y": 198,
+          "width": 246,
+          "height": 185
+        }
+      },
+      "visual": {
+        "id": "camp-board-art",
+        "viewBox": [
+          0,
+          0,
+          200,
+          195
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "绿色瓦顶、木框与双公告纸，图钉和折角明确",
+        "立柱木纹、屋檐暗面与边角铜钉，保持双脚开放设施"
+      ],
+      "dependencies": [],
+      "anchors": {
+        "streetX": 180,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "海风镇 · 更新日志",
+        "静态背景设施；角色在前方行走"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 绿色瓦顶、木框与双公告纸，图钉和折角明确"
+    },
+    {
+      "id": "BLD-002",
+      "kind": "building",
+      "name": "行政厅",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "hall",
+      "definition": {
+        "x": 470,
+        "name": "行政厅",
+        "owner": "老板 · 秦始皇",
+        "art": "camp-hall-art",
+        "portrait": "camp-emperor",
+        "draw": {
+          "mode": "symbol",
+          "dx": -123,
+          "y": 145,
+          "width": 246,
+          "height": 238
+        }
+      },
+      "visual": {
+        "id": "camp-hall-art",
+        "viewBox": [
+          0,
+          0,
+          280,
+          230
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "双层墨绿殿顶、金色屋脊、石阶和对称灯笼",
+        "立柱、窗棂、门环与屋檐有分层；秦始皇复用 CHR-004"
+      ],
+      "dependencies": [
+        "CHR-004"
+      ],
+      "anchors": {
+        "streetX": 470,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "老板 · 秦始皇",
+        "静态背景设施；角色在前方行走"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 双层墨绿殿顶、金色屋脊、石阶和对称灯笼"
+    },
+    {
+      "id": "BLD-003",
+      "kind": "building",
+      "name": "铁匠铺",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "smith",
+      "definition": {
+        "x": 800,
+        "name": "铁匠铺",
+        "owner": "老板 · 熊猫",
+        "art": "camp-smith-art",
+        "portrait": "camp-panda",
+        "draw": {
+          "mode": "symbol",
+          "dx": -123,
+          "y": 145,
+          "width": 246,
+          "height": 238
+        }
+      },
+      "visual": {
+        "id": "camp-smith-art",
+        "viewBox": [
+          0,
+          0,
+          260,
+          230
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "珊瑚红瓦顶、砌筑烟囱、奶油墙、铁砧与暖色炉膛",
+        "补足炉口石块、檐影和木梁；熊猫复用 CHR-002，火焰和烟为静态"
+      ],
+      "dependencies": [
+        "CHR-002"
+      ],
+      "anchors": {
+        "streetX": 800,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "老板 · 熊猫",
+        "烟囱为已有静态路径，当前没有独立烟雾动画"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 珊瑚红瓦顶、砌筑烟囱、奶油墙、铁砧与暖色炉膛"
+    },
+    {
+      "id": "BLD-004",
+      "kind": "building",
+      "name": "武器架",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "rack",
+      "definition": {
+        "x": 1010,
+        "name": "武器架",
+        "owner": "六类基础武器 · 免费切换",
+        "art": "camp-weapon-rack",
+        "draw": {
+          "mode": "group",
+          "dx": 0,
+          "y": 325
+        }
+      },
+      "visual": {
+        "id": "camp-weapon-rack",
+        "viewBox": [
+          -56,
+          -58,
+          112,
+          110
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "木板背架、双层横梁、立柱铜钉与脚座",
+        "六类基础武器全部用既有图形陈列；是开放武器架"
+      ],
+      "dependencies": [
+        "WPN-001",
+        "WPN-002",
+        "WPN-003",
+        "WPN-004",
+        "WPN-005",
+        "WPN-006"
+      ],
+      "anchors": {
+        "streetX": 1010,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "六类基础武器 · 免费切换",
+        "静态背景设施；角色在前方行走"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 木板背架、双层横梁、立柱铜钉与脚座"
+    },
+    {
+      "id": "BLD-005",
+      "kind": "building",
+      "name": "停车点",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "garage",
+      "definition": {
+        "x": 1300,
+        "name": "停车点",
+        "owner": "四类基础坐骑 · 自由试骑",
+        "art": "camp-parking",
+        "draw": {
+          "mode": "group",
+          "dx": 0,
+          "y": 350
+        }
+      },
+      "visual": {
+        "id": "camp-parking",
+        "viewBox": [
+          -99,
+          -72,
+          198,
+          94
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "四车分位陈列、停车支架和实体“海风车行”招牌",
+        "开放设施，无封闭房屋；四车图形直接引用实际坐骑"
+      ],
+      "dependencies": [
+        "MNT-001",
+        "MNT-002",
+        "MNT-003",
+        "MNT-004"
+      ],
+      "anchors": {
+        "streetX": 1300,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "四类基础坐骑 · 自由试骑",
+        "静态背景设施；角色在前方行走"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 四车分位陈列、停车支架和实体“海风车行”招牌"
+    },
+    {
+      "id": "BLD-006",
+      "kind": "building",
+      "name": "学堂",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "school",
+      "definition": {
+        "x": 1600,
+        "name": "学堂",
+        "owner": "老板 · 仙鹤",
+        "art": "camp-school-art",
+        "portrait": "camp-crane",
+        "draw": {
+          "mode": "symbol",
+          "dx": -123,
+          "y": 145,
+          "width": 246,
+          "height": 238
+        }
+      },
+      "visual": {
+        "id": "camp-school-art",
+        "viewBox": [
+          0,
+          0,
+          260,
+          230
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "青绿卷檐、书本牌匾、竹叶与书窗",
+        "瓦缝、门板和台阶有层次；仙鹤复用 CHR-003"
+      ],
+      "dependencies": [
+        "CHR-003"
+      ],
+      "anchors": {
+        "streetX": 1600,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "老板 · 仙鹤",
+        "静态背景设施；角色在前方行走"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 青绿卷檐、书本牌匾、竹叶与书窗"
+    },
+    {
+      "id": "BLD-007",
+      "kind": "building",
+      "name": "冒险入口",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "adventure",
+      "definition": {
+        "x": 1940,
+        "name": "冒险入口",
+        "owner": "初始地图 · 海岸试炼",
+        "art": "camp-gate-art",
+        "draw": {
+          "mode": "symbol",
+          "dx": -123,
+          "y": 145,
+          "width": 246,
+          "height": 238
+        }
+      },
+      "visual": {
+        "id": "camp-gate-art",
+        "viewBox": [
+          0,
+          0,
+          230,
+          195
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "带绿瓦顶的木制双柱、方向牌、灯笼、小旗和石柱脚",
+        "入口小路、低矮植被和贝壳；仍为同一冒险入口"
+      ],
+      "dependencies": [
+        "PROP-004"
+      ],
+      "anchors": {
+        "streetX": 1940,
+        "interactionDepth": 30,
+        "interactionDistance": 100,
+        "signY": 380
+      },
+      "actions": [
+        "初始地图 · 海岸试炼",
+        "静态背景设施；角色在前方行走"
+      ],
+      "integration": [
+        "places",
+        "drawScene",
+        "openCampPanel",
+        "render"
+      ],
+      "reuse": "图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。",
+      "revisionNote": "20261027-008 · 带绿瓦顶的木制双柱、方向牌、灯笼、小旗和石柱脚"
+    },
+    {
+      "id": "PROP-001",
+      "kind": "prop",
+      "name": "练习木桩",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "dummy",
+      "definition": {
+        "hp": 999,
+        "speed": 0,
+        "r": 22,
+        "h": 78,
+        "damage": 0,
+        "xp": 0,
+        "offset": 0,
+        "art": "art-dummy"
+      },
+      "visual": {
+        "id": "art-dummy",
+        "viewBox": [
+          -32,
+          -84,
+          64,
+          92
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "草编椭圆靶、珊瑚靶心、木横臂和固定底座",
+        "编织圈、木纹与右侧阴影，训练用途不变"
+      ],
+      "actions": [
+        "受击反馈；不死亡、不掉落、不计任务击退"
+      ],
+      "anchors": {
+        "ground": [
+          0,
+          0
+        ],
+        "height": 78,
+        "radius": 22
+      },
+      "integration": [
+        "enemyKinds.dummy",
+        "spawnEnemy",
+        "hurtEnemy"
+      ],
+      "reuse": "练习目标独立编号，不作为有奖励的普通怪物复用。",
+      "revisionNote": "20261027-008 · 草编椭圆靶、珊瑚靶心、木横臂和固定底座"
+    },
+    {
+      "id": "PROP-002",
+      "kind": "prop",
+      "name": "营地树",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "tree",
+      "definition": {},
+      "visual": {
+        "id": "camp-tree",
+        "viewBox": [
+          0,
+          0,
+          100,
+          140
+        ],
+        "mode": "symbol"
+      },
+      "identity": [
+        "分簇鼠尾草绿树冠、明暗叶团、分叉木干与根脚",
+        "少量叶片高光，轮廓闭合，供场景重复摆放"
+      ],
+      "actions": [
+        "静态场景复用"
+      ],
+      "integration": [
+        "drawScene"
+      ],
+      "reuse": "以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。",
+      "revisionNote": "20261027-008 · 分簇鼠尾草绿树冠、明暗叶团、分叉木干与根脚"
+    },
+    {
+      "id": "PROP-003",
+      "kind": "prop",
+      "name": "海岸草",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "grass",
+      "definition": {},
+      "visual": {
+        "id": "art-grass",
+        "viewBox": [
+          -16,
+          -32,
+          38,
+          35
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "四片闭合长草叶，以长短、弧度与浅叶脉区分",
+        "整体仍为轻量海岸草丛，不增加独立动画"
+      ],
+      "actions": [
+        "静态场景复用"
+      ],
+      "integration": [
+        "drawScene"
+      ],
+      "reuse": "以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。",
+      "revisionNote": "20261027-008 · 四片闭合长草叶，以长短、弧度与浅叶脉区分"
+    },
+    {
+      "id": "PROP-004",
+      "kind": "prop",
+      "name": "海滩贝壳",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "shell",
+      "definition": {},
+      "visual": {
+        "id": "art-shell",
+        "viewBox": [
+          -16,
+          -21,
+          28,
+          28
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "奶油色扇贝、扇形放射纹、波瓣壳缘和浅棕暗面",
+        "保留小尺寸装饰物和底部铰合点"
+      ],
+      "actions": [
+        "静态场景复用"
+      ],
+      "integration": [
+        "drawScene"
+      ],
+      "reuse": "以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。",
+      "revisionNote": "20261027-008 · 奶油色扇贝、扇形放射纹、波瓣壳缘和浅棕暗面"
+    },
+    {
+      "id": "PROP-005",
+      "kind": "prop",
+      "name": "珍珠经验",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "pearl",
+      "definition": {},
+      "visual": {
+        "id": "art-pearl",
+        "viewBox": [
+          -9,
+          -10,
+          18,
+          20
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "薄荷菱形经验晶体、深色侧面和奶油高光",
+        "仍称珍珠经验，沿用既有掉落形状和拾取用途"
+      ],
+      "actions": [
+        "掉落、浮动、吸附与拾取"
+      ],
+      "integration": [
+        "dropAt / updateDrops"
+      ],
+      "reuse": "以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。",
+      "revisionNote": "20261027-008 · 薄荷菱形经验晶体、深色侧面和奶油高光"
+    },
+    {
+      "id": "PROP-006",
+      "kind": "prop",
+      "name": "体力补给",
+      "revision": 2,
+      "status": "r2 造型优化，待用户确认",
+      "runtimeKey": "heart",
+      "definition": {},
+      "visual": {
+        "id": "art-heart",
+        "viewBox": [
+          -13,
+          -14,
+          26,
+          25
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "珊瑚色心形、奶油描边与局部高光",
+        "右侧阴影加强轮廓，仍为体力补给"
+      ],
+      "actions": [
+        "掉落、浮动、吸附与拾取"
+      ],
+      "integration": [
+        "dropAt / updateDrops"
+      ],
+      "reuse": "以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。",
+      "revisionNote": "20261027-008 · 珊瑚色心形、奶油描边与局部高光"
+    },
+    {
+      "id": "LEG-001",
+      "kind": "legacy",
+      "name": "旧版一体骑行鹈鹕",
+      "revision": 1,
+      "status": "基线登记，未视觉验收",
+      "runtimeKey": null,
+      "definition": {},
+      "visual": {
+        "id": "art-player",
+        "viewBox": [
+          -42,
+          -66,
+          104,
+          105
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "当前横版角色已拆层，此一体造型仅作历史参考，禁止拿来替换 CHR-001。"
+      ],
+      "actions": [
+        "旧版保留；当前玩法不接入"
+      ],
+      "integration": [
+        "历史快照 / 兼容保留"
+      ],
+      "reuse": "新增玩法如需重新启用，先明确用途；不要与当前角色、武器资产混淆。"
+    },
+    {
+      "id": "LEG-002",
+      "kind": "legacy",
+      "name": "旧版鱼镖",
+      "revision": 1,
+      "status": "基线登记，未视觉验收",
+      "runtimeKey": null,
+      "definition": {},
+      "visual": {
+        "id": "art-fish",
+        "viewBox": [
+          -21,
+          -12,
+          36,
+          24
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "当前六基础武器不使用此主武器。"
+      ],
+      "actions": [
+        "旧版保留；当前玩法不接入"
+      ],
+      "integration": [
+        "历史快照 / 兼容保留"
+      ],
+      "reuse": "新增玩法如需重新启用，先明确用途；不要与当前角色、武器资产混淆。"
+    },
+    {
+      "id": "LEG-003",
+      "kind": "legacy",
+      "name": "旧版护航海星",
+      "revision": 1,
+      "status": "基线登记，未视觉验收",
+      "runtimeKey": null,
+      "definition": {},
+      "visual": {
+        "id": "art-star",
+        "viewBox": [
+          -18,
+          -18,
+          36,
+          36
+        ],
+        "mode": "group"
+      },
+      "identity": [
+        "当前八通用升级不生成环绕海星。"
+      ],
+      "actions": [
+        "旧版保留；当前玩法不接入"
+      ],
+      "integration": [
+        "历史快照 / 兼容保留"
+      ],
+      "reuse": "新增玩法如需重新启用，先明确用途；不要与当前角色、武器资产混淆。"
+    }
+  ],
+  "visualRevision": {
+    "gameVersion": "0.3.2",
+    "change": "20261027-008",
+    "activeAssets": 37,
+    "summary": "37 项活跃资产 r2：连接自然的鹈鹕长喙、清晰轮廓与分层材质；3 项历史素材保持 r1。"
+  }
+}

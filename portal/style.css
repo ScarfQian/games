@@ -1,0 +1,58 @@
+/* ScarfQian · 2026-10-30 · 游戏集入口 */
+:root{color-scheme:light;--paper:#f5f1e5;--ink:#213e34;--soft:#657366;--line:#d3d8c5;--green:#234a3a;--gold:#dcb36d}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}
+a:focus-visible{outline:3px solid #b16d3f;outline-offset:6px}
+.wrap{max-width:1180px;margin:auto;padding:0 38px}
+header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 0;border-bottom:1px solid var(--line)}
+.brand{font-size:18px;font-weight:750;letter-spacing:.08em}
+.brand span{font-weight:400;font-size:12px;letter-spacing:.18em;margin-left:16px;color:var(--soft)}
+nav{display:flex;gap:24px;font-size:13px;color:var(--soft)}
+.intro{padding:62px 0 34px;display:flex;align-items:flex-end;justify-content:space-between;gap:28px}
+.eyebrow{font-size:11px;letter-spacing:.23em;text-transform:uppercase;color:var(--soft);margin:0 0 13px}
+h1{font-family:"Songti SC","Noto Serif SC",serif;font-size:clamp(34px,5vw,58px);line-height:1.2;font-weight:600;margin:0}
+.intro p:last-child{margin:0;max-width:320px;color:var(--soft);font-size:14px}
+.featured{display:grid;grid-template-columns:1.04fr 1fr;min-height:372px;background:var(--green);color:#f8f0d9;overflow:hidden;border:1px solid #1c382e}
+.featured-copy{padding:38px 40px;position:relative;z-index:1}
+.label{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.09em}
+.dot{width:6px;height:6px;background:var(--gold);border-radius:50%}
+.featured h2{font-family:"Songti SC",serif;font-size:38px;line-height:1.25;margin:26px 0 8px;font-weight:500}
+.subtitle{font-size:15px;color:#c3d0ba;margin:0 0 17px;letter-spacing:.18em}
+.description{font-size:14px;color:#d0dbc9;max-width:350px}
+.actions{display:flex;align-items:center;gap:22px;margin-top:27px;flex-wrap:wrap}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:22px;background:var(--gold);color:#243e30;padding:11px 22px;font-size:14px;font-weight:650;border:1px solid var(--gold)}
+.button:hover{background:#edc98a}
+.text-link{font-size:12px;border-bottom:1px solid currentColor}
+.scene{position:relative;min-height:330px;background:radial-gradient(ellipse at 52% 46%,#729270 0%,#395c48 47%,#244b39 75%);display:grid;place-items:center;isolation:isolate}
+.scene:before{content:"";position:absolute;width:300px;height:300px;border:1px solid #90aa7a55;border-radius:50%;box-shadow:0 0 0 35px #8ca57a0d,0 0 0 72px #8ca57a09;z-index:-1}
+.scene:after{content:"";position:absolute;bottom:-25px;left:-15%;width:130%;height:110px;border-top:1px solid #a8b88e55;transform:rotate(-10deg);background:#223f30}
+.scene img{width:220px;height:232px;object-fit:contain;filter:drop-shadow(3px 12px 8px #162d3055);position:relative;z-index:1}
+.scene-caption{position:absolute;bottom:26px;right:28px;font-size:10px;letter-spacing:.18em;color:#c4d5b5;z-index:1}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;padding:34px 0 17px}
+.section-head h2{font-size:16px;font-weight:650;margin:0}
+.section-head span{font-size:11px;color:var(--soft);letter-spacing:.08em}
+.games{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+.game{padding:26px;min-height:250px;display:flex;flex-direction:column}
+.game+.game{border-left:1px solid var(--line)}
+.number{font-family:Georgia,serif;font-size:32px;color:#a1ac91;line-height:1}
+.game h3{font-size:21px;margin:16px 0 5px;font-weight:650}
+.game p{font-size:13px;color:var(--soft);margin:0 0 20px;max-width:270px}
+.game .row{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:15px}
+.game .version{font-size:11px;color:var(--soft)}
+.game .go{font-weight:650;border-bottom:1px solid #a0ad94}
+.game:hover{background:#ebeedd}
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:35px 0 42px;color:var(--soft);font-size:12px}
+.notes p{margin:0}
+.notes strong{display:block;color:var(--ink);font-weight:600;margin-bottom:5px}
+footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:22px 0 30px;color:var(--soft);font-size:11px}
+.design{max-width:760px;padding:66px 0 70px}
+.design h1{margin-bottom:25px}
+.design .lead{font-size:18px;line-height:1.9}
+.design .stages{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0}
+.design .stages span{border:1px solid var(--line);padding:8px 17px;font-size:13px}
+.design .muted{color:var(--soft);font-size:13px}
+@media(max-width:760px){.wrap{padding:0 22px}.intro{display:block;padding-top:40px}.intro p:last-child{margin-top:20px;max-width:none}.featured{grid-template-columns:1fr}.featured-copy{padding:28px}.scene{min-height:245px;grid-row:1}.scene img{width:160px;height:170px}.scene:before{width:205px;height:205px}.featured h2{font-size:32px;margin-top:19px}.games{grid-template-columns:1fr}.game{min-height:0;padding:24px}.game+.game{border-left:0;border-top:1px solid var(--line)}.game p{max-width:none}.number{font-size:25px}.notes{grid-template-columns:1fr;gap:20px}.brand span{display:none}nav{gap:16px}footer{flex-direction:column;gap:6px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+

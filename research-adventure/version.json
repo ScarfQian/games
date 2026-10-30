@@ -1,0 +1,16 @@
+{
+  "project": "科研大冒险",
+  "project_id": "research-adventure",
+  "version": "0.0.1",
+  "stage": "design-only",
+  "entry": null,
+  "design_plan": "docs/261027-科研大冒险设计与开发计划.md",
+  "repository": "https://github.com/ScarfQian/games",
+  "sourceDirectory": "research-adventure",
+  "url": "https://scarfqian.github.io/games/research-adventure/",
+  "origin": {
+    "repository": "https://github.com/ScarfQian/research-adventure",
+    "commit": "7e328d7bbc1111b5e80ca3d080aff89c0f062eec",
+    "version": "0.0.1"
+  }
+}

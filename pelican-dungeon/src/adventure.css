@@ -1,0 +1,466 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+ * ScarfQian · 2026-10-30 · 海岸远征像素 RPG 界面主题。
+ * 最后导入；只调整界面，不修改图形母版、战斗规则或存档。
+ */
+:root {
+  --paper: #f4e9cb;
+  --ink: #244632;
+  --muted: #adbd9c;
+  --gold: #deb96a;
+  --line: #6d80514d;
+  --green: #456d46;
+  --red: #aa513d;
+  --rpg-paper: #f3e8c9;
+  --rpg-paper-light: #fff5db;
+  --rpg-paper-deep: #e6d6ae;
+  --rpg-ink: #254432;
+  --rpg-bronze: #927044;
+  --rpg-edge: #543e28;
+  --rpg-forest: #142e24;
+  color: #eee6ca;
+  background: var(--rpg-forest);
+  color-scheme: dark;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+body { background: #142e24; }
+button, input, select { font-variant-numeric: tabular-nums; }
+button {
+  min-height: 44px;
+  border: 2px solid #977544;
+  border-radius: 2px;
+  padding: 9px 14px;
+  background: #ecdfba;
+  color: #294532;
+  box-shadow: inset 0 2px #fff3d3, inset 0 -2px #d7c299, 0 2px #0a201a;
+  transition: background-color .12s, border-color .12s, transform .12s;
+  line-height: 1.35;
+}
+button:hover { background: #fff1cb; border-color: #bc9452; }
+button:active { transform: translateY(1px); box-shadow: inset 0 1px #d7c299, inset 0 -1px #fff3d3; }
+button:disabled, .equipment-workspace button:disabled {
+  cursor: default;
+  opacity: 1;
+  color: #817b62;
+  background: #d4ceb7;
+  border-color: #a19a7a;
+  box-shadow: inset 0 1px #e6e0ca;
+  transform: none;
+}
+button.primary, .quick-actions [data-action="attack"] {
+  background: #e9bd64;
+  color: #283b23;
+  border-color: #97713b;
+  box-shadow: inset 0 2px #ffe4a1, inset 0 -3px #c59545, 0 2px #092018;
+  font-weight: 700;
+}
+button.primary:hover, .quick-actions [data-action="attack"]:hover { background: #f5cc7d; }
+button.quiet { background: #e5ddbd; color: #3e5639; border-color: #a79870; }
+button.quiet:hover { background: #f5ebcc; }
+button.danger { color: #883f2d; border-color: #aa7050; background: #f0dcc1; }
+button.small { min-height: 44px; padding: 7px 11px; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible,
+summary:focus-visible, .eq-detail:focus-visible {
+  outline: 3px solid #d69c35;
+  outline-offset: 3px;
+}
+.board canvas:focus-visible, .camp-canvas:focus-visible { outline: 2px solid #f1d992; outline-offset: -3px; }
+a { color: #f0d69b; }
+.version-tag { color: #b7c5a3; border-color: #6a7a51; border-radius: 1px; background: #1c372a; }
+.eyebrow { letter-spacing: .16em; }
+.adventure-icon {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  background: #f6edcf;
+  border-radius: 0;
+  overflow: hidden;
+  image-rendering: pixelated;
+}
+.adventure-icon .ui-sprite { display: block; width: 32px; height: 32px; background-repeat: no-repeat; image-rendering: pixelated; flex-shrink: 0; mix-blend-mode: multiply; }
+.meter-label .adventure-icon, .hero-stats .adventure-icon { width: 18px; height: 18px; flex-basis: 18px; margin-right: 4px; }
+.meter-label .ui-sprite, .hero-stats .ui-sprite { transform: scale(.5625); }
+
+/* 地图之外保留木框与纸面，地图之内只留下必要的目标提示。 */
+.game-shell { padding: 0 18px; grid-template-rows: 68px minmax(0, 1fr) 82px; }
+.game-header { gap: 12px; border-bottom: 2px solid #6a7144; box-shadow: 0 1px #0b2119; }
+.brand { gap: 10px; min-width: 0; }
+.brand img { width: 39px; height: 46px; }
+.brand h1 { color: #f6e5b6; font-size: 21px; font-weight: 700; letter-spacing: .10em; }
+.brand p { color: #a9bb93; letter-spacing: .08em; }
+.header-right { gap: 10px; min-width: 0; }
+.save-state { color: #b7c6a4; }
+.save-state.warning { color: #efc48c; }
+.play-layout { grid-template-columns: minmax(0, 1fr) 254px; gap: 14px; padding-top: 12px; }
+.board {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  border: 3px solid #87724b;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #2c2118, inset 0 0 0 1px #c6ae70;
+  background: #14251f;
+}
+.board canvas { grid-column: 1; grid-row: 1; min-width: 0; min-height: 0; }
+.board-label { left: 12px; top: 10px; padding: 5px 8px; border: 1px solid #a18b54; border-radius: 1px; color: #f2ddb0; background: #1a352aeF; box-shadow: 0 2px #0c211c; letter-spacing: .06em; }
+.board-help { bottom: 64px; border: 1px solid #b6a06c; border-radius: 2px; background: #f3e7c5f2; color: #304b35; box-shadow: 0 2px #182d22; padding: 7px 12px; }
+.supply-bar {
+  grid-column: 1;
+  grid-row: 2;
+  position: relative;
+  inset: auto;
+  display: flex;
+  min-width: 0;
+  max-width: none;
+  min-height: 56px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 106px 5px 8px;
+  border-top: 2px solid #7c6842;
+  background: #253c29;
+}
+.supply-bar button { min-height: 44px; padding: 6px 10px; border-color: #9d8959; background: #eadfbd; color: #2c4a34; box-shadow: inset 0 2px #fff2cf, inset 0 -2px #cfc197; }
+.supply-bar .primary { background: #e8be68; color: #293f26; border-color: #ae8546; }
+.supply-bar kbd { color: #566346; }
+.board-tools { right: 8px; bottom: 7px; gap: 5px; }
+.board-tools button { width: 44px; min-height: 44px; padding: 0; border-color: #9c8857; background: #d7cfac; color: #314b34; font-size: 21px; }
+.combat-target { top: 46px; left: 12px; width: 218px; padding: 8px 10px; border: 2px solid #99804b; border-left: 4px solid #ba8550; border-radius: 1px; background: #f0e3c3f5; box-shadow: 2px 3px #0a211c66; color: #294632; }
+.target-heading { color: #66704e; margin-bottom: 5px; }
+.target-heading button { min-width: 44px; min-height: 44px; padding: 5px 7px; font-size: 10px; border: 1px solid #b0a078; box-shadow: none; background: #e1d6af; color: #375034; }
+.target-name { color: #75543a; font-variant-numeric: tabular-nums; }
+.target-name strong { color: #334b32; }
+.target-meter { height: 7px; border: 1px solid #75523a; border-radius: 0; background: #bcb294; }
+.target-meter span { background: #b05a40; box-shadow: inset 0 2px #d7835b; }
+.combat-target p { color: #586448; }
+.right-panel { gap: 11px; }
+.panel, dialog, .equipment-workspace {
+  --muted: #657158;
+  --gold: #8d6631;
+  --line: #bdaf874f;
+  color: var(--rpg-ink);
+  color-scheme: light;
+}
+.panel { border: 2px solid #907149; border-radius: 2px; padding: 14px; background: #f1e5c4; box-shadow: inset 0 0 0 2px #fff1cf, 0 2px #0b2219; }
+.panel h2 { color: #687148; font-weight: 700; letter-spacing: .11em; margin-bottom: 12px; }
+.hero-panel { background: #f4e8c8; }
+.hero-portrait { width: 48px; height: 55px; padding: 3px; border: 1px solid #b2a87d; border-radius: 0; background: #dce0b6; }
+.hero-name { color: #2a4a32; font-weight: 600; }
+.hero-name small { color: #8d6532; }
+.meter-label { color: #566344; font-size: 11px; margin: 13px 0 5px; font-variant-numeric: tabular-nums; }
+.meter-label span:last-child { color: #2e4631; font-weight: 700; }
+.meter { height: 10px; border: 1px solid #806948; border-radius: 0; background: #c6bfa1; box-shadow: inset 0 1px #a99d79; }
+.meter span { border-radius: 0; background: #ae5c42; box-shadow: inset 0 2px #d98b61, inset 0 -1px #823f32; }
+.meter.xp span { background: #638b55; box-shadow: inset 0 2px #9dbd72, inset 0 -1px #3f623e; }
+.hero-stats { gap: 8px; border-top: 1px solid #c1b286; padding-top: 11px; margin-top: 13px; }
+.hero-stats div { color: #6a7353; }
+.hero-stats strong { color: #315036; font-weight: 700; }
+.status-line { color: #856136; }
+.equipment-line { border-top-color: #b4a97b; color: #536448; }
+.equipment-line button { min-height: 44px; border: 1px solid #b8aa7e; background: #e9dcba; color: #345439; box-shadow: inset 0 1px #fff0ce; }
+.journal-list { scrollbar-color: #a6956b #e5d9b7; }
+.journal-list p { border-bottom-color: #b9ac7b5c; color: #576447; }
+.journal-list p.good { color: #3c6b3c; }
+.journal-list p.danger { color: #96462f; }
+.journal-list p.hint { color: #4e7363; }
+.objectives { color: #5c6b4b; }
+.objectives strong { color: #385438; font-weight: 700; }
+.objectives .dialog-actions { margin-top: 12px; }
+.game-footer { gap: 14px; }
+.quick-actions { gap: 7px; }
+.quick-actions button { min-height: 48px; gap: 7px; border-radius: 2px; padding: 7px 12px; font-size: 12px; }
+.quick-actions kbd { color: #63704e; border-color: #b7a77e; border-radius: 0; background: #f6eccd; }
+.quick-actions button.resting { color: #24462d; border-color: #8eaa68; background: #d7e2b5; box-shadow: inset 0 2px #f4f5ce, inset 0 -2px #aec58d; }
+.quick-actions [data-action="attack"]:disabled { color: #817b62; background: #c9c6ad; border-color: #979375; box-shadow: inset 0 1px #e2ddc4; opacity: 1; }
+.key-guide { color: #9db38c; font-size: 10px; }
+.mobile-controls button { min-width: 44px; min-height: 44px; border-radius: 2px; border-color: #927b50; background: #d8d3af; color: #355137; box-shadow: inset 0 2px #f3eccc, inset 0 -2px #b9ae83, 0 2px #092017; }
+.mobile-controls button:nth-child(5) { color: #fff0bf; background: #527249; border-color: #8e9c66; box-shadow: inset 0 2px #7f9860, inset 0 -2px #385639; }
+.toast { border: 2px solid #977448; border-radius: 2px; background: #f7e8c0; color: #2c4932; box-shadow: 3px 4px #08231c88; }
+
+/* 窗口和装备工作台：用纸面的明暗分区区分层级，保留原有数据和操作。 */
+dialog, dialog:has(.equipment-workspace) { background: #f3e8ca; border: 3px solid #8d6c43; border-radius: 3px; box-shadow: 0 0 0 1px #382c20, inset 0 0 0 2px #fff4d6, 6px 8px #071b1777; }
+dialog::backdrop { background: #071b18c2; backdrop-filter: none; }
+.dialog-inner { padding: 24px; }
+.dialog-header { border-bottom: 2px solid #c8b889; padding-bottom: 15px; margin-bottom: 18px; gap: 12px; }
+.dialog-header h2 { color: #2e4933; font-size: 25px; letter-spacing: .04em; line-height: 1.35; }
+.dialog-header button { width: 44px; min-width: 44px; min-height: 44px; margin-top: -4px; padding: 0; border: 1px solid #b6a077; background: #e6d9b6; color: #6b6848; box-shadow: inset 0 1px #fff1d0; }
+dialog a { color: #7a542b; }
+dialog .eyebrow, dialog .field-label { color: #7c683e; }
+dialog .tag { color: #6b653e; border-color: #b9a67b; border-radius: 0; background: #e8dcb6; }
+input[type="text"] { min-height: 44px; border: 2px solid #ad9870; border-radius: 1px; background: #fff5dc; color: #2c4c36; box-shadow: inset 0 2px #d7c8a3; }
+.slot, .item-card, .forge-before-after article, .augment-options article, .talent-card { border: 1px solid #b29b70; border-radius: 2px; background: #eee1bc; color: #304e34; box-shadow: inset 0 1px #fff3d4; }
+.slot p, .item-card small, .forge-target-list small { color: #667252; }
+.slot h3, .item-card strong, .talent-card h4 { color: #2e4e34; }
+.item-card:hover, .item-card.selected { background: #f6ebcc; border-color: #967341; }
+.item-detail { border: 1px solid #c2ad7d; border-radius: 1px; background: #fff1cf; color: #59684a; }
+.item-detail h3 { color: #355037; }
+.stat-grid div { color: #65704e; border-color: #b9a57a; border-radius: 1px; background: #eadfba; }
+.stat-grid strong { color: #836036; }
+.help-list, .exit-note, .encounter-description { color: #4e6249; }
+.dialog-error { color: #963e2e; }
+.exit-note { border-left-color: #ab8041; }
+.operation-cost { color: #77603a; background: #e9d8ae; border-left-color: #a87f42; }
+.forge-before-after article:last-child { background: #e3e6bb; border-color: #91a46b; }
+.forge-before-after small, .talent-heading span, .talent-card strong { color: #876632; }
+.talent-card.learned { border-color: #79915a; background: #e7e6bd; }
+.growth-details summary { color: #80623a; min-height: 44px; }
+.growth-current { color: #3e5c3d; background: #e4e2b9; border-left-color: #9b7a43; }
+.growth-table th { color: #5b6847; background: #e5d7ae; }
+.growth-table th, .growth-table td { border-bottom-color: #c2b286; }
+.growth-table td { color: #4e644a; }
+.growth-table .current-level td { color: #365735; background: #dce2b0; font-weight: 700; }
+.status-warning { color: #8c5c2c; }
+.encounter-emblem { border: 2px solid #af925b; border-radius: 2px; background: #e8d8ad; color: #6b663b; }
+.menu-list { display: grid; gap: 9px; }
+.menu-list button { text-align: left; }
+.equipment-workspace { --eq-muted: #647252; --eq-border: #baa779; color: #355039; }
+.eq-run-summary { color: #677151; }
+.eq-run-summary strong { color: #805a2e; }
+.eq-camp-note { color: #6c633e; background: #e9dcb5; border-left-color: #9e824c; }
+.eq-slot { background: #e4dfb9; border: 2px solid #aea075; border-radius: 1px; color: #365237; box-shadow: inset 0 2px #f8efcb, inset 0 -2px #cbc397; }
+.eq-slot:hover { background: #f1e9c8; }
+.eq-slot.selected { border-color: #93703d; background: #f6e6b5; box-shadow: inset 0 0 0 1px #fff3d0; }
+.eq-slot small, .eq-slot-mark { color: #6b7551; }
+.eq-slot.empty { opacity: 1; background: #e4dfc3; color: #7e8163; }
+.eq-tabs button { border-radius: 1px; border-color: #b7a57a; background: #e5d8b2; color: #566444; box-shadow: inset 0 1px #fff0c9; }
+.eq-tabs button.active { background: #4b6741; color: #f9edc3; border-color: #405d38; box-shadow: inset 0 2px #708653, inset 0 -2px #354c31; }
+.eq-materials { border-radius: 1px; background: #e9debd; border-color: #c1b086; }
+.eq-materials > span, .eq-material-note { color: #697353; }
+.eq-materials strong { color: #805e30; }
+.eq-detail { border: 2px solid #b5a173; border-radius: 2px; background: #fff2d2; box-shadow: inset 0 0 0 1px #fff9e7; }
+.eq-filters button { border: 1px solid #b6a97d; border-radius: 1px; color: #657151; background: #e6daba; box-shadow: none; }
+.eq-filters button.active { background: #c5d09a; border-color: #82905a; color: #334f32; box-shadow: inset 0 -2px #a4b77d; }
+.eq-item-list { scrollbar-color: #a99465 #e6dabc; }
+.eq-item { border: 1px solid #c1af82; border-radius: 1px; background: #eee3c1; box-shadow: inset 0 1px #fff1d1; }
+.eq-item:hover { background: #fff1cd; }
+.eq-item.selected { background: #e5e5b8; border-color: #84965a; box-shadow: inset 3px 0 #7d9152, inset 0 1px #f8f0cb; }
+.eq-item-copy > strong { color: #354f36; font-weight: 600; }
+.eq-quantity { color: #747449; }
+.eq-unknown-icon { background: #e0dac0; border-color: #b5a574; border-radius: 1px; color: #79683e; }
+.eq-unknown-icon small { color: #737052; }
+.eq-badge { color: #69734e; border-color: #bcae82; border-radius: 1px; }
+.eq-badge.equipped { background: #d6deb0; color: #49613c; border-color: #a2b077; }
+.eq-badge.unknown { background: #f1e0b6; color: #8a6835; border-color: #c1a56a; }
+.eq-badge.cursed { color: #8c4554; background: #ecd2ce; border-color: #bd8e91; }
+.eq-detail-heading .eq-icon, .eq-detail-heading .eq-unknown-icon { border: 1px solid #c2b07e; border-radius: 1px; background-color: #efe2bb; }
+.eq-detail h3 { color: #2f5036; }
+.eq-description, .eq-note { color: #5d6d4e; }
+.eq-section-title { color: #647049; font-weight: 700; }
+.eq-stat-list > div { border-bottom-color: #d6c7a0; }
+.eq-stat-list dt { color: #697455; }
+.eq-stat-list dd { color: #6f5736; }
+.eq-note.warning { color: #8b5f34; background: #efdfb7; border-left-color: #ad8248; }
+.eq-footnote, .eq-empty-detail p, .eq-list-empty { color: #737b5d; }
+.eq-comparison th { color: #66714f; }
+.eq-comparison th, .eq-comparison td { border-bottom-color: #cdbd94; }
+.eq-comparison thead th { color: #65704d; background: #e8dbb2; }
+.eq-comparison td { color: #715e3d; }
+.eq-comparison td.better { color: #3c7139; font-weight: 700; }
+.eq-comparison td.worse { color: #a24b37; font-weight: 700; }
+.eq-upgrade-preview, .eq-familiarity { border-color: #c6b280; border-radius: 1px; background: #eee4bf; }
+.eq-familiarity h4, .eq-familiarity > div > span { color: #64714b; }
+.eq-familiarity-meter { border: 1px solid #9b9970; border-radius: 0; background: #d0c5a2; }
+.eq-familiarity-meter > span { background: #7e9e5d; border-radius: 0; }
+.eq-familiarity p { color: #6b7757; }
+.eq-familiarity p.warning { color: #926a36; }
+.eq-shield-note { border-left-color: #91a36a; }
+.eq-shield-note strong { color: #547047; font-weight: 700; }
+.eq-preview-heading h4 { color: #526c43; }
+.eq-preview-heading > span { color: #8f672e; }
+.eq-operation { border-color: #c3b181; border-radius: 1px; background: #eee1b8; }
+.eq-operation h4 { color: #3f5a3a; font-weight: 700; }
+.eq-operation p { color: #637151; }
+.eq-operation small { color: #8a6d3b; }
+.eq-operation button { background: #d8dfad; color: #425d39; border-color: #98a770; box-shadow: inset 0 2px #f1efc6, inset 0 -2px #bbc793; }
+.eq-operation.unavailable { background: #e7e0c4; border-color: #c3b997; }
+.eq-operation.unavailable h4, .eq-operation-camp { color: #7a8063; }
+.eq-seal-panel { background: #e9e3b9; border-left-color: #9b8c51; }
+.eq-seal-panel h4 { color: #6a6239; }
+.eq-seal-panel p { color: #66714e; }
+.eq-empty-detail > span { color: #9da06d; }
+
+/* 拾取窗口独立强调获得物；属性变动同时保留文字，不只使用颜色。 */
+dialog[data-kind="loot"] { width: min(760px, calc(100vw - 24px)); }
+.loot-banner { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: 18px; align-items: center; padding: 4px 0 18px; border-bottom: 1px solid #c8b98e; }
+.loot-art { width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; border: 2px solid #b19357; background: #e4dfae; box-shadow: inset 0 0 0 3px #f9edc6, 3px 3px #c9b482; image-rendering: pixelated; }
+.loot-art .item-icon { transform: scale(1.75); image-rendering: pixelated; }
+.loot-art .adventure-icon { transform: scale(1.75); background: #f4e9c8; }
+.loot-kicker { color: #8b6a32; font-size: 11px; font-weight: 700; letter-spacing: .12em; margin: 0 0 7px; }
+.loot-title { color: #305037; font: 700 clamp(20px, 3.5vw, 28px)/1.35 "Songti SC", "STSong", Georgia, serif; margin: 0 0 7px; overflow-wrap: anywhere; }
+.loot-description { color: #627051; font-size: 13px; line-height: 1.8; margin: 8px 0 0; overflow-wrap: anywhere; }
+.loot-quantity { display: inline-block; color: #87642e; font: 700 12px/1.5 ui-monospace, monospace; padding: 2px 7px; border: 1px solid #bfa369; background: #f5e0a8; }
+.loot-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.loot-equipment-card { min-width: 0; padding: 15px; border: 2px solid #b5a57b; border-radius: 1px; background: #ebe2c3; }
+.loot-equipment-card.found { border-color: #91a361; background: #ebedc4; box-shadow: inset 0 3px #c9d79e; }
+.loot-equipment-card.current { box-shadow: inset 0 3px #d0c39d; }
+.loot-equipment-card h3 { color: #3d5637; font-size: 15px; line-height: 1.5; margin: 5px 0 13px; overflow-wrap: anywhere; }
+.loot-equipment-card h4 { color: #2f5035; font-size: 16px; margin: 10px 0; overflow-wrap: anywhere; }
+.loot-reference { color: #6b704b; font-size: 11px; margin: 10px 0 5px; }
+.loot-reference.is-unknown { color: #8a6734; }
+.loot-equipment-card > small { color: #79815c; font-size: 10px; letter-spacing: .07em; }
+.loot-equipment-card .item-icon, .loot-equipment-card .adventure-icon { vertical-align: middle; margin-right: 6px; }
+.loot-stat-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.loot-stat { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 0; border-bottom: 1px solid #c4b88b88; font-size: 12px; line-height: 1.5; color: #657252; }
+.loot-stat > :last-child { color: #6e5837; font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; margin: 0; }
+.loot-stat.is-better, .loot-stat .is-better, .loot-stat.is-better > :last-child { color: #397038; }
+.loot-stat.is-worse, .loot-stat .is-worse, .loot-stat.is-worse > :last-child { color: #9c4b35; }
+.loot-stat.is-unknown, .loot-stat .is-unknown, .loot-stat.is-unknown > :last-child { color: #87734d; }
+.loot-warning { margin: 16px 0 0; padding: 11px 13px; border-left: 3px solid #b98a46; background: #ead8ac; color: #87623b; font-size: 12px; line-height: 1.8; }
+.loot-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 21px; }
+.loot-actions button { flex: 1 1 150px; min-height: 46px; }
+
+/* 营地沿用原建筑与角色，只收紧边框、导航和方向控制。 */
+.camp-shell { grid-template-rows: 68px minmax(320px, 1fr) 82px; gap: 10px; padding: 0 18px; }
+.camp-stage { min-height: 320px; border: 3px solid #877448; border-radius: 2px; box-shadow: 0 0 0 1px #283d24, inset 0 0 0 1px #ead6a0; }
+.camp-footer { gap: 14px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+.camp-footer p { color: #b8c7a0; }
+.camp-location { top: 18px; left: 20px; text-shadow: 0 1px #f3efc5; }
+.camp-location span { color: #365738; font-weight: 700; letter-spacing: .11em; }
+.camp-location small { color: #5a744e; letter-spacing: .1em; }
+.camp-nav { gap: 5px; top: 14px; right: 14px; }
+.camp-nav button { min-height: 44px; border: 1px solid #a69563; border-radius: 1px; padding: 7px 10px; background: #f1e7c7; color: #405b3b; box-shadow: inset 0 1px #fff5d9, 0 2px #5372473b; }
+.camp-nav button:hover { background: #fff2cc; border-color: #8d9058; }
+.camp-nav button, .camp-shell .header-right button { min-width: 44px; }
+.camp-walk-hint { border: 1px solid #b0a374; border-radius: 1px; background: #f5edceeF; color: #486344; }
+.camp-interact { min-height: 44px; border-radius: 2px; }
+.camp-interact:disabled { color: #71775a; background: #e2dfbf; border-color: #a6a176; opacity: 1; }
+.camp-direction-pad button { min-height: 44px; min-width: 44px; border-radius: 2px; border-color: #a39666; background: #e6dfba; color: #44633f; box-shadow: inset 0 2px #f6efcc, inset 0 -2px #bbb58e; }
+.camp-direction-pad button:nth-child(5) { color: #f7ebbf; background: #547a4c; border-color: #8ba36a; box-shadow: inset 0 2px #819a60, inset 0 -2px #3d5b38; }
+.map-transition { background: #193629; color: #f2e1b2; }
+.map-transition p { color: #bccaa2; }
+.map-transition #transition-kicker { color: #d7b872; }
+.transition-stairs { color: #c6b17b; }
+
+@media (min-width: 1500px) {
+  .game-shell { grid-template-rows: 74px minmax(0, 1fr) 86px; }
+  .play-layout { grid-template-columns: minmax(0, 1fr) 276px; }
+  .panel { padding: 17px; }
+}
+@media (min-width: 681px) and (max-width: 1100px) {
+  .game-shell { grid-template-rows: 64px minmax(0, 1fr) 112px; padding: 0 12px; }
+  .play-layout { grid-template-columns: minmax(0, 1fr) 220px; gap: 10px; padding-top: 10px; }
+  .quick-actions { flex-wrap: wrap; gap: 6px; }
+  .quick-actions button { min-height: 44px; padding: 5px 9px; }
+  .panel { padding: 12px; }
+}
+@media (pointer: coarse), (max-width: 680px) {
+  .camp-direction-pad { grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px); gap: 4px; }
+  .camp-interaction { max-width: calc(100% - 176px); right: 12px; bottom: 18px; }
+}
+@media (max-width: 760px) {
+  dialog:has(.equipment-workspace) { width: calc(100vw - 16px); }
+  dialog:has(.equipment-workspace) .dialog-inner { padding: 18px 12px; }
+  .eq-slot { gap: 6px; }
+  .eq-slot small { font-size: 10px; }
+  .eq-badge { font-size: 9px; }
+  .eq-tabs button { min-height: 44px; }
+}
+@media (max-width: 680px) {
+  .game-shell { grid-template-rows: 56px minmax(0, 1fr) calc(180px + env(safe-area-inset-bottom)); padding: 0 7px; }
+  .game-header { gap: 6px; }
+  .brand { gap: 6px; }
+  .brand img { width: 29px; height: 36px; }
+  .brand h1 { font-size: 15px; letter-spacing: .03em; }
+  .brand p { font-size: 9px; letter-spacing: 0; }
+  .header-right { gap: 5px; }
+  .header-right .adventure-icon { display: none; }
+  .header-right button { min-height: 44px; padding: 6px 8px; font-size: 11px; }
+  .save-state { max-width: 75px; font-size: 9px; }
+  .play-layout { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; gap: 6px; padding-top: 7px; }
+  .board { border-width: 2px; }
+  .board-label { top: 8px; left: 8px; padding: 4px 6px; font-size: 9px; }
+  .board-help { bottom: 64px; max-width: calc(100% - 18px); padding: 5px 8px; font-size: 10px; }
+  .supply-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 5px 100px 5px 5px; gap: 4px; min-height: 55px; }
+  .supply-bar button { min-width: 0; min-height: 44px; padding: 4px 2px; font-size: 10px; line-height: 1.35; overflow-wrap: anywhere; }
+  .supply-bar .adventure-icon { display: none; }
+  .board-tools { bottom: 6px; right: 5px; gap: 4px; }
+  .combat-target { left: 8px; top: 39px; width: 142px; max-width: calc(100% - 142px); padding: 5px 6px; border-left-width: 3px; }
+  .target-heading { flex-wrap: nowrap; font-size: 9px; margin: 0 0 3px; gap: 4px; }
+  .target-heading button { flex: 0 0 44px; font-size: 10px; padding: 3px; }
+  .target-name { gap: 3px; font-size: 9px; }
+  .target-name strong { font-size: 12px; }
+  .target-meter { height: 6px; margin-top: 5px; }
+  .combat-target p { display: none; }
+  /* 状态条占自己的布局行，移除原先遮在地图下方的装备窗口。 */
+  .right-panel { position: static; inset: auto; width: auto; min-width: 0; display: block; pointer-events: auto; }
+  .hero-panel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 8px; gap: 4px 12px; padding: 7px 10px 8px; border: 1px solid #9b8858; }
+  .hero-panel > .meter-label { margin: 0; font-size: 10px; grid-row: 1; gap: 5px; }
+  .hero-panel > .meter-label:has(+ #hero-hp-meter) { grid-column: 1; }
+  .hero-panel > .meter-label:has(+ .xp) { grid-column: 2; }
+  .hero-panel > .meter { grid-row: 2; height: 8px; }
+  .hero-panel > #hero-hp-meter { grid-column: 1; }
+  .hero-panel > .xp { grid-column: 2; }
+  .right-panel .equipment-line { display: none; }
+  .hero-panel h2, .hero-panel .hero-line, .hero-panel .hero-stats, .hero-panel .status-line { display: none; }
+  .game-footer { grid-template-columns: minmax(0, 1fr) 140px; gap: 3px 7px; padding: 4px 0 max(5px, env(safe-area-inset-bottom)); }
+  .quick-actions { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; min-width: 0; }
+  .quick-actions button { min-width: 0; min-height: 48px; padding: 3px 2px; font-size: 10px; line-height: 1.2; gap: 2px; flex-direction: column; }
+  .quick-actions .adventure-icon { width: 24px; height: 24px; flex-basis: 24px; }
+  .quick-actions .adventure-icon .ui-sprite { transform: scale(.75); transform-origin: center; }
+  .quick-actions kbd { display: none; }
+  .mobile-controls { margin-left: 0; grid-template-columns: repeat(3, 44px); grid-template-rows: repeat(3, 44px); gap: 4px; }
+  .mobile-hint { color: #a7bb93; font-size: 9px; }
+  .toast { bottom: 190px; font-size: 12px; padding: 9px 13px; }
+  .dialog-inner { padding: 19px 14px; }
+  .dialog-header { padding-bottom: 12px; margin-bottom: 15px; }
+  .dialog-header h2 { font-size: 22px; }
+  .dialog-actions button { min-height: 44px; }
+  .loot-banner { grid-template-columns: 66px minmax(0, 1fr); gap: 13px; padding-bottom: 15px; }
+  .loot-art { width: 66px; height: 66px; }
+  .loot-art .item-icon, .loot-art .adventure-icon { transform: scale(1.4); }
+  .loot-title { font-size: 22px; }
+  .loot-kicker { font-size: 10px; }
+  .loot-description { font-size: 12px; }
+  .loot-compare { gap: 7px; }
+  .loot-equipment-card { padding: 10px 8px; }
+  .loot-equipment-card h3 { font-size: 13px; }
+  .loot-stat { font-size: 10px; gap: 4px; }
+  .camp-shell { padding: 0 7px; gap: 8px; grid-template-rows: 58px minmax(320px, 1fr) 106px; }
+  .camp-shell .brand h1 { font-size: 15px; }
+  .camp-shell .header-right button { min-height: 44px; padding: 5px 7px; font-size: 10px; }
+  .camp-stage { min-height: 320px; border-width: 2px; }
+  .camp-location { left: 13px; top: 12px; }
+  .camp-location span { font-size: 22px; }
+  .camp-location small { font-size: 9px; }
+  .camp-nav { top: 64px; left: 10px; right: 10px; max-width: none; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; gap: 5px; padding: 0 1px 4px; scrollbar-width: thin; scrollbar-color: #8e9c64 transparent; }
+  .camp-nav button { flex-shrink: 0; min-height: 44px; font-size: 10px; padding: 7px 9px; }
+  .camp-footer { gap: 6px; }
+  .camp-footer p { font-size: 10px; }
+  .camp-footer button { min-height: 44px; padding: 8px 13px; font-size: 12px; }
+  .camp-direction-pad { left: 10px; bottom: 13px; }
+  .camp-walk-hint { font-size: 10px; padding: 6px 7px; }
+  .camp-interact { min-height: 44px; font-size: 11px; padding: 8px; }
+}
+@media (max-width: 380px) {
+  .save-state { display: none; }
+  .loot-compare { grid-template-columns: minmax(0, 1fr); }
+  .loot-stat { font-size: 12px; }
+  .loot-equipment-card { padding: 12px; }
+  .loot-equipment-card h3 { font-size: 14px; margin-bottom: 8px; }
+  .loot-actions button { flex-basis: 100%; }
+  .eq-detail { padding: 13px; }
+  .eq-run-summary > div { gap: 9px; }
+}
+@media (max-height: 620px) and (min-width: 681px) {
+  .game-shell { grid-template-rows: 58px minmax(0, 1fr) 108px; }
+  .play-layout { grid-template-columns: minmax(0, 1fr) 204px; padding-top: 7px; }
+  .right-panel .objectives, .right-panel .journal, .hero-panel h2, .hero-panel .hero-line, .hero-panel .equipment-line { display: none; }
+  .hero-panel { padding: 10px; }
+  .hero-panel .meter-label { margin-top: 7px; }
+  .quick-actions button { min-height: 44px; }
+}
+.game-shell button:disabled, .camp-shell button:disabled, dialog button:disabled {
+  color: #817b62;
+  background: #d4ceb7;
+  border-color: #a19a7a;
+  box-shadow: inset 0 1px #e6e0ca;
+  cursor: default;
+  transform: none;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  button, .meter span, .target-meter span, .eq-familiarity-meter > span { transition: none; }
+  button:active { transform: none; }
+  .loot-art, .loot-banner, .camp-interact { animation: none; }
+}

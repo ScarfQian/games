@@ -1,0 +1,1002 @@
+{
+  "schemaVersion": 1,
+  "libraryVersion": "0.3.2",
+  "date": "2026-10-30",
+  "creator": "ScarfQian",
+  "policy": "sourceAssetId 保留原身份；网页组合不改母版路径。逻辑内容 ID 与图形 ID 分离。",
+  "entries": [
+    {
+      "sourceAssetId": "CHR-001",
+      "variant": "web-canvas-sailor",
+      "revision": 2,
+      "variantRevision": 5,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#rig-pelican",
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "texture": "pelican.svg",
+      "frameSize": [
+        240,
+        252
+      ],
+      "viewBox": [
+        -54,
+        -110,
+        120,
+        126
+      ],
+      "anchor": [
+        0.45,
+        0.873015873
+      ],
+      "animationMap": {
+        "idle": [
+          0
+        ],
+        "move": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "attack": [
+          0
+        ]
+      },
+      "animationSource": "../src/render/pelican.ts",
+      "combatSource": "../src/render/scene.ts",
+      "weaponAttachment": {
+        "contentId": "spd:weapon/worn-shortsword",
+        "sourceAssetId": "SPD-ITEMS",
+        "frame": [
+          0,
+          96,
+          13,
+          13
+        ],
+        "gripPixel": [
+          2,
+          11
+        ],
+        "rigPart": "hand",
+        "notes": "沿既有CHR-001手部挂点绘制原版短剑图帧；摆臂/挥击仅显示，不改变碰撞或射程。"
+      },
+      "attachments": [
+        {
+          "sourceAssetId": "EQP-001",
+          "revision": 2,
+          "symbol": "wear-sailor"
+        },
+        {
+          "sourceAssetId": "EQP-003",
+          "revision": 2,
+          "symbol": "wear-red"
+        }
+      ],
+      "status": "integrated-walk-and-weapon-animation",
+      "notes": "静态pelican.svg保留variant1组合；既有骨架派生16帧步态，move索引运行时帧。variant4沿用手部短剑，并补方向刀光、受击亮度/回弹和护盾轮廓；投石使用既有石头帧。身体、嘴型、帽巾母版路径不改，帽巾仍仅外观；160ms跨一格，连续移动保持步态相位，动画不进入存档。 variant5按现有武器内容区分刃光、刺击、鞭迹和钝击，轨迹触达实际目标；不修改母版或逻辑射程。"
+    },
+    {
+      "sourceAssetId": "SPD-MON-RAT",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/rat.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/rat.png",
+      "frameSize": [
+        16,
+        15
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "animationMap": {
+        "idle": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "move": [
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "attack": [
+          2,
+          3,
+          4,
+          5,
+          0
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames",
+      "idleFPS": 2
+    },
+    {
+      "sourceAssetId": "SPD-MON-SNAKE",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/snake.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/snake.png",
+      "frameSize": [
+        12,
+        11
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "animationMap": {
+        "idle": [
+          0,
+          0,
+          1,
+          1,
+          2,
+          3,
+          2,
+          1
+        ],
+        "move": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "attack": [
+          8,
+          9,
+          10,
+          9,
+          0
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames",
+      "idleFPS": 4.5
+    },
+    {
+      "sourceAssetId": "SPD-ITEMS",
+      "variant": "upstream-atlas",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/items.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/items.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "animationMap": {},
+      "attachments": [],
+      "status": "integrated-selected-frames",
+      "frames": {
+        "spd:weapon/worn-shortsword": [
+          0,
+          96,
+          13,
+          13
+        ],
+        "spd:armor/cloth": [
+          0,
+          176,
+          15,
+          12
+        ],
+        "spd:missile/throwing-stone": [
+          48,
+          144,
+          12,
+          10
+        ],
+        "spd:food/ration": [
+          80,
+          432,
+          16,
+          12
+        ],
+        "spd:potion/healing": [
+          0,
+          352,
+          12,
+          14
+        ],
+        "spd:scroll/upgrade": [
+          0,
+          304,
+          15,
+          14
+        ],
+        "spd:currency/gold": [
+          32,
+          16,
+          15,
+          13
+        ],
+        "spd:weapon/shortsword": [
+          128,
+          96,
+          13,
+          13
+        ],
+        "spd:armor/leather": [
+          16,
+          176,
+          14,
+          13
+        ],
+        "spd:weapon/dagger": [
+          64,
+          96,
+          12,
+          13
+        ],
+        "spd:weapon/gloves": [
+          32,
+          96,
+          12,
+          16
+        ],
+        "spd:weapon/hand-axe": [
+          144,
+          96,
+          12,
+          14
+        ],
+        "spd:weapon/spear": [
+          160,
+          96,
+          16,
+          16
+        ],
+        "spd:weapon/quarterstaff": [
+          176,
+          96,
+          16,
+          16
+        ],
+        "spd:weapon/dirk": [
+          192,
+          96,
+          13,
+          14
+        ],
+        "spd:weapon/sickle": [
+          208,
+          96,
+          15,
+          15
+        ],
+        "spd:weapon/sword": [
+          0,
+          112,
+          14,
+          14
+        ],
+        "spd:weapon/mace": [
+          16,
+          112,
+          15,
+          15
+        ],
+        "spd:weapon/scimitar": [
+          32,
+          112,
+          13,
+          16
+        ],
+        "spd:weapon/round-shield": [
+          48,
+          112,
+          16,
+          16
+        ],
+        "spd:weapon/sai": [
+          64,
+          112,
+          16,
+          16
+        ],
+        "spd:weapon/whip": [
+          80,
+          112,
+          14,
+          14
+        ],
+        "spd:armor/mail": [
+          32,
+          176,
+          14,
+          12
+        ],
+        "spd:armor/scale": [
+          48,
+          176,
+          14,
+          11
+        ],
+        "spd:armor/plate": [
+          64,
+          176,
+          12,
+          12
+        ],
+        "spd:scroll/identify": [
+          16,
+          304,
+          15,
+          14
+        ],
+        "spd:scroll/remove-curse": [
+          32,
+          304,
+          15,
+          14
+        ],
+        "spd:stone/augmentation": [
+          16,
+          336,
+          14,
+          12
+        ],
+        "spd:utility/broken-seal": [
+          32,
+          48,
+          13,
+          13
+        ],
+        "spd:potion/strength": [
+          16,
+          352,
+          12,
+          14
+        ]
+      },
+      "notes": "已接入30类物品，包括15种近战、5阶护甲和纹章/增幅/鉴定/祛咒。复用同一原版图集；鉴定后药卷固定图帧映射是网页适配，未迁移原版每局随机外观。未知药卷在地图使用统一分类图帧与问号，在拾取/行囊/确认界面使用通用问号。图集其他帧不代表对应物品已移植。",
+      "containerFrames": {
+        "chest": [
+          64,
+          32,
+          16,
+          14
+        ],
+        "supply-cache": [
+          64,
+          32,
+          16,
+          14
+        ]
+      },
+      "containerNotes": "普通箱与补给共用官方frame36；补给叠加类别标记，打开后只显示地面物品。不显示封存物品图案。"
+    },
+    {
+      "sourceAssetId": "ENV-WEB-SEWER",
+      "variant": "canvas-coastal-sewer",
+      "revision": 1,
+      "source": "../src/render/terrain.ts",
+      "license": "ScarfQian 网页原创图形，GPL-3.0-or-later",
+      "texture": null,
+      "frameSize": null,
+      "anchor": [
+        0,
+        0
+      ],
+      "animationMap": {
+        "water": "continuous-tide",
+        "highGrass": "subtle-sway"
+      },
+      "attachments": [],
+      "status": "integrated-procedural-terrain",
+      "palette": {
+        "floor": "#a5ab8e",
+        "wallTop": "#536e5f",
+        "wallFace": "#364e47",
+        "water": "#578e85",
+        "bridge": "#b6b799"
+      },
+      "notes": "固定网页环境资产；程序绘制邻接墙面、错缝石地、水岸、桥沿、门与楼梯。只读取已探索邻格，装饰由坐标确定，不改变生成/视野或抽取玩法随机数；非SPD地形贴图移植。"
+    },
+    {
+      "sourceAssetId": "SPD-MON-GNOLL",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/gnoll.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/gnoll.png",
+      "frameSize": [
+        12,
+        15
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "idleFPS": 2,
+      "animationMap": {
+        "idle": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ],
+        "move": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "attack": [
+          2,
+          3,
+          0
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames"
+    },
+    {
+      "sourceAssetId": "SPD-MON-CRAB",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/crab.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/crab.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "idleFPS": 5,
+      "animationMap": {
+        "idle": [
+          0,
+          1,
+          0,
+          2
+        ],
+        "move": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "attack": [
+          7,
+          8,
+          9
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames"
+    },
+    {
+      "sourceAssetId": "SPD-MON-SWARM",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/swarm.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/swarm.png",
+      "frameSize": [
+        16,
+        16
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "idleFPS": 15,
+      "animationMap": {
+        "idle": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "move": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "attack": [
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames"
+    },
+    {
+      "sourceAssetId": "SPD-MON-SLIME",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/slime.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/slime.png",
+      "frameSize": [
+        14,
+        12
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "idleFPS": 3,
+      "animationMap": {
+        "idle": [
+          0,
+          1,
+          1,
+          0
+        ],
+        "move": [
+          0,
+          2,
+          3,
+          3,
+          2,
+          0
+        ],
+        "attack": [
+          2,
+          3,
+          4,
+          6,
+          5
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames"
+    },
+    {
+      "sourceAssetId": "SPD-MON-GOO",
+      "variant": "upstream",
+      "revision": 1,
+      "source": "core/src/main/assets/sprites/goo.png",
+      "upstreamCommit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+      "license": "上游仓库 LICENSE.txt / GPL-3.0；保留 Pixel Dungeon 与 Shattered Pixel Dungeon 作者署名",
+      "texture": "upstream/goo.png",
+      "frameSize": [
+        20,
+        14
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "idleFPS": 10,
+      "animationMap": {
+        "idle": [
+          2,
+          1,
+          0,
+          0,
+          1
+        ],
+        "move": [
+          3,
+          2,
+          1,
+          2
+        ],
+        "attack": [
+          8,
+          9,
+          10
+        ],
+        "charge": [
+          4,
+          3,
+          2,
+          1,
+          0
+        ],
+        "chargeAttack": [
+          4,
+          3,
+          2,
+          1,
+          0,
+          7
+        ]
+      },
+      "attachments": [],
+      "status": "integrated-idle-move-and-attack-frames"
+    },
+    {
+      "sourceAssetId": "CHR-002",
+      "name": "熊猫铁匠",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-panda",
+      "texture": "camp.svg",
+      "symbol": "camp-panda",
+      "viewBox": [
+        0,
+        0,
+        90,
+        100
+      ],
+      "dependencies": [],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "CHR-003",
+      "name": "仙鹤先生",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-crane",
+      "texture": "camp.svg",
+      "symbol": "camp-crane",
+      "viewBox": [
+        0,
+        0,
+        90,
+        115
+      ],
+      "dependencies": [],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "CHR-004",
+      "name": "秦始皇",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-emperor",
+      "texture": "camp.svg",
+      "symbol": "camp-emperor",
+      "viewBox": [
+        0,
+        0,
+        90,
+        115
+      ],
+      "dependencies": [],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-001",
+      "name": "公告栏",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-board-art",
+      "texture": "camp.svg",
+      "symbol": "camp-board-art",
+      "viewBox": [
+        0,
+        0,
+        200,
+        195
+      ],
+      "dependencies": [],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-002",
+      "name": "行政厅",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-hall-art",
+      "texture": "camp.svg",
+      "symbol": "camp-hall-art",
+      "viewBox": [
+        0,
+        0,
+        280,
+        230
+      ],
+      "dependencies": [
+        "CHR-004"
+      ],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-003",
+      "name": "铁匠铺",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-smith-art",
+      "texture": "camp.svg",
+      "symbol": "camp-smith-art",
+      "viewBox": [
+        0,
+        0,
+        260,
+        230
+      ],
+      "dependencies": [
+        "CHR-002"
+      ],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-004",
+      "name": "武器架",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-weapon-rack",
+      "texture": "camp.svg",
+      "symbol": "camp-weapon-rack",
+      "viewBox": [
+        -56,
+        -58,
+        112,
+        110
+      ],
+      "dependencies": [
+        "WPN-001",
+        "WPN-002",
+        "WPN-003",
+        "WPN-004",
+        "WPN-005",
+        "WPN-006"
+      ],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-005",
+      "name": "停车点",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-parking",
+      "texture": "camp.svg",
+      "symbol": "camp-parking",
+      "viewBox": [
+        -99,
+        -72,
+        198,
+        94
+      ],
+      "dependencies": [
+        "MNT-001",
+        "MNT-002",
+        "MNT-003",
+        "MNT-004"
+      ],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-006",
+      "name": "学堂",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-school-art",
+      "texture": "camp.svg",
+      "symbol": "camp-school-art",
+      "viewBox": [
+        0,
+        0,
+        260,
+        230
+      ],
+      "dependencies": [
+        "CHR-003"
+      ],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "BLD-007",
+      "name": "冒险入口",
+      "variant": "web-camp",
+      "revision": 2,
+      "source": "https://github.com/ScarfQian/pelican-knight-waves/blob/16d83f48851de82f567050f50144652a880bdd92/assets/sprites.svg#camp-gate-art",
+      "texture": "camp.svg",
+      "symbol": "camp-gate-art",
+      "viewBox": [
+        0,
+        0,
+        230,
+        195
+      ],
+      "dependencies": [
+        "PROP-004"
+      ],
+      "license": "ScarfQian 项目自有图形，沿本项目 GPL-3.0-or-later 分发",
+      "status": "integrated-camp-art",
+      "notes": "直接复用完整固定SVG库中的定义与依赖；建筑展示的装备/车辆不代表玩法已开放。"
+    },
+    {
+      "sourceAssetId": "ENV-WEB-CAMP",
+      "variant": "canvas-coastal-camp",
+      "revision": 2,
+      "source": "../src/render/camp.ts",
+      "texture": "camp.svg",
+      "symbol": "camp-tree",
+      "license": "ScarfQian 网页原创布局与既有营地树，GPL-3.0-or-later",
+      "status": "integrated-camp-scene",
+      "notes": "保留固定城镇布局、建筑/树和碰撞；增加草地、道路与海岸层次及北侧像素林缘。林缘来源单独登记为USR-FOREST-001，不改原SVG母版，不消费远征随机数。"
+    },
+    {
+      "sourceAssetId": "SPD-ENV-WELL",
+      "variant": "upstream-sewer-tiles",
+      "revision": 1,
+      "source": "https://github.com/00-Evan/shattered-pixel-dungeon/blob/57a4e06a4caf162446d1c28caa7983f0493fecf0/core/src/main/assets/environment/tiles_sewers.png",
+      "texture": "upstream/tiles-sewers.png",
+      "license": "GPL-3.0-or-later; Pixel Dungeon Oleg Dolya / Shattered Pixel Dungeon Evan Debenham",
+      "frames": {
+        "well": [
+          32,
+          16,
+          16,
+          16
+        ],
+        "empty-well": [
+          48,
+          16,
+          16,
+          16
+        ]
+      },
+      "renderSource": "../src/render/scene.ts",
+      "status": "integrated-static-only",
+      "notes": "沿用原16px井砖；生命/觉察井共用图形并分别叠加青色/金色提示，使用后显示枯井。未修改原图集像素。"
+    },
+    {
+      "sourceAssetId": "USR-UI-001",
+      "name": "用户提供的魔幻像素图标",
+      "variant": "original-atlas-clips",
+      "revision": 1,
+      "source": "ScarfQian 提供的像素素材图集，2026-10-30；原图见 user/fantasy-icons.png",
+      "license": "原作者与授权条款未提供；保留来源待补充，不将其归为 SPD 或项目原创的 GPL 素材。",
+      "texture": "user/fantasy-icons.png",
+      "imageSize": [
+        512,
+        1152
+      ],
+      "frameSize": [
+        32,
+        32
+      ],
+      "frames": {
+        "attack": [
+          32,
+          192,
+          32,
+          32
+        ],
+        "armor": [
+          224,
+          256,
+          32,
+          32
+        ],
+        "heart": [
+          128,
+          160,
+          32,
+          32
+        ],
+        "gold": [
+          0,
+          288,
+          32,
+          32
+        ],
+        "bag": [
+          0,
+          416,
+          32,
+          32
+        ],
+        "chest": [
+          64,
+          416,
+          32,
+          32
+        ],
+        "book": [
+          384,
+          352,
+          32,
+          32
+        ],
+        "potion": [
+          0,
+          352,
+          32,
+          32
+        ],
+        "rest": [
+          224,
+          0,
+          32,
+          32
+        ],
+        "inspect": [
+          416,
+          160,
+          32,
+          32
+        ]
+      },
+      "renderSource": "../src/ui/art.ts",
+      "status": "integrated-static-only",
+      "notes": "保留原PNG，只用CSS背景坐标裁取动作/HUD图标，正片叠底显示白底。物品本体继续使用已登记SPD图集，未知药卷不泄露用途。"
+    },
+    {
+      "sourceAssetId": "USR-FOREST-001",
+      "name": "用户提供的森林植物图集",
+      "variant": "north-camp-canopy",
+      "revision": 1,
+      "source": "ScarfQian 提供的像素素材图集，2026-10-30；原图见 user/forest-atlas.png",
+      "license": "原作者与授权条款未提供；保留来源待补充，不将其归为 SPD 或项目原创的 GPL 素材。",
+      "texture": "user/forest-atlas.png",
+      "imageSize": [
+        512,
+        512
+      ],
+      "frames": {
+        "canopy": [
+          254,
+          32,
+          124,
+          158
+        ]
+      },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "renderSource": "../src/render/camp.ts",
+      "status": "integrated-static-only",
+      "notes": "原PNG像素不改；Canvas裁图显示营地北侧8株背景树，关闭图像平滑、正片叠底处理白底，按脚点排序。不替换camp-tree，不新增碰撞、不占建筑入口。"
+    }
+  ]
+}

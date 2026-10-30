@@ -1,0 +1,48 @@
+{
+  "project": "鹈鹕骑士 · 波次远征",
+  "project_id": "pelican-knight-waves",
+  "version": "0.4.0",
+  "stage": "development-prototype",
+  "entry": "index.html",
+  "implementation": "top-down-30-waves-elite-cards-essence-forge-run-reset-map-clear-checkpoint",
+  "rules": {
+    "waves": 30,
+    "elite_every": 5,
+    "forge_every": 10,
+    "boss_wave": 30,
+    "elite_at_boss_wave": true,
+    "growth_scope": "current-expedition",
+    "end_resets": [
+      "essence",
+      "cards",
+      "equipment-levels"
+    ],
+    "map_clear_preserves": [
+      "loadout",
+      "equipment-levels",
+      "cards",
+      "essence",
+      "hp",
+      "mounted"
+    ],
+    "available_maps": [
+      "coast"
+    ],
+    "next_map": "not-implemented"
+  },
+  "save_schema": {
+    "key": "pelican-waves-save-v1",
+    "schema_version": 1,
+    "project": "pelican-knight-waves",
+    "legacy_policy": "do-not-read-or-migrate-original-project-saves",
+    "checkpoint": "map-clear-only-no-mid-combat-resume"
+  },
+  "repository": "https://github.com/ScarfQian/games",
+  "sourceDirectory": "pelican-knight-waves",
+  "url": "https://scarfqian.github.io/games/pelican-knight-waves/",
+  "origin": {
+    "repository": "https://github.com/ScarfQian/pelican-knight-waves",
+    "commit": "16d83f48851de82f567050f50144652a880bdd92",
+    "version": "0.4.0"
+  }
+}

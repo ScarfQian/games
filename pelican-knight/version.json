@@ -1,0 +1,22 @@
+{
+  "project": "鹈鹕骑士 · 海风镇与海岸",
+  "project_id": "pelican-knight",
+  "version": "0.3.2",
+  "stage": "development-prototype",
+  "entry": "index.html",
+  "implementation": "side-view-camp-weapons-mounts-apparel-resources-save-and-settlement",
+  "save_schema": {
+    "key": "pelican-knight-save-v1",
+    "schema_version": 1,
+    "legacy_key": "pelican-coast-best-v1",
+    "legacy_policy": "copy-records-on-first-load-preserve-old-key"
+  },
+  "repository": "https://github.com/ScarfQian/games",
+  "sourceDirectory": "pelican-knight",
+  "url": "https://scarfqian.github.io/games/pelican-knight/",
+  "origin": {
+    "repository": "https://github.com/ScarfQian/pelican-knight",
+    "commit": "4ce07ded5835f9abb83c41018b4ea4f439b46a8b",
+    "version": "0.3.2"
+  }
+}

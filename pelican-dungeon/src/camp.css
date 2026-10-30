@@ -1,0 +1,38 @@
+/* ScarfQian · 2026-10-30 · 海风镇网页场景 · GPL-3.0-or-later */
+.camp-shell{height:100dvh;min-height:540px;max-width:1720px;margin:auto;padding:0 22px;display:grid;grid-template-rows:76px minmax(360px,1fr) 84px;gap:12px}
+.camp-shell .game-header{min-width:0}.camp-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:10px}
+.camp-footer p{margin:0;color:#b9c8a9;font-size:12px;line-height:1.8;max-width:600px}.camp-footer .row{flex-shrink:0}
+.growth-current{padding:12px 15px;background:#52785933;border-left:3px solid #d8b977;line-height:1.8}
+.table-scroll{overflow:auto;margin:18px 0}.growth-table{border-collapse:collapse;width:100%;min-width:320px;font-size:13px;text-align:left}
+.growth-table th{font-weight:500;color:#d6c79e;background:#122f29}.growth-table th,.growth-table td{padding:10px 13px;border-bottom:1px solid #91ab6b33;white-space:nowrap}
+.growth-table td{color:#b5c8a6}.growth-table .current-level td{color:#f5d99a;background:#c2b36314}
+.status-warning{font-size:11px;margin:10px 0 0;color:#ebcb8b;line-height:1.6}
+@media(max-width:680px){.camp-shell{padding:0 8px;gap:8px;grid-template-rows:58px minmax(350px,1fr) 112px;min-height:540px}.camp-shell .header-right{gap:5px}.camp-shell .version-tag{display:none}.camp-shell .brand{gap:5px}.camp-shell .brand h1{font-size:17px}.camp-shell .brand p{font-size:9px}.camp-shell .header-right button{font-size:10px;padding:6px}.camp-footer{flex-direction:column;justify-content:center;gap:8px}.camp-footer p{font-size:10px;text-align:center}.camp-footer button{font-size:12px;padding:9px 16px}.status-warning{font-size:9px;margin-top:6px}.growth-table th,.growth-table td{padding:8px}}
+.camp-stage{position:relative;min-height:360px;height:100%;overflow:hidden;border:1px solid #a0b08b88;border-radius:14px;background:#cbd2ac;isolation:isolate}
+.camp-canvas{display:block;width:100%;height:100%;outline:none;touch-action:none}
+.camp-location{position:absolute;left:22px;top:20px;pointer-events:none;color:#3d604d;text-shadow:0 1px #f1efd0;display:grid;gap:5px}
+.camp-location span{font:600 25px "Songti SC","STSong",Georgia,serif;letter-spacing:.2em}
+.camp-location small{font-size:10px;letter-spacing:.17em;color:#627b5c}
+.camp-nav{position:absolute;right:18px;top:17px;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:70%}
+.camp-nav button{background:#f7efd8e8;border:1px solid #9fae7c99;color:#49664e;font-size:11px;line-height:1.2;padding:8px 10px;border-radius:6px;box-shadow:0 2px 4px #52745212}
+.camp-nav button:hover{background:#fff4d3;border-color:#768d65}
+.camp-interaction{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;max-width:calc(100% - 28px);width:max-content}
+.camp-walk-hint{margin:0;color:#385f4e;font-size:11px;background:#f4ecd6d9;padding:7px 13px;border-radius:22px;line-height:1.5;max-width:100%;text-align:center}
+.camp-interact{font-size:13px;padding:10px 19px;min-height:42px;box-shadow:0 3px 12px #45694b30}
+.camp-interact:disabled{background:#f1e7cebf;color:#6f8060;opacity:.9;cursor:default;border-color:#a4b08680;box-shadow:none}
+.camp-interact kbd{font-size:10px;margin-left:6px;opacity:.7}
+.camp-direction-pad{display:none}
+@media(pointer:coarse),(max-width:680px){
+  .camp-direction-pad{position:absolute;left:12px;bottom:15px;display:grid;grid-template-columns:repeat(3,34px);grid-template-rows:repeat(3,34px);gap:3px}
+  .camp-direction-pad button{padding:0;border-radius:6px;background:#e8e4c7e8;border-color:#94a37c99;color:#4c7156;font-size:16px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+  .camp-direction-pad button:nth-child(5){background:#5b8268;color:#fff0c8}
+  .camp-interaction{left:auto;right:12px;bottom:18px;transform:none;max-width:calc(100% - 146px);gap:7px}
+  .camp-walk-hint{font-size:10px;padding:6px 8px}.camp-interact{font-size:11px;padding:9px 10px;line-height:1.4;white-space:normal}
+}
+@media(max-width:680px){
+  .camp-stage{min-height:350px;border-radius:9px}
+  .camp-location{left:14px;top:15px}.camp-location span{font-size:22px}.camp-location small{font-size:9px}
+  .camp-nav{left:12px;right:12px;top:72px;max-width:none;justify-content:flex-start;gap:4px}
+  .camp-nav button{font-size:10px;padding:7px 8px;background:#f7efd8f2}
+}
+@media(prefers-reduced-motion:reduce){.camp-stage button{transition:none}}

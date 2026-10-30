@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "project": "pelican-knight-dungeon-web",
+  "displayName": "鹈鹕骑士 · 地牢远征",
+  "date": "2026-10-30",
+  "creator": "ScarfQian",
+  "platform": "web",
+  "status": "first-chapter-loot-encounters-and-ui-candidate",
+  "currentVersion": "0.2.0-dev.4",
+  "nextVersion": "0.2.0",
+  "runtimeEntry": "index.html",
+  "buildEntry": "dist/index.html",
+  "requiresHttp": true,
+  "saveNamespace": "pelican-dungeon-web",
+  "saveSchemaVersion": 4,
+  "upstream": {
+    "repository": "https://github.com/00-Evan/shattered-pixel-dungeon",
+    "tag": "v4.0.2",
+    "commit": "57a4e06a4caf162446d1c28caa7983f0493fecf0",
+    "use": "source-and-behavior-port"
+  },
+  "repository": "https://github.com/ScarfQian/games",
+  "sourceDirectory": "pelican-dungeon",
+  "url": "https://scarfqian.github.io/games/pelican-dungeon/"
+}

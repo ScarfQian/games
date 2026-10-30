@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#eaf0e5">
+<title>鹈鹕骑士 · 海风镇与海岸</title>
+<style>
+:root{color-scheme:light;--ink:#264b48;--muted:#708678;--paper:#fff9e9;--green:#4f8972;--coral:#cc7d60}
+*{box-sizing:border-box}body{margin:0;background:#eaf0e5;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;overflow:hidden;overscroll-behavior:none}button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}button:focus-visible{outline:3px solid #cf885d;outline-offset:3px}button:disabled{opacity:.48;cursor:default}[hidden]{display:none!important}svg{display:block}h1,h2,h3,p{margin-top:0}
+.app{height:100svh;max-width:1600px;margin:auto;padding:16px 22px 10px;display:flex;flex-direction:column;gap:12px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-shrink:0}.brand{display:flex;align-items:center;gap:11px}.brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--ink);color:var(--paper);font:italic 24px Georgia}.brand b{font-size:14px;letter-spacing:2px}.brand small{display:block;font-size:9px;letter-spacing:1.4px;color:var(--muted);margin-top:4px}.header-right{display:flex;gap:7px;align-items:center}.icon-button{border:1px solid #c4d2c1;border-radius:9px;padding:8px 11px;background:#f8f7e9;font-size:11px}.wallet{font-size:12px;font-weight:600;margin-right:8px;font-variant-numeric:tabular-nums}
+.stage{position:relative;flex:1;min-height:0;border-radius:20px;overflow:hidden;background:#d9e8d8;box-shadow:0 1px 0 #ffffff88,0 16px 42px -24px #426a4e70;isolation:isolate;touch-action:none;outline:none}#world{position:absolute;width:100%;height:100%;inset:0}.hud{position:absolute;inset:17px 20px auto;display:flex;justify-content:space-between;gap:15px;pointer-events:none;z-index:2}.vitals{width:min(245px,48%);font-size:11px}.health-label{display:flex;justify-content:space-between;margin-bottom:5px}.track{height:8px;border-radius:8px;background:#57786128;overflow:hidden}.fill{height:100%;background:#d38267;transition:width .1s}.xp{height:4px;margin-top:6px}.xp .fill{background:#4d947b}.run-detail{font-size:10px;margin-top:6px}.clock{text-align:right;background:#fff9e9ad;border-radius:12px;padding:8px 12px}.clock strong{font:31px Georgia;font-variant-numeric:tabular-nums}.clock small{display:block;font-size:10px;margin-top:4px}.camp-title{font-family:"Songti SC",Georgia,serif;font-size:30px;letter-spacing:3px}.camp-title small{display:block;font:10px -apple-system,sans-serif;letter-spacing:1px;margin-top:6px;color:#6e887b}.boss-hud{position:absolute;top:112px;left:50%;transform:translateX(-50%);width:min(420px,64%);font-size:11px;z-index:2}.boss-hud .fill{background:#a67b99}.boss-hud .track{margin-top:5px}
+.toast{position:absolute;left:50%;top:26%;transform:translateX(-50%);background:#294f46ed;color:#fff7df;padding:10px 17px;border-radius:20px;z-index:9;font-size:12px;max-width:88%;text-align:center;pointer-events:none;opacity:0;transition:opacity .2s}.toast.visible{opacity:1}.hit-flash{position:absolute;inset:0;box-shadow:inset 0 0 90px #d7634e;opacity:0;pointer-events:none;z-index:1}
+.loadout{position:absolute;left:20px;bottom:82px;font-size:11px;line-height:1.9;pointer-events:none;background:#fff9e9c9;border:1px solid #fff9e9;border-radius:10px;padding:7px 11px;max-width:55%}.loadout b{font-size:12px}.interact{position:absolute;left:50%;bottom:153px;transform:translateX(-50%);border:1px solid #ffffff;background:#294f46ef;color:#fff8df;border-radius:20px;padding:10px 17px;font-size:12px;max-width:90%;z-index:3}.camp-nav{position:absolute;left:20px;bottom:18px;display:flex;flex-wrap:wrap;gap:5px;max-width:60%}.camp-nav button{border:1px solid #c1cdb4;background:#fff8e6ed;border-radius:7px;padding:7px 10px;font-size:10px}.camp-nav button:hover{background:white}
+.actions{position:absolute;right:18px;bottom:18px;display:grid;grid-template-columns:repeat(3,58px);gap:7px;z-index:3}.action{border:1px solid #fff8df;background:#f9f4dfe8;min-height:49px;border-radius:12px;font-size:11px;box-shadow:0 3px 0 #61817120;padding:5px 2px;touch-action:none;user-select:none;-webkit-user-select:none}.action small{display:block;font-size:8px;color:#7a8b72;margin-top:4px}.action.main{background:#315f50;color:#fff8df}.action.main small{color:#bfceb6}.action.active{background:#dfb581}.joystick{display:none;position:absolute;left:25px;bottom:28px;width:106px;height:106px;border-radius:50%;background:#fff9df55;border:1px solid #fffae9;z-index:4;touch-action:none}.joystick-knob{width:38px;height:38px;position:absolute;left:33px;top:33px;border-radius:50%;background:#709278b0;border:1px solid #fffae9;pointer-events:none}.footer{display:flex;justify-content:space-between;gap:10px;font-size:9px;color:var(--muted);flex-shrink:0;line-height:1.5}.save-warning{position:absolute;top:94px;left:20px;z-index:3;font-size:11px;color:#924e3b;background:#fff1d7;padding:7px 10px;border-radius:7px;max-width:90%}
+dialog{color:var(--ink);background:var(--paper);border:1px solid #fffef2;border-radius:20px;box-shadow:0 24px 80px #24433340;width:min(800px,calc(100% - 26px));max-height:87svh;padding:28px;overscroll-behavior:contain}dialog::backdrop{background:#365e4a55;backdrop-filter:blur(4px)}.dialog-head{display:flex;align-items:center;gap:16px;padding-right:26px;margin-bottom:18px}.portrait{width:65px;height:78px;flex-shrink:0}.dialog-head h2{font:600 29px "Songti SC",Georgia,serif;margin:0 0 6px}.dialog-head p{font-size:11px;color:var(--muted);margin:0;line-height:1.6}.close{position:absolute;right:14px;top:14px;width:30px;height:30px;border:0;border-radius:50%;background:#e5e9d6;font-size:21px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{border:1px solid #d9dfca;border-radius:13px;padding:17px;background:#fffdf4}.card.selected{border:2px solid #638e72;padding:16px;background:#eff3e4}.card h3{font-size:16px;margin:0 0 8px}.card p{font-size:11px;color:#708371;line-height:1.9;margin-bottom:12px}.card .art{height:64px;width:86px;margin-bottom:12px}.card .tag{font-size:10px;color:#b27d52;display:block;margin-bottom:7px}.card button,.small-button{border:1px solid #bccdb5;background:#edf0de;border-radius:7px;padding:8px 11px;font-size:11px;margin-right:5px;margin-top:5px}.card button:hover{background:#e2e9ce}.primary,.secondary{border:0;border-radius:10px;padding:13px 18px;font-size:13px;display:block;width:100%;margin-top:12px}.primary{background:var(--ink);color:var(--paper)}.secondary{background:#e9eddc}.note{font-size:11px;line-height:1.9;color:#788674;margin:12px 0}.section-label{font-size:12px;letter-spacing:1px;margin:20px 0 12px}.summary{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #d9dfcb;border-bottom:1px solid #d9dfcb;padding:17px 0;text-align:center;gap:6px}.summary b{font:26px Georgia;display:block;margin-bottom:6px}.summary span{font-size:10px;color:#7a8c75}.ledger{padding:14px;background:#edf0dd;border-radius:10px;font-size:12px;line-height:2}.talents{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.talents .card{margin-bottom:9px;padding:12px}.talents h3{font-size:13px}.keymap{display:grid;grid-template-columns:90px 1fr;gap:9px;font-size:12px;line-height:1.7}.keymap dt{font-weight:700}.keymap dd{margin:0;color:#708371}.floating-damage{font-weight:700;paint-order:stroke;stroke:#fff9df;stroke-width:3px;stroke-linejoin:round}.log-item{padding:14px 0;border-bottom:1px solid #dce1ce;font-size:12px;line-height:1.9}.log-item b{display:block}
+@media(pointer:coarse){.joystick{display:block}.camp-nav{bottom:156px;max-width:95%;left:12px}.loadout{bottom:196px;max-width:70%;left:12px}.interact{bottom:245px}.actions{grid-template-columns:repeat(3,55px)}}
+@media(max-width:700px){.app{padding:9px;gap:8px}.brand b{font-size:11px}.brand small{font-size:8px;letter-spacing:.3px}.brand-mark{width:29px;height:29px;font-size:20px}.header-right{gap:4px}.icon-button{padding:7px;font-size:10px}.wallet{font-size:10px;margin-right:0}.stage{border-radius:14px}.hud{inset:13px 13px auto}.camp-title{font-size:24px}.clock{padding:7px}.clock strong{font-size:25px}.loadout{font-size:10px}.actions{right:12px;gap:5px;grid-template-columns:repeat(3,48px)}.action{font-size:10px;min-height:46px}.footer span:first-child{max-width:74%}dialog{padding:22px 17px}.dialog-head h2{font-size:25px}.cards{gap:9px}.card{padding:12px}.card.selected{padding:11px}.talents{grid-template-columns:1fr}.talent-branch{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.talent-branch h3.section-label{grid-column:1/-1}.talents .card{padding:9px}.camp-nav{max-width:calc(100% - 20px)}}
+@media(max-height:560px){.app{padding:5px 10px;gap:5px}.topbar{min-height:30px}.brand-mark{width:26px;height:26px}.brand small,.footer{display:none}.hud{top:9px}.loadout{bottom:92px}.camp-nav{bottom:8px;max-width:calc(100% - 210px)}.interact{bottom:145px}.joystick{bottom:16px;width:88px;height:88px}.joystick-knob{left:25px;top:25px}.actions{bottom:10px}.camp-nav{left:126px}.loadout{left:126px;max-width:50%}.boss-hud{top:83px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="brand"><span class="brand-mark">p</span><div><b>鹈鹕骑士</b><small id="header-place">海风镇 · 海岸启程</small></div></div><div class="header-right"><span class="wallet" id="wallet">海贝 0</span><button class="icon-button" id="save-button">行囊</button><button class="icon-button" id="help">操作</button><button class="icon-button" id="sound">音效 关</button><button class="icon-button" id="pause">暂停</button></div></header>
+<main id="stage" class="stage" tabindex="0" aria-label="鹈鹕骑士横版游戏场景">
+<svg id="world" viewBox="0 0 1120 640" role="img" aria-label="可自由移动的海风镇与海岸">
+<defs>
+<!-- ASSET-SPRITES:START -->
+<!-- 由 tools/sync_assets.py 同步；图形源：assets/sprites.svg -->
+<pattern id="water-pattern" width="145" height="95" patternUnits="userSpaceOnUse"><rect width="145" height="95" fill="#9dc8b6"/><path d="M12 21q18 5 36 0m49 41q18 5 36 0" fill="none" stroke="#c0dcc7" stroke-width="2.4" stroke-linecap="round" opacity=".8"/></pattern>
+        <pattern id="sand-pattern" width="170" height="130" patternUnits="userSpaceOnUse"><rect width="170" height="130" fill="#e8dcba"/><path d="M14 23h4m92 67h4m38-54h3m-101 78h3" stroke="#c9c89d" stroke-width="2" stroke-linecap="round"/><circle cx="69" cy="42" r="1" fill="#d4c69f"/><circle cx="137" cy="115" r="1.2" fill="#d4c69f"/></pattern>
+<g id="art-grass" stroke="#789365" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-1 0Q-6-17-14-25-3-23 3-2Z" fill="#99b180"/><path d="M0 0Q-1-22 10-30 4-14 4 0Z" fill="#b6c58e"/>
+  <path d="M3 0Q8-17 20-17 10-11 6 0Z" fill="#84a16f"/><path d="M-1 0Q-9-11-14-11-4-13 2-3Z" fill="#7f9d6c"/>
+  <path d="M1-2Q1-18 8-26M-3-6q-3-11-8-15m17 16 9-9" fill="none" stroke="#d2d7a7" stroke-width=".8"/>
+</g>
+<g id="art-shell" stroke="#af9364" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-2 3q-5 1-5-3-7-3-7-9 0-4 4-5 2-5 7-4 4-4 8 1 5 0 5 6 4 5-2 10l-4 4Z" fill="#f6e8c6"/>
+  <path d="M7-14q5 8-5 16h3l4-4q7-6 1-10Z" fill="#dec89b" stroke="none"/>
+  <path d="M-2 2-10-13M-1 2-3-16M0 2 5-15M1 2l7-10" fill="none" stroke="#c7ae7d" stroke-width="1"/>
+  <path d="M-11-9q-2-4 2-5m5-1q2-3 5-1" fill="none" stroke="#fff8df" stroke-width="1.6"/>
+  <path d="M-5 2h8" stroke="#a8a27b" stroke-width="1.3"/>
+</g>
+        <g id="art-star" stroke-linejoin="round"><path d="m0-14 4 9 11 1-8 7 3 11-10-6-10 6 3-11-8-7 11-1Z" fill="#e9ad63" stroke="#ac8249" stroke-width="1.6"/><circle r="2.5" fill="#fff0b0"/><path d="M0-9v3m8 4-3 1m1 8-2-3m-10 3 2-3m-8-6 4 1" stroke="#f6cf88" stroke-width="1.5"/></g>
+        <g id="art-fish"><path d="M-10 0q7-10 20 0-13 10-20 0l-8 6V-6Z" fill="#72a894" stroke="#426c64" stroke-width="1.3" stroke-linejoin="round"/><circle cx="5" cy="-1" r="1.3" fill="#284b4a"/><path d="m-2-4-1 5" stroke="#b0d0b2" stroke-width="1.5"/></g>
+<g id="art-pearl" stroke-linejoin="round">
+  <path d="m0-7 6 7-6 7-6-7Z" fill="#69ae99" stroke="#e9edbf" stroke-width="1.4"/>
+  <path d="m0-5 4 5-4 5-3-5Z" fill="#88c3aa"/><path d="m0-5 4 5-4 5 1-5Z" fill="#4a9986"/>
+  <path d="M-1-4-4 0" stroke="#f5f7cf" stroke-width="1.4" stroke-linecap="round"/>
+</g>
+<g id="art-heart" stroke-linejoin="round">
+  <path d="M0 7C-17-3-6-14 0-6 6-14 17-3 0 7Z" fill="#d98669" stroke="#fff0ce" stroke-width="1.5"/>
+  <path d="M7-7q5 5-7 12C10 0 12-4 7-7Z" fill="#c36f56"/>
+  <path d="M-7-4q0-3 3-2" fill="none" stroke="#f6cb9d" stroke-width="1.6" stroke-linecap="round"/>
+</g>
+        <g id="wheel-lines" stroke="#7f9082" stroke-width="1"><path d="M-10 0h20M0-10v20m-7-17 14 14m-14 0L7-7"/></g>
+        <g id="art-player" stroke-linecap="round" stroke-linejoin="round">
+          <g fill="#f2e7cb" stroke="#36554e" stroke-width="3.3"><circle cx="-22" cy="20" r="13"/><circle cx="25" cy="20" r="13"/></g>
+          <use href="#wheel-lines" x="-22" y="20"/><use href="#wheel-lines" x="25" y="20"/>
+          <path d="M-22 20-5 2 4 20-22 20M-5 2l23 0L4 20M18 2l7 18" fill="none" stroke="#df7d5e" stroke-width="3.5"/>
+          <path d="M-8-2H1m17 4-1-9h8" fill="none" stroke="#4b6b5b" stroke-width="2.4"/>
+          <path id="pedal-leg" d="M-5-3 9 7 9 20" fill="none" stroke="#d7a14f" stroke-width="4"/>
+          <path d="M-16-21q-12-2-18-8 2 9 10 14-3 15 15 17 20 2 25-14 0-15 7-24 10-3 9-12-2-11-12-9-11 2-11 15-1 16-12 19Z" fill="#fff9e6" stroke="#4c685e" stroke-width="2"/>
+          <path d="M-18-14q16-8 22 6-10 10-22-6Z" fill="#e9e8cf" stroke="#c0c9af" stroke-width="1.3"/>
+          <path d="M28-46 55-39 31-36q4 8 18 4l6-7" fill="#e9b365" stroke="#ac854b" stroke-width="1.5"/>
+          <circle cx="25" cy="-47" r="2.3" fill="#294b47"/><circle cx="25.6" cy="-47.7" r=".6" fill="#fff"/>
+          <path d="M15-52q-2-7 1-8l4 7" fill="#fff9e6" stroke="#4c685e" stroke-width="1.5"/>
+          <path d="m10-27 13 3-2 7-13-3Z" fill="#548b77"/>
+          <path id="riding-scarf" d="M10-26Q-4-34-17-26L-15-19Q-2-27 9-20Z" fill="#70a18b" stroke="#477560" stroke-width="1"/>
+          <path d="M8-15q9 10 16 8" fill="none" stroke="#4c685e" stroke-width="5"/><path d="M8-15q9 10 16 8" fill="none" stroke="#fff7e2" stroke-width="3"/>
+          <circle cx="4" cy="20" r="3" fill="#6e8469"/>
+        </g>
+<!-- 普通蟹和精英蟹共用肢体与表情，精英保留独立的甲壳层。 -->
+<g id="crab-limbs" stroke="#8e604a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m-13 1-10 2-6 8 11-5 7-1m-1 2-10 4-2 7 10-7 6-1m25-9 10 2 6 8-11-5-7-1m1 2 10 4 2 7-10-7-6-1" fill="#ce8663"/>
+  <path d="m-13-6-8-10m34 10 8-10" fill="none" stroke-width="4"/><path d="m-16-10-4-5m36 5 4-5" stroke="#e7aa7b" stroke-width="1.5"/>
+  <path d="M-23-11q-11-1-8-14l7 7 4-9q10 10-3 16Zm46 0q11-1 8-14l-7 7-4-9q-10 10 3 16Z" fill="#df8b67"/>
+  <path d="M-29-22q-1 7 5 8m53-8q1 7-5 8" fill="none" stroke="#f2bd8c" stroke-width="1.5"/>
+  <circle cx="-20" cy="-13" r="2.4" fill="#c07854"/><circle cx="20" cy="-13" r="2.4" fill="#c07854"/>
+</g>
+<g id="crab-face" stroke-linecap="round">
+  <path d="M-9-8v-9m18 9v-9" stroke="#8e604a" stroke-width="3.5"/><path d="M-9-11v-4m18 4v-4" stroke="#e8b583" stroke-width="1.1"/>
+  <g fill="#fff4d9" stroke="#8e604a" stroke-width="1.5"><circle cx="-9" cy="-18" r="3.6"/><circle cx="9" cy="-18" r="3.6"/></g>
+  <g fill="#35594d"><circle cx="-8.7" cy="-18" r="1.6"/><circle cx="9.3" cy="-18" r="1.6"/></g>
+  <g fill="#fff9e6"><circle cx="-8.1" cy="-18.6" r=".5"/><circle cx="9.9" cy="-18.6" r=".5"/></g>
+  <path d="M-5 3q5 6 10 0" fill="none" stroke="#915d49" stroke-width="1.6"/>
+</g>
+<g id="art-crab">
+  <use href="#crab-limbs"/>
+  <path d="M-17 0q0-12 17-12T17 0q-1 12-17 13T-17 0Z" fill="#dd8d6c" stroke="#91634c" stroke-width="1.8"/>
+  <path d="M-15 4Q0 15 15 4q-4 9-15 7-11 0-15-7Z" fill="#c47758"/>
+  <path d="M-12-5q8-8 19-2" fill="none" stroke="#f3b58b" stroke-width="2" stroke-linecap="round"/>
+  <use href="#crab-face"/>
+</g>
+<g id="art-crab-elite" stroke-linejoin="round">
+  <use href="#crab-limbs"/>
+  <path d="m-18-4 7-8h21l8 8-2 12-16 7-16-7Z" fill="#6d9179" stroke="#426558" stroke-width="1.8"/>
+  <path d="m-16-3 7-7 8 5 10-5 7 7-5 9-12 4-11-4Z" fill="#9fb08a" stroke="#cbbb7c" stroke-width="1.1"/>
+  <path d="m-16 8 5-2 11 4 11-4 5 2-16 7Z" fill="#557862"/>
+  <path d="M-6-9h12" stroke="#ebd092" stroke-width="2"/><g fill="#e2c586"><circle cx="-14" cy="-2" r="1.4"/><circle cx="14" cy="-2" r="1.4"/><circle cx="0" cy="11" r="1.4"/></g>
+  <use href="#crab-face"/>
+</g>
+<g id="art-gull" stroke="#4c7262" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-6 4Q-13-13-29-19l1 10 6 5-2 2 9 5-1 3 9 3Z" fill="#89a899"/>
+  <path d="m-28-16 6 9 5 1-3-8m-2 10 7 4 3-1" fill="none" stroke="#cad9bf" stroke-width="1.2"/>
+  <path d="M5 4Q15-15 29-20l-1 10-5 5 1 3-8 5 1 3-9 3Z" fill="#88aa9d"/>
+  <path d="m27-16-7 9-5 1 3-8m5 10-7 4-3-1" fill="none" stroke="#cfdfc7" stroke-width="1.2"/>
+  <path d="M-9 6q1-10 8-13 2-9 11-8 8 1 8 9-1 6-7 10-4 13-15 11l-12-2 4-5-8-2Z" fill="#fff6df"/>
+  <path d="M-8 9q12 5 19-5-2 12-16 9l-8-1Z" fill="#dfe3c7" stroke="none"/>
+  <path d="m14-7 13 4-14 4Z" fill="#e8b45e" stroke="#9c834e" stroke-width="1.2"/><path d="m15-3 9 0" stroke="#bd9052" stroke-width="1"/>
+  <circle cx="9" cy="-8" r="2" fill="#34584b" stroke="none"/><circle cx="9.5" cy="-8.6" r=".5" fill="#fff" stroke="none"/>
+  <path d="m4-13 7 1M-2 16l-3 4h-4m13-5-1 5h4" fill="none" stroke="#9b8350" stroke-width="1.6"/>
+</g>
+<g id="art-urchin" stroke="#756480" stroke-width="1.3" stroke-linejoin="round">
+  <path d="m-3-16 3-11 3 11 5-1 6-8-1 11 5 2 8-3-6 9 1 5 7 3-11 3-1 5 5 8-10-4-4 3-1 11-5-9-5 1-6 8 1-11-5-2-8 4 6-10-1-4-10-4 11-3 1-5-5-9 10 4 4-3Z" fill="#99849e"/>
+  <circle r="17" fill="#a18ca5" stroke-width="1.8"/>
+  <path d="M11-12Q20 0 10 11-1 21-13 10q4 10 16 5T11-12Z" fill="#8a7695" stroke="none"/>
+  <path d="M-11-8q3-5 8-5" fill="none" stroke="#c9b5c1" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M-8-3h4m8 0h4" stroke="#fff4de" stroke-width="2.9" stroke-linecap="round"/>
+  <path d="M-4 7q4-5 8 0" fill="none" stroke="#63586d" stroke-width="1.6" stroke-linecap="round"/>
+  <g fill="#ba9db1" stroke="none"><circle cx="-11" cy="3" r="1.6"/><circle cx="11" cy="3" r="1.6"/></g>
+</g>
+<g id="art-jelly" stroke="#527f76" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-11 7Q-18 15-13 22l-1 7M-3 9q7 8 1 19M7 8q-4 8 4 14l-1 8M14 7q6 12 1 17" fill="none" stroke-width="2.8"/>
+  <path d="M-11 8q-5 8-2 15m10-13q5 8 1 15m9-15q-3 7 3 13" fill="none" stroke="#acd5bc" stroke-width="1"/>
+  <path d="M-19 5q0-29 19-30T19 5q-5 6-10 1-5 6-9 1-5 5-10-1-4 5-9-1Z" fill="#87bbac" stroke-width="1.8"/>
+  <path d="M11-20Q20-7 17 3q-5 3-8-1-5 5-10 2-8 4-15 0 1 8 6 2 5 6 10 1 4 5 9-1 5 5 10-1-1-18-8-25Z" fill="#6ca495" stroke="none"/>
+  <path d="M-12-7q1-10 9-13" fill="none" stroke="#d4e9c8" stroke-width="3"/>
+  <ellipse cx="-6" cy="-3" rx="2" ry="2.5" fill="#3b6b61" stroke="none"/><ellipse cx="6" cy="-3" rx="2" ry="2.5" fill="#3b6b61" stroke="none"/>
+  <g fill="#d9efce" stroke="none"><circle cx="-5.5" cy="-3.7" r=".6"/><circle cx="6.5" cy="-3.7" r=".6"/><circle cx="-12" cy="-11" r="1"/><circle cx="4" cy="-18" r="1.2"/></g>
+  <path d="M-2 2q2 2 4 0" fill="none" stroke-width="1.1"/>
+</g>
+<g id="art-boss" stroke="#775e7a" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m-31 12-22 4-12 16 25-9 13-1m-2 5-22 9-6 12 23-14 12-1m62-21 22 4 12 16-25-9-13-1m-4 5 22 9 6 12-23-14-12-1" fill="#9a8195" stroke-width="3"/>
+  <path d="M-36-7Q-57-66-10-65q40-1 48 40l-9 43Z" fill="#e4d4b7" stroke-width="3"/>
+  <path d="M-29-9Q-46-51-12-56q28-2 37 25" fill="none" stroke="#f8edd0" stroke-width="5"/>
+  <path d="M-27-12Q-45-45-18-49q31-5 37 24-1 21-22 18-17-3-11-17 6-9 14-2" fill="none" stroke="#b49ba3" stroke-width="3.5"/>
+  <path d="m-41-31 14-3m-10-14 12 7m18-21-3 15m22-8-8 12" stroke="#c2adb0" stroke-width="2"/>
+  <path d="m-30-5-26-26m86 26 26-26" fill="none" stroke-width="9"/><path d="m-32-7-20-21m84 21 20-21" stroke="#c5a0b0" stroke-width="3"/>
+  <path d="M-59-25q-22-3-16-28l15 10 10-18q17 23-9 36Zm118 0q22-3 16-28L60-43 50-61q-17 23 9 36Z" fill="#ac87a3" stroke-width="3"/>
+  <path d="M-70-48q-3 15 11 17m129-17q3 15-11 17" fill="none" stroke="#d4afbe" stroke-width="3"/>
+  <path d="M-42 4q-3-33 36-35 45 0 48 35-2 29-42 32-36-1-42-32Z" fill="#b598af" stroke-width="3"/>
+  <path d="M-38 13q33 26 74-1-6 25-38 21-29-1-36-20Z" fill="#9c7e9a" stroke="none"/>
+  <path d="M-25-9q1-13 8-17m30 17 9-16" fill="none" stroke-width="5"/>
+  <g fill="#fff0d0" stroke-width="2"><circle cx="-16" cy="-27" r="6"/><circle cx="23" cy="-27" r="6"/></g><g fill="#4d465c" stroke="none"><circle cx="-15" cy="-27" r="2.7"/><circle cx="24" cy="-27" r="2.7"/></g>
+  <path d="M-14 18q14 11 29-2" fill="none" stroke-width="3"/><path d="M-5 0q-9 3-5 11m20-10q9 0 10 8" fill="none" stroke="#d3b2bf" stroke-width="2"/>
+  <path d="m-13-52-5-16 13 7 7-14 9 14 15-7-6 18Z" fill="#dbb465" stroke="#9b8051" stroke-width="2"/>
+  <path d="M-11-54h28M2-68v9" stroke="#f9df9c" stroke-width="2"/><g fill="#fff0bc" stroke="none"><circle cx="-8" cy="-58" r="1.5"/><circle cx="13" cy="-58" r="1.5"/></g>
+</g>
+        <!-- 营地角色和建筑沿用海岸的奶油色、鼠尾草绿与圆润描边。 -->
+<symbol id="camp-panda" viewBox="0 0 90 100">
+  <g stroke="#426558" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="45" cy="94" rx="28" ry="4" fill="#afbe94" opacity=".5" stroke="none"/>
+    <path d="M25 54Q12 61 17 82l12 3m35-31q13 6 10 27L62 85" fill="#426558"/>
+    <path d="M25 87v7h13v-8m15 0v8h14v-7" fill="#426558"/>
+    <ellipse cx="45" cy="70" rx="24" ry="23" fill="#fff5df"/>
+    <path d="M56 51q16 8 8 32-10 14-27 7 23 1 19-39Z" fill="#e2e2c7" stroke="none"/>
+    <path d="M29 54v32q15 9 32-1V54l-8 7H37Z" fill="#b9895c"/>
+    <path d="M29 57h6v10m20-10h6v10" fill="none" stroke="#ddbb80" stroke-width="2.5"/>
+    <path d="M34 67h22v18H34Z" fill="#caa372" stroke="#8d7251" stroke-width="1.3"/>
+    <path d="M38 70h14m-14 11h14" stroke="#e6cb92" stroke-width="1.2" stroke-dasharray="2 2"/>
+    <path d="M39 74h12v5H39Z" fill="#517766" stroke-width="1.1"/>
+    <g fill="#e9c780" stroke="none"><circle cx="32" cy="60" r="1.5"/><circle cx="58" cy="60" r="1.5"/></g>
+    <circle cx="24" cy="19" r="10" fill="#426558"/><circle cx="65" cy="19" r="10" fill="#426558"/>
+    <g fill="#698571" stroke="none"><circle cx="24" cy="19" r="5"/><circle cx="65" cy="19" r="5"/></g>
+    <ellipse cx="45" cy="34" rx="30" ry="26" fill="#fff8e5" stroke-width="2.3"/>
+    <path d="M67 21Q81 43 58 55q-17 11-34-5 28 11 43-29Z" fill="#e2e4ca" stroke="none"/>
+    <ellipse cx="32" cy="33" rx="8" ry="10" transform="rotate(24 32 33)" fill="#426558" stroke="none"/>
+    <ellipse cx="58" cy="33" rx="8" ry="10" transform="rotate(-24 58 33)" fill="#426558" stroke="none"/>
+    <g fill="#fff8e5" stroke="none"><circle cx="33" cy="32" r="2.3"/><circle cx="57" cy="32" r="2.3"/></g>
+    <g fill="#426558" stroke="none"><circle cx="33.5" cy="32.5" r="1"/><circle cx="57.5" cy="32.5" r="1"/></g>
+    <path d="m41 42 4 3 4-3Z" fill="#426558"/><path d="M45 46v3m-7 0q7 7 14 0" fill="none" stroke-width="1.6"/>
+    <path d="m72 81 9-29" stroke="#426558" stroke-width="5.7"/><path d="m72 81 9-29" stroke="#b48b59" stroke-width="3.4"/>
+    <path d="m71 47 16 5 2-13-14-4Z" fill="#779588"/><path d="m75 38 10 3m-11 7 10 3" stroke="#bad0b9" stroke-width="1.2"/>
+    <path d="m72 75 5 1" stroke="#d9bf87" stroke-width="2"/>
+  </g>
+</symbol>
+<symbol id="camp-crane" viewBox="0 0 90 115">
+  <g stroke="#426558" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="44" cy="108" rx="27" ry="4" fill="#afbe94" opacity=".5" stroke="none"/>
+    <path d="m35 92-1 16h-7m27-16 2 16h8" fill="none" stroke="#b38c52" stroke-width="3"/>
+    <path d="M27 58q-12 14-8 39 23 9 48-1-1-30-21-40Z" fill="#749681"/>
+    <path d="M51 61q11 13 10 34l-15 3 1-33Z" fill="#567b67" stroke="none"/>
+    <path d="m31 60 13 18 10-17m-29 18-1 15m35-13 1 13" fill="none" stroke="#e5e5c7" stroke-width="3"/>
+    <path d="M28 97q15 4 31-1M27 87l4 2m-4 3 4 2" fill="none" stroke="#c6d0aa" stroke-width="1.5"/>
+    <path d="M44 63Q28 52 41 36q8-7 5-17" fill="none" stroke="#426558" stroke-width="12"/>
+    <path d="M44 63Q28 52 41 36q8-7 5-17" fill="none" stroke="#fff8e1" stroke-width="8"/>
+    <ellipse cx="46" cy="21" rx="13" ry="15" fill="#fff8e1"/>
+    <path d="M34 19q3 12 13 15" fill="none" stroke-width="4"/>
+    <path d="M56 20 83 27 56 29Z" fill="#e8b86a" stroke-width="1.5"/><path d="M57 25h20" stroke="#ad8c52" stroke-width="1"/>
+    <path d="M38 8q6-7 13 0" fill="#ca8067" stroke="#aa6d53" stroke-width="1.4"/>
+    <circle cx="50" cy="19" r="2" fill="#35594d" stroke="none"/><circle cx="50.5" cy="18.5" r=".5" fill="#fff" stroke="none"/>
+    <path d="m22 74 20 6 20-6v22l-20 6-20-6Z" fill="#d8c79a" stroke-width="1.6"/>
+    <path d="m25 74 17 5 17-5v19l-17 5-17-5Z" fill="#fff2ce" stroke-width="1.1"/>
+    <path d="M42 80v18m-12-19 8 2m-8 3 8 2m-8 3 8 2m8-9 8-2m-8 7 8-2" fill="none" stroke="#a7b08a" stroke-width="1"/>
+    <path d="M50 78v12l3-3 2 1V77" fill="#cd8967" stroke="none"/>
+    <path d="m20 78 8 5m36-5-8 5" stroke="#fff8e1" stroke-width="5"/>
+  </g>
+</symbol>
+<symbol id="camp-emperor" viewBox="0 0 90 115">
+  <g stroke="#365b4d" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="45" cy="108" rx="29" ry="4" fill="#afbe94" opacity=".5" stroke="none"/>
+    <path d="M26 58 13 86l15 5-5 14h45l-5-14 14-5-13-28Z" fill="#426558"/>
+    <path d="m59 61 12 22-14-2 4 21H49Z" fill="#315648" stroke="none"/>
+    <path d="m35 57 10 14 10-14 4 46H31Z" fill="#cda664"/>
+    <path d="M35 76q4-7 10 0 5-7 10 0m-19 8q4-7 9 0 5-7 10 0M33 95h24" fill="none" stroke="#f3d89a" stroke-width="1.5"/>
+    <path d="m18 84 10-12m44 12L62 72M28 102h34" stroke="#d5b879" stroke-width="2.3"/>
+    <path d="M27 25q0-11 18-11t18 11v22q0 17-18 18T27 47Z" fill="#edc999"/>
+    <path d="M58 27v21q-1 12-13 14 17 2 18-16V28Z" fill="#d4b17e" stroke="none"/>
+    <path d="M27 28v-9h36v9m-36-4v12m36-12v12" fill="#365b4d"/>
+    <path d="m32 40 7-1m12 0 7 1" fill="none" stroke-width="2.4"/><g fill="#365b4d" stroke="none"><circle cx="35" cy="45" r="1.6"/><circle cx="55" cy="45" r="1.6"/></g>
+    <path d="M42 48v3h5m-10 5q8-5 16 0m-12 2 4 12 5-12" fill="none" stroke-width="1.6"/>
+    <path d="M30 23V11h30v12" fill="#426558"/><path d="m18 9 52-2 4 7-53 2Z" fill="#527867"/>
+    <path d="M22 14h47M27 18v18m9-18v15m24-16v16m8-17v20" stroke="#d4b671" stroke-width="1.2"/>
+    <g fill="#e6ca85" stroke="#a58c59" stroke-width=".7"><circle cx="27" cy="36" r="1.8"/><circle cx="36" cy="33" r="1.8"/><circle cx="60" cy="33" r="1.8"/><circle cx="68" cy="36" r="1.8"/></g>
+    <path d="M29 105v5h13v-5m7 0v5h13v-5" fill="#365b4d"/>
+  </g>
+</symbol>
+<symbol id="camp-tree" viewBox="0 0 100 140">
+  <g transform="translate(4 0) scale(.9 1)" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="50" cy="131" rx="39" ry="6" fill="#8fa67b" opacity=".2"/>
+    <path d="M43 72h14l-2 38 8 17H37l8-17Zm5 24L29 75m24 15 18-19" fill="#b69a68" stroke="#69805b" stroke-width="2.4"/>
+    <path d="M50 84v31l-4 10m7-25 4 22" fill="none" stroke="#d3b888" stroke-width="2"/>
+    <path d="M14 75Q1 68 8 53q-5-15 10-21 1-18 22-18 13-20 28-2 21-5 26 16 14 9 5 25 8 17-8 26-4 19-26 17-20 16-34-2-19 3-17-19Z" fill="#8eaa78" stroke="#627f59" stroke-width="2.4"/>
+    <path d="M79 18q20 10 12 30 12 20-11 30-7 21-32 15-14 9-23-1 11 21 32 8 28 4 34-21 16-9 8-26 9-16-5-25-2-9-15-10Z" fill="#6f915f"/>
+    <path d="M15 52q0-14 16-15 0-13 17-13m13-5q12-1 16 11M27 74q2-10 13-7m22 12q9 4 17-3" fill="none" stroke="#bdcb93" stroke-width="4"/>
+    <path d="m22 127-5-10m4 10 7-8m47 9 3-11m-2 10 8-5" fill="none" stroke="#7f9c6b" stroke-width="2"/>
+  </g>
+</symbol>
+<symbol id="camp-smith-art" viewBox="0 0 260 230">
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="129" cy="214" rx="119" ry="8" fill="#9aaf82" opacity=".25"/>
+    <path d="M32 101h190v100H32Z" fill="#eee0bc" stroke="#8d8b63" stroke-width="2.5"/>
+    <path d="M32 106h190v15H32Zm170 15h20v80h-20Z" fill="#d6c49a"/>
+    <path d="M184 32h24v57h-24Z" fill="#9ca58c" stroke="#607c67" stroke-width="2.2"/>
+    <path d="M180 30h32v12h-32Z" fill="#839a83" stroke="#607c67" stroke-width="2"/>
+    <path d="M186 48h20m-20 13h20m-13-19v7m6 12v8" stroke="#bdc1a0" stroke-width="1.6"/>
+    <path d="M195 24q-12-5-3-13t-1-9m8 17q11-7 4-14" fill="none" stroke="#f8f1d7" stroke-width="6"/>
+    <path d="M17 103 51 48h151l42 55Z" fill="#c78262" stroke="#8d7053" stroke-width="2.8"/>
+    <path d="m25 91 209 0-6 10H19Z" fill="#a4664f"/><path d="M45 60h167M36 76h189M27 91h210" fill="none" stroke="#e3a27a" stroke-width="2"/>
+    <path d="m68 50-8 25m28 1-8 24m16-50-5 25m26 1-2 24m8-50 2 25m28 1 6 24m-9-50 7 25m28 1 9 24m-19-50 11 25" fill="none" stroke="#e4a780" stroke-width="1.7"/>
+    <path d="M27 103h208v10H27Z" fill="#885e47" stroke="#805d47" stroke-width="1.8"/>
+    <path d="M42 115h11v86H42Zm161 0h11v86h-11Z" fill="#b2996c" stroke="#95865e" stroke-width="1.4"/>
+    <path d="M79 152q0-34 35-34t35 34v48H79Z" fill="#b9aa7e" stroke="#8f825b" stroke-width="2.4"/>
+    <path d="M88 153q0-27 26-27t26 27v46H88Z" fill="#495f50" stroke="#6b7251" stroke-width="2"/>
+    <path d="M95 177q-5-17 9-26l2 11q17-10 18-21 18 18 8 36Z" fill="#d78a50"/>
+    <path d="M104 179q-6-15 7-21 0 10 6 5 10 5 8 16Z" fill="#f1bd64"/><path d="M111 180q-5-6 4-15 6 7 4 15Z" fill="#ffde8c"/>
+    <path d="M92 180h44v7H92Z" fill="#354e43"/><path d="M96 188v9m35-9v9" stroke="#8f9b7a" stroke-width="3"/>
+    <path d="M82 151h7m-3-14 7 4m4-16 3 7m26-7-3 7m17 4-6 5m10 10h-6" stroke="#e8d5a8" stroke-width="3"/>
+    <path d="M58 129h14v31H58Z" fill="#829e83" stroke="#9b8e66" stroke-width="2"/><path d="M65 131v27m-5-14h10" stroke="#d9dcb5" stroke-width="1.5"/>
+    <rect x="91" y="101" width="63" height="23" rx="3" fill="#f7e4b7" stroke="#8f7853" stroke-width="2"/>
+    <path d="m111 117 11-10m-4-1 10 8m-7-6 6-5" stroke="#7f694c" stroke-width="3"/>
+    <path d="M19 178h22l11-7h15v8l-12 8H38l-6 9H22v-9l-9-4Z" fill="#6d8d7c" stroke="#426558" stroke-width="2"/>
+    <path d="M20 180h32m-13 8h10" stroke="#a8bba0" stroke-width="1.6"/>
+    <path d="M26 195h28v8H26Z" fill="#bc9565" stroke="#8d7952" stroke-width="1.5"/>
+    <path d="M29 202h199" stroke="#b9ac84" stroke-width="4"/>
+    <use href="#camp-panda" x="160" y="119" width="82" height="94"/>
+    <path d="m68 197 5-13h8l3 13Z" fill="#cba772" stroke="#a68c5b" stroke-width="1.4"/>
+  </g>
+</symbol>
+<symbol id="camp-school-art" viewBox="0 0 260 230">
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="130" cy="214" rx="116" ry="8" fill="#9aaf82" opacity=".25"/>
+    <path d="M34 100h184v101H34Z" fill="#f0e5c6" stroke="#83906a" stroke-width="2.4"/>
+    <path d="M35 108h181v14H35Zm163 14h18v79h-18Z" fill="#d5d4ab"/>
+    <path d="M17 104q25-15 39-58h132q18 43 56 58Z" fill="#6c947b" stroke="#426b57" stroke-width="2.8"/>
+    <path d="M26 94q100 5 207 0l11 10H17Z" fill="#537c66"/>
+    <path d="M49 65h150M41 80h174M30 94h198m-149-45-8 30m20 2-5 13m20-45-2 30m21 2 1 13m9-45 7 30m16 2 6 13m-1-45 14 30m15 2 9 13" fill="none" stroke="#91b195" stroke-width="1.7"/>
+    <path d="M55 46q66 5 133 0m-134 0-2-5m136 5 2-5" fill="none" stroke="#426b57" stroke-width="4"/>
+    <path d="M27 104h207v10H27Z" fill="#466e58" stroke="#426b57" stroke-width="1.4"/>
+    <path d="M45 117h10v84H45m143-84h11v84h-11" fill="#93a17a" stroke="#6e8a65" stroke-width="1.3"/>
+    <path d="M96 124h46v77H96Z" fill="#648875" stroke="#809371" stroke-width="2.5"/>
+    <path d="M118 127v72m-14-12h7m15 0h7" stroke="#d0d3a5" stroke-width="1.6"/>
+    <rect x="61" y="130" width="24" height="45" rx="1" fill="#abc19e" stroke="#82986e" stroke-width="2"/>
+    <path d="M73 132v40m-10-30h20m-20 12h20m-20 11h20" stroke="#e1e3bd" stroke-width="1.5"/>
+    <path d="M64 134h4v5m7 8h5v5m-14 6h4v4" fill="none" stroke="#76916e" stroke-width="1.4"/>
+    <rect x="84" y="101" width="80" height="24" rx="3" fill="#f9ebc5" stroke="#6f8e6a" stroke-width="1.9"/>
+    <path d="m108 107 15 4 16-4v12l-16 3-15-3Zm15 4v11" fill="none" stroke="#6b8968" stroke-width="1.6"/><path d="m112 112 7 2m9 0 7-2" stroke="#a4ad81" stroke-width="1.2"/>
+    <path d="M48 201h106v6H48Zm9 6h92v5H57Z" fill="#c8c8a0" stroke="#a7b38a" stroke-width="1.3"/>
+    <path d="M19 190V99m-9 63V126m232 66V99m-9 69V131" fill="none" stroke="#7e9c6b" stroke-width="3.2"/>
+    <path d="M16 120h6m-6 28h6m-6 28h6m217-57h6m-6 28h6m-6 28h6" stroke="#bac794" stroke-width="1.7"/>
+    <path d="M19 120q-12-9-12-16 11 4 12 16m0 23q12-12 15-10-3 10-15 10m0 29q-9-9-15-6 6 8 15 6m223-51q-13-11-13-17 12 5 13 17m0 25q10-11 17-10-2 9-17 10m0 24q-12-9-15-7 3 8 15 7" fill="#9db484" stroke="#7c9a6b" stroke-width="1"/>
+    <use href="#camp-crane" x="157" y="112" width="78" height="106"/>
+  </g>
+</symbol>
+<symbol id="camp-hall-art" viewBox="0 0 280 230">
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="138" cy="215" rx="127" ry="8" fill="#9aaf82" opacity=".25"/>
+    <path d="M39 111h202v86H39Z" fill="#e9dbb4" stroke="#82906a" stroke-width="2.4"/>
+    <path d="M40 118h200v13H40Zm179 13h21v66h-21Z" fill="#d0c6a0"/>
+    <path d="M18 120q32-10 43-39h152q17 28 49 39Z" fill="#628975" stroke="#426854" stroke-width="2.8"/>
+    <path d="M28 111h223l11 9H18Z" fill="#4b735f"/>
+    <path d="M45 104h190m-168-20-9 22m28-22-5 22m27-22v22m27-22 2 22m26-22 7 22m21-22 13 22" stroke="#91ab8b" stroke-width="1.8"/>
+    <path d="M77 79h123v22H77Z" fill="#d9c28e" stroke="#9c9168" stroke-width="2"/>
+    <path d="M62 82q24-12 30-39h94q10 28 32 39Z" fill="#4d7864" stroke="#365f4d" stroke-width="2.8"/>
+    <path d="M73 74h134l11 8H62Z" fill="#3b6552"/><path d="M90 61h99m-81-16-9 28m31-28-3 28m23-28 5 28m16-28 12 28" stroke="#89a68b" stroke-width="1.8"/>
+    <path d="M89 41q50 5 98 0m-99 0q-11-6-6-11 7-4 8 5m98 6q11-6 6-11-7-4-8 5" fill="none" stroke="#cfb16b" stroke-width="3"/>
+    <path d="M136 40V28m-6 5h12" stroke="#c8a55d" stroke-width="3"/><circle cx="136" cy="25" r="4" fill="#e3c37b" stroke="#a58b54" stroke-width="1.6"/>
+    <path d="M48 125h11v72H48m158-72h11v72h-11" fill="#7b9270" stroke="#5f7d60" stroke-width="1.5"/>
+    <path d="M103 129h54v68h-54Z" fill="#567b66" stroke="#9e9c71" stroke-width="2.6"/><path d="M130 131v65" stroke="#a3b48b" stroke-width="1.5"/>
+    <circle cx="124" cy="170" r="2" fill="#dbc27d"/><circle cx="136" cy="170" r="2" fill="#dbc27d"/>
+    <path d="M71 137h22v35H71Zm96 0h22v35h-22Z" fill="#a8b692" stroke="#999d73" stroke-width="2"/>
+    <path d="M82 138v32m-9-21h18m-18 12h18m87-23v32m-9-21h18m-18 12h18" stroke="#d9ddba" stroke-width="1.6"/>
+    <rect x="106" y="103" width="57" height="23" rx="3" fill="#e4c68a" stroke="#9b8755" stroke-width="1.8"/>
+    <path d="M122 111h24m-20 6h16m-8-11v16" stroke="#6c7652" stroke-width="1.7"/>
+    <path d="M32 197h209v9H32Zm-9 9h225v8H23Z" fill="#c9c8a2" stroke="#a6b18b" stroke-width="1.5"/><path d="M48 199h170m-179 9h190" stroke="#e7e2ba" stroke-width="1.5"/>
+    <path d="M31 129v13m207-13v13" stroke="#5a7a61" stroke-width="2"/><path d="M24 142h14v21H24Zm207 0h14v21h-14Z" fill="#edcc82" stroke="#53785e" stroke-width="1.7"/>
+    <path d="M23 140h16m191 0h16M31 145v14m207-14v14" stroke="#9a8d55" stroke-width="1.6"/>
+    <use href="#camp-emperor" x="172" y="123" width="72" height="94"/>
+  </g>
+</symbol>
+<symbol id="camp-board-art" viewBox="0 0 200 195">
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="100" cy="181" rx="82" ry="6" fill="#9aaf82" opacity=".24"/>
+    <path d="M42 64h12v115H42m92-115h12v115h-12" fill="#b39665" stroke="#78825c" stroke-width="2.2"/>
+    <path d="M46 151v24m104-24v24" stroke="#d8bb84" stroke-width="1.7"/>
+    <rect x="29" y="48" width="142" height="103" rx="3" fill="#b3996c" stroke="#6d805d" stroke-width="2.5"/>
+    <path d="M36 58h128v85H36Z" fill="#9b835e" stroke="#d1b480" stroke-width="2"/>
+    <path d="M18 58 48 21h102l32 37Z" fill="#829e75" stroke="#5e805c" stroke-width="2.6"/>
+    <path d="M27 48h146l9 10H18Z" fill="#66885f"/><path d="M39 39h123m-103-15-11 22m32-22-4 22m28-22 4 22m23-22 11 22" stroke="#b1bf8b" stroke-width="1.7"/>
+    <path d="m41 71 48-5 4 68-49 2Z" fill="#fff0ca" stroke="#d9c59a" stroke-width="1.2"/>
+    <path d="m103 76 50 3-4 57-49-3Z" fill="#f2e5be" stroke="#d4bf91" stroke-width="1.2"/>
+    <path d="m82 125 10-1-9 10Zm56 1 12 1-12 8Z" fill="#dfcca0"/>
+    <path d="m54 90 24-2m-24 12 24-1m-22 11 23-1m-22 11 15-1m38-24 28 2m-29 10 24 2m-25 9 18 1" stroke="#b1a77c" stroke-width="2"/>
+    <circle cx="65" cy="74" r="3.2" fill="#cb8360" stroke="#a16e4b" stroke-width="1"/><circle cx="127" cy="84" r="3.2" fill="#789c7e" stroke="#5e805f" stroke-width="1"/>
+    <g fill="#dcc08a"><circle cx="35" cy="63" r="2"/><circle cx="165" cy="63" r="2"/><circle cx="35" cy="145" r="2"/><circle cx="165" cy="145" r="2"/></g>
+    <path d="m26 179-8-12m8 12 5-16m-6 15-14-3m161 4 7-14m-6 13 13-5" fill="none" stroke="#89a374" stroke-width="2.3"/>
+  </g>
+</symbol>
+<symbol id="camp-gate-art" viewBox="0 0 230 195">
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="115" cy="182" rx="98" ry="7" fill="#9aaf82" opacity=".24"/>
+    <path d="M72 181q28-32 86-47l38 47Z" fill="#f3e7bf"/><path d="m104 161 9 2m30-15 8 1m-2 27 12-2" stroke="#d8cba0" stroke-width="2"/>
+    <path d="M51 60h15v119H51m100-119h15v119h-15" fill="#b89c6c" stroke="#74805c" stroke-width="2.3"/>
+    <path d="M54 64h5v102h-5m115-102h4v102h-4" fill="#d9bd83"/>
+    <path d="M34 59q21-7 34-28h96q11 22 33 28l5 13H28Z" fill="#7d9d78" stroke="#4c795a" stroke-width="2.6"/>
+    <path d="M29 63q87 4 171 0l2 9H28Z" fill="#577f5e"/>
+    <path d="M61 43h111M46 55h140m-105-22-7 21m28-21-2 22m22-22 4 22m16-22 10 22" fill="none" stroke="#b0c095" stroke-width="1.6"/>
+    <path d="M67 30q49 4 98 0" stroke="#547a5a" stroke-width="3"/>
+    <path d="M64 74h104v26H64Z" fill="#f7e7bd" stroke="#8c8b60" stroke-width="1.9"/>
+    <path d="M85 87h54m-11-7 11 7-11 7" fill="none" stroke="#628b68" stroke-width="2.9"/>
+    <path d="M179 102h34l-5 21-29-7Z" fill="#d79268" stroke="#a87c53" stroke-width="1.6"/><path d="m183 107 22 2" stroke="#eabe89" stroke-width="1.6"/>
+    <path d="M44 84v12m143-12v12" stroke="#5c7e5c" stroke-width="2"/><path d="M38 96h12v19H38Zm143 0h12v19h-12Z" fill="#efce85" stroke="#9b8c58" stroke-width="1.5"/>
+    <path d="M44 100v11m143-11v11" stroke="#d8a65b" stroke-width="1.5"/>
+    <path d="M46 169h25v12H46Zm115 0h25v12h-25Z" fill="#acb592" stroke="#7d9771" stroke-width="1.7"/>
+    <path d="M22 174q-13-9-4-15-4-13 8-14 13 0 11 12 12 6 4 17Zm169 0q-12-10-3-18-3-11 9-13 16-1 14 15 10 7 1 16Z" fill="#9fb784" stroke="#79996c" stroke-width="1.5"/>
+    <path d="m80 145 21-18 20 18m-20-18v35" fill="none" stroke="#b6c6a0" stroke-width="2.5"/>
+    <use href="#art-shell" x="26" y="180"/>
+  </g>
+</symbol>
+<!-- 六种基础武器沿用手持挂点；轮廓与少量材质细节优先于装饰。 -->
+<g id="weapon-bow"><g stroke="#4c685e" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-10-29Q9-20 5-7L3 0 5 7Q9 20-10 29L-12 26Q1 16-1 8L-3 0-1-8Q1-16-12-26Z" fill="#bd8b53" stroke-width="1.8"/>
+  <path d="M-9-25Q4-16 2-8m0 16Q4 16-9 25" fill="none" stroke="#edc184" stroke-width="1.2"/>
+  <path d="M-11-27-17 0-11 27" fill="none" stroke="#7c927d" stroke-width="1.2"/>
+  <rect x="-3.5" y="-5" width="7" height="10" rx="2" fill="#527d6c" stroke-width="1.3"/><path d="M-2-2h4m-4 4h4" stroke="#dcc08a" stroke-width="1"/>
+  <path d="M-21 0H43" stroke="#6a806a" stroke-width="1.6"/><path d="m-23-4 8 4-8 4 2-4Zm64 0-5-4 14 4-14 4Z" fill="#c1d7bd" stroke-width="1.2"/>
+</g></g>
+<g id="weapon-shield"><g transform="rotate(20)" stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-9-24 5-28 22-22 20 6Q16 17 5 23-8 16-11 5Z" fill="#c4b67b" stroke-width="2"/><path d="m-5-20 10-3 12 4-1 23Q12 13 5 17-4 11-6 3Z" fill="#648875" stroke-width="1.5"/>
+  <path d="M5-22v38M-2-19V9M12-18v26" fill="none" stroke="#8faa91" stroke-width="1.3"/>
+  <circle cx="5" cy="-2" r="5" fill="#e6b967" stroke-width="1.4"/><circle cx="5" cy="-2" r="2.4" fill="#f8df9a" stroke="none"/>
+  <g fill="#e3ca8c" stroke="none"><circle cx="-6" cy="-20" r="1.2"/><circle cx="18" cy="-18" r="1.2"/><circle cx="5" cy="19" r="1.2"/></g>
+  <path d="M31 5 29-29 35-38 40-29 37 5Z" fill="#c7dbce" stroke-width="1.7"/><path d="M35-33 35 2" stroke="#fff8df" stroke-width="1.8"/>
+  <path d="M31 7h6v16h-6Z" fill="#9a7751" stroke-width="1.5"/><path d="m32 9 4 4-4 4 4 4" fill="none" stroke="#e2bf80" stroke-width="1"/>
+  <rect x="26" y="3" width="16" height="5" rx="1.5" fill="#e3b86b" stroke-width="1.4"/><rect x="30" y="23" width="8" height="4" rx="1.4" fill="#d6b775" stroke-width="1.3"/>
+</g></g>
+<g id="weapon-katana"><g transform="rotate(15)" stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-3 9Q32-12 50-38 45-13 3 16Z" fill="#afc9bd" stroke-width="1.8"/><path d="M2 10Q32-10 47-32" fill="none" stroke="#f6f3da" stroke-width="2"/>
+  <path d="m-16 27 15-18 6 5-15 18Z" fill="#597969" stroke-width="1.5"/><path d="m-11 23 6 1m-2-6 6 1m-2-6 5 2" stroke="#dac084" stroke-width="2"/>
+  <path d="m-7 6 14 12-3 3L-10 9Z" fill="#dcac61" stroke-width="1.3"/><path d="m-17 28 6 5 3-3-6-5Z" fill="#dbb676" stroke-width="1.2"/>
+</g></g>
+<g id="weapon-hammer"><g transform="rotate(30)" stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m-4 25 24-48 7 3L3 29Z" fill="#b98d5d" stroke-width="1.8"/><path d="M2 20 20-16" stroke="#e0ba7b" stroke-width="1.6"/>
+  <path d="m-4 24 10-20 6 3L2 29Z" fill="#547665" stroke-width="1.4"/><path d="m-1 18 6 2m-3-7 6 2m-3-7 6 2" stroke="#b7ba88" stroke-width="1.5"/>
+  <path d="M8-36 43-20 34 2-2-14Z" fill="#78988a" stroke-width="2"/><path d="m8-36 5 7 27 13 3-4Z" fill="#c0d2be" stroke-width="1.3"/>
+  <path d="m-2-14 8-20 6 3-8 21Zm30 13 9-22 6 3-9 22Z" fill="#a5bfb0" stroke-width="1.5"/>
+  <path d="m10-24 21 10" stroke="#91b09c" stroke-width="1.6"/><g fill="#35594d" stroke="none"><circle cx="5" cy="-18" r="1.3"/><circle cx="34" cy="-10" r="1.3"/></g>
+  <path d="m-4 24 7 4-2 4-7-4Z" fill="#dcba77" stroke-width="1.2"/>
+</g></g>
+<g id="weapon-staff"><g transform="rotate(35)" stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-3 27 18-28 24-26 3 30Z" fill="#ad8657" stroke-width="1.7"/><path d="M2 23 20-23" stroke="#e3bd7e" stroke-width="1.3"/>
+  <path d="m-1 16 6 3m-4-8 6 3m-4-8 6 3" stroke="#537b69" stroke-width="3"/>
+  <path d="M14-26Q7-34 16-42l13-3 9 8-1 13-12 8Z" fill="#75b5a5" stroke-width="1.8"/>
+  <path d="m16-42 4 12 9 8 8-15-11 4Z" fill="#a3d2bb" stroke="#dff0ce" stroke-width="1.2"/><path d="m20-30-6 4 11 10 4-6Z" fill="#519887" stroke-width="1.1"/>
+  <path d="M14-26q3 9 12 9l-2 4-12-7Z" fill="#dfb466" stroke-width="1.4"/><path d="M14-19 9-13l7 2 4-5" fill="#d1aa67" stroke-width="1.2"/>
+  <circle cx="0" cy="28" r="3" fill="#d9b575" stroke-width="1.2"/>
+</g></g>
+<g id="weapon-shotgun"><g stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m-19 7 18-6 10 4 8-4 8 9-22 6-14 13-8-3Z" fill="#b58a58" stroke-width="1.8"/>
+  <path d="m-16 11 13-6 6 4-15 14Z" fill="#d0a873" stroke="none"/><path d="m-17 9 2 15m9-11 7-4" stroke="#916d4e" stroke-width="1.2"/>
+  <path d="M8-7h41v12H8Z" fill="#648579" stroke-width="1.8"/><path d="M9-4h38M9 1h38" stroke="#aec8b6" stroke-width="1.3"/>
+  <rect x="9" y="4" width="21" height="7" rx="2" fill="#ae8354" stroke-width="1.4"/><path d="M15 6v3m4-3v3m4-3v3" stroke="#e1b779" stroke-width="1"/>
+  <path d="M4 11q0 9 10 6l2-7M9 11v3" fill="none" stroke-width="1.6"/>
+  <path d="M6-6h4V7H6Zm34-1h3V5h-3Z" fill="#d2b572" stroke-width="1.2"/><path d="M47-8h4V6h-4Z" fill="#45685b" stroke-width="1.3"/>
+</g></g>
+<!-- 车辆共享圆心约定，各轮型只维护一份；轮组随实例旋转。 -->
+<g id="wheel-city" stroke="#426558"><circle r="14" fill="#f0e7c6" stroke-width="2.6"/><circle r="10.7" fill="none" stroke="#c2b98d" stroke-width="1"/><path d="M-10.5 0h21M0-10.5v21M-7.4-7.4 7.4 7.4m-14.8 0L7.4-7.4" stroke="#93a58a" stroke-width=".85"/><circle r="2" fill="#acb995" stroke-width="1"/></g>
+<g id="wheel-trail" stroke="#426558"><circle r="16" fill="#dddcb7" stroke-width="4"/><circle r="17" fill="none" stroke="#567560" stroke-width="2.5" stroke-dasharray="2 3"/><circle r="12" fill="none" stroke="#92a583" stroke-width="1.2"/><path d="M-11 0h22M0-11v22m-8-19 16 16m-16 0L8-8" stroke="#8d9d7e" stroke-width="1.1"/><circle r="3.3" fill="#b6ba89" stroke-width="1"/><circle r="1.3" fill="#426558"/></g>
+<g id="wheel-road" stroke="#426558"><circle r="14" fill="#f0e7c6" stroke-width="1.8"/><circle r="11.8" fill="none" stroke="#adc4ad" stroke-width="1"/><path d="M-11.5 0h23M0-11.5v23m-8-19.5 16 16m-16 0L8-8M-4-10.5l8 21m-14.5-6.5 21-8m-21 0 21 8m-6.5-14.5-8 21" stroke="#93ae98" stroke-width=".65"/><circle r="1.8" fill="#6b9585" stroke-width=".8"/></g>
+<g id="wheel-motor" stroke="#426558"><circle r="14.5" fill="#d5d8b9" stroke-width="4.5"/><circle r="14.5" fill="none" stroke="#6b8168" stroke-width="1" stroke-dasharray="2 3"/><circle r="10.5" fill="#b6c2a6" stroke="#849b81" stroke-width="1"/><path d="M-10 0h20M0-10v20m-7-17 14 14m-14 0L7-7" stroke="#6e8b75" stroke-width="1.5"/><circle r="4" fill="#c6cba5" stroke-width="1.3"/><circle r="1.5" fill="#607c67"/></g>
+<g id="mount-bicycle"><g stroke-linecap="round" stroke-linejoin="round">
+  <g data-part="wheel" data-x="-29" data-y="-13" transform="translate(-29 -13)"><use href="#wheel-city"/></g>
+  <g data-part="wheel" data-x="29" data-y="-13" transform="translate(29 -13)"><use href="#wheel-city"/></g>
+  <path d="M-43-17q4-15 18-10m39 0q14-7 26 9" fill="none" stroke="#cdb985" stroke-width="2.3"/>
+  <path d="M-29-13-12-36 3-13H-29m17-23h33L3-13m18-23 8 23" fill="none" stroke="#526e58" stroke-width="5"/>
+  <path d="M-29-13-12-36 3-13H-29m17-23h33L3-13m18-23 8 23" fill="none" stroke="#d78a65" stroke-width="3.1"/>
+  <path d="M-25-15h27q8 1 5 6h-29Z" fill="#e1b36a" stroke="#aa8953" stroke-width="1.3"/>
+  <path d="M-12-36v-5m33 5-2-12h12" fill="none" stroke="#426558" stroke-width="2.5"/>
+  <path d="M-20-42h16q3 4-1 5h-13Z" fill="#5b7865" stroke="#426558" stroke-width="1.4"/><path d="M-17-40h10" stroke="#8ca087" stroke-width="1.2"/>
+  <path d="M24-48h7" stroke="#b79867" stroke-width="3"/>
+  <circle cx="3" cy="-13" r="4" fill="#e9cb83" stroke="#547762" stroke-width="1.4"/>
+  <path d="m3-13 5 6h5" fill="none" stroke="#537661" stroke-width="1.8"/><circle cx="29" cy="-13" r="1.8" fill="#d8b970"/>
+</g></g>
+<g id="mount-mountain"><g stroke-linecap="round" stroke-linejoin="round">
+  <g data-part="wheel" data-x="-29" data-y="-13" transform="translate(-29 -13)"><use href="#wheel-trail"/></g>
+  <g data-part="wheel" data-x="29" data-y="-13" transform="translate(29 -13)"><use href="#wheel-trail"/></g>
+  <path d="M-29-13-12-36 3-13H-29m17-23h31L3-13m16-23 10 23" fill="none" stroke="#426558" stroke-width="5.6"/>
+  <path d="M-29-13-12-36 3-13H-29m17-23h31L3-13m16-23 10 23" fill="none" stroke="#85a16e" stroke-width="3.6"/>
+  <path d="m-5-31 7 11" stroke="#416353" stroke-width="4.5"/><path d="m-6-30 5-1-3 5 6-1-3 5 5-1" fill="none" stroke="#e5c477" stroke-width="1.4"/>
+  <path d="m21-30 5 13m-2-14 5 13" stroke="#c2b580" stroke-width="2.4"/>
+  <path d="M-12-36v-6m31 6-2-12h16m-6 0h6" fill="none" stroke="#426558" stroke-width="2.7"/>
+  <path d="M-20-43h16l2 4h-18Z" fill="#506b58" stroke="#426558" stroke-width="1.4"/><path d="M-18-42h11" stroke="#c4c39a" stroke-width="1"/>
+  <circle cx="3" cy="-13" r="4.5" fill="#6b8c70" stroke="#3c6051" stroke-width="1.7"/><circle cx="3" cy="-13" r="2" fill="#d4c086"/>
+  <path d="m3-13 5 6h5M3-10l-29-1" fill="none" stroke="#4c6d57" stroke-width="1.5"/>
+</g></g>
+<g id="mount-road"><g stroke-linecap="round" stroke-linejoin="round">
+  <g data-part="wheel" data-x="-29" data-y="-13" transform="translate(-29 -13)"><use href="#wheel-road"/></g>
+  <g data-part="wheel" data-x="29" data-y="-13" transform="translate(29 -13)"><use href="#wheel-road"/></g>
+  <path d="M-29-13-12-36 3-13H-29m17-23h32L3-13m17-23 9 23" fill="none" stroke="#426558" stroke-width="4.3"/>
+  <path d="M-29-13-12-36 3-13H-29m17-23h32L3-13m17-23 9 23" fill="none" stroke="#78a9ac" stroke-width="2.6"/>
+  <path d="M-12-36v-7m32 7-2-11h12q9 1 6 7t-7 1" fill="none" stroke="#426558" stroke-width="2.5"/>
+  <path d="M28-47h4q7 2 3 7" fill="none" stroke="#a7c3ad" stroke-width="1.2"/>
+  <path d="M-21-44h17l1 3-14 1Z" fill="#526e5d" stroke="#426558" stroke-width="1.3"/>
+  <path d="m4-29 4-1 4 8-4 1Z" fill="#f1ddb0" stroke="#658a7e" stroke-width="1.2"/>
+  <path d="M-29-13 3-17 8-10l-37-1" fill="none" stroke="#7b9682" stroke-width="1"/>
+  <circle cx="3" cy="-13" r="4.2" fill="#b5cab3" stroke="#426558" stroke-width="1.4"/><circle cx="3" cy="-13" r="2" fill="#6c9186"/>
+  <path d="m3-13 6 6h5" fill="none" stroke="#426558" stroke-width="1.6"/>
+</g></g>
+<g id="mount-motor"><g stroke-linecap="round" stroke-linejoin="round">
+  <g data-part="wheel" data-x="-29" data-y="-13" transform="translate(-29 -13)"><use href="#wheel-motor"/></g>
+  <g data-part="wheel" data-x="29" data-y="-13" transform="translate(29 -13)"><use href="#wheel-motor"/></g>
+  <path d="M-43-23q15-14 27 0m31 0q14-14 27 0" fill="none" stroke="#426558" stroke-width="4"/><path d="M-43-23q15-14 27 0m31 0q14-14 27 0" fill="none" stroke="#c2a263" stroke-width="2"/>
+  <path d="M-29-13-16-35 19-34 11-10H-11l-8-25m38 1 10 21" fill="none" stroke="#426558" stroke-width="4"/>
+  <path d="M-12-36Q2-49 21-35l-6 11H-8Z" fill="#d4ad64" stroke="#7e8055" stroke-width="1.8"/><path d="M-7-36q10-8 20-1" fill="none" stroke="#f4d58a" stroke-width="2"/>
+  <path d="M0-44h6" stroke="#426558" stroke-width="2.5"/>
+  <path d="M-31-41h20l3 5h-23Z" fill="#5a7060" stroke="#426558" stroke-width="1.6"/><path d="M-28-39h13" stroke="#bba474" stroke-width="1.2"/>
+  <rect x="-12" y="-26" width="20" height="15" rx="3" fill="#6b887a" stroke="#426558" stroke-width="1.5"/>
+  <path d="M-9-23H5m-14 3H5m-14 3H5" stroke="#a7baa0" stroke-width="1.3"/><circle cx="-1" cy="-11" r="5" fill="#a9bba2" stroke="#426558" stroke-width="1.4"/><circle cx="-1" cy="-11" r="2" fill="#617e6c"/>
+  <path d="m20-34 5-11-7-3m4 16 7 19" fill="none" stroke="#426558" stroke-width="2.8"/><path d="m24-29 4 12" stroke="#d2c58f" stroke-width="2.2"/>
+  <path d="m-18-31-6 15" stroke="#c1b77d" stroke-width="3"/><path d="m-21-28 3 3-5 1 3 3-5 1" fill="none" stroke="#56745e" stroke-width="1"/>
+  <path d="M-24-7H14l5-4" fill="none" stroke="#426558" stroke-width="4"/><path d="M-24-7H10" stroke="#b6c6a9" stroke-width="2"/>
+  <path d="M26-41h6v11h-6Z" fill="#d6b775" stroke="#426558" stroke-width="1.4"/><ellipse cx="33" cy="-35.5" rx="4" ry="5.5" fill="#ffe4a1" stroke="#7b8158" stroke-width="1.4"/><path d="M33-39v5" stroke="#fff5ce" stroke-width="1.3"/>
+  <path d="M26-27h12v4H26Z" fill="#6c8474" stroke="#426558" stroke-width="1.2"/>
+</g></g>
+<!-- 主角嘴部拆成相接的喉囊与上喙：每一块闭合，不从眼睛引线。 -->
+<g id="art-pelican-body" stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M-17-22Q-28-24-34-29q3 10 11 16C-24 0-9 5 5-1c11-5 12-17 13-26q1-9 10-12c7-4 7-10 3-15-5-6-13-4-17 1-4 5-3 13-5 19C6-23-4-20-17-22Z" fill="#fff9e6" stroke-width="2"/>
+  <path d="M-22-13Q-17 1-3-1q16-2 18-23Q10-4-6-6q-10-1-16-7Z" fill="#e0e3c9" stroke="none"/>
+  <path d="M-21-15Q-9-24 4-11q-5 11-18 6-6-3-7-10Z" fill="#e7e8d1" stroke="#99b09a" stroke-width="1.3"/>
+  <path d="M-16-14q7-4 13 0m-14 3q4 5 9 4M-29-23l8 5" fill="none" stroke="#fbf6de" stroke-width="2"/>
+  <path d="M30-40 59-40Q55-28 43-30q-9 1-16-6l-4-2q4 0 7-2Z" fill="#e3ac56" stroke="#aa7b43" stroke-width="1.5"/>
+  <path d="M29-37Q40-29 52-35q-9 8-20 1Z" fill="#f2c66e" stroke="none"/>
+  <path d="M30-46Q43-47 60-41l1 2q-15 1-31-1Z" fill="#f2c572" stroke="#aa7b43" stroke-width="1.5"/>
+  <path d="M33-44q12 0 22 3" fill="none" stroke="#ffe1a0" stroke-width="1.3"/>
+  <path d="M30-40q14 2 30 0" fill="none" stroke="#a87b45" stroke-width="1.2"/>
+  <circle cx="24.5" cy="-47" r="2.5" fill="#294b47" stroke="none"/><circle cx="25.2" cy="-47.8" r=".75" fill="#fff" stroke="none"/>
+  <path d="M20-53q3-2 6-1" fill="none" stroke="#a8bca0" stroke-width="1.1"/><ellipse cx="23" cy="-43" rx="2.3" ry="1.1" fill="#e6d8b0" stroke="none"/>
+</g>
+<g id="wear-sailor"><g stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M11-86q-4-10 6-13 9-4 20 3l3 10Z" fill="#fff8e1" stroke-width="1.8"/>
+  <path d="M13-87q10-4 24-1l-2-4q-13-2-21 3Z" fill="#e5e4c9" stroke="none"/>
+  <path d="M9-87h32v5H9Z" fill="#508573" stroke-width="1.4"/><path d="M12-85h25" stroke="#8fb29a" stroke-width="1"/>
+  <path d="M25-95v6m-4-2q4 6 8 0m-7-2h6" fill="none" stroke="#b3894d" stroke-width="1.2"/><circle cx="25" cy="-96" r="1" fill="#e0b56c" stroke="#b3894d" stroke-width=".8"/>
+</g></g>
+<g id="wear-guard"><g stroke="#426558" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10-85q-2-18 17-17 17 0 15 18Z" fill="#6e9180" stroke-width="1.8"/>
+  <path d="M27-101q12 3 11 16h4q2-14-15-16Z" fill="#537564" stroke="none"/><path d="M25-100q3 7 2 15" stroke="#c9b97e" stroke-width="2.2"/>
+  <path d="M8-86h36v5H8Z" fill="#d9ba79" stroke-width="1.5"/><path d="M12-84h27" stroke="#f5df9c" stroke-width="1"/>
+  <g fill="#e1c781" stroke="#45685a" stroke-width=".8"><circle cx="15" cy="-89" r="1.3"/><circle cx="36" cy="-89" r="1.3"/><circle cx="18" cy="-97" r="1.1"/><circle cx="34" cy="-97" r="1.1"/></g>
+  <circle cx="12" cy="-83" r="2.2" fill="#eac87e" stroke-width="1"/>
+</g></g>
+<g id="wear-red">
+  <g data-part="tail" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M10-58Q-7-67-27-60l5 5-4 5q18-7 35-1Z" fill="#d88a65" stroke="#966a50" stroke-width="1.3"/>
+    <path d="M-23-52q17-6 31-2l1 3q-18-5-32 1Z" fill="#bb6f52"/>
+    <path d="M5-59q-13-5-26-1" fill="none" stroke="#f5c996" stroke-width="1.1" stroke-dasharray="3 2"/>
+  </g>
+  <path d="m10-60 14 4-2 7-14-4Z" fill="#c87656" stroke="#966a50" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="m13-57 8 2m-9 1 7 2" stroke="#efb387" stroke-width="1"/>
+  <path d="m9-59 5 2-2 7-5-3Z" fill="#e5a077" stroke="#966a50" stroke-width="1"/>
+</g>
+<g id="wear-breeze">
+  <g data-part="tail" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M10-58Q-11-69-35-59l7 5-4 7q20-10 41-4Z" fill="#83b4a7" stroke="#527f70" stroke-width="1.3"/>
+    <path d="M-30-49q18-9 38-5l1 3q-21-5-39 4Z" fill="#5f9a8d"/>
+    <path d="M-28-59q4-5 8-1t8 0 8 1" fill="none" stroke="#d9e8c6" stroke-width="1.5"/>
+    <path d="m-29-59 3 7m3-8 3 7" stroke="#d9e8c6" stroke-width="1"/>
+  </g>
+  <path d="m10-60 14 4-2 7-14-4Z" fill="#5f9a8e" stroke="#527f70" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="m16-57-1 5m4-4-1 5" stroke="#d0e1b8" stroke-width="1.2"/>
+  <path d="m9-59 5 2-2 7-5-3Z" fill="#a3c8af" stroke="#527f70" stroke-width="1"/>
+</g>
+<g id="rig-pelican"><ellipse data-part="shadow" rx="30" ry="7" fill="#5c7852" opacity=".20"/>
+<g data-part="lift"><g data-part="facing">
+<g data-part="bike"/><g data-part="legs" stroke-linecap="round" fill="none" stroke="#c49a55" stroke-width="4">
+<path data-part="legA" d="M-7-34 -9 -18 -10 -2h10"/><path data-part="legB" d="M2-33 3 -17 4 -1h10"/></g>
+<g data-part="body" transform="translate(0 -31)" stroke-linecap="round" stroke-linejoin="round"><use href="#art-pelican-body"/></g>
+<g data-part="scarf"/><g data-part="hat"/><g data-part="hand" transform="translate(21 -40) rotate(0) scale(.72)"/>
+<path data-part="arm" d="M8-46q9 10 16 8" fill="none" stroke="#fff7e2" stroke-width="5" stroke-linecap="round"/>
+</g></g></g>
+<g id="art-dummy" stroke-linejoin="round" stroke-linecap="round">
+  <ellipse cy="3" rx="24" ry="4" fill="#9eaf83" opacity=".2"/>
+  <path d="M-5 0v-66h10V0Z" fill="#ae8b5c" stroke="#70805a" stroke-width="1.8"/><path d="M-2-23v21" stroke="#d5b77d" stroke-width="1.4"/>
+  <path d="M-26-48h52v6h-52Z" fill="#c4a371" stroke="#7b8159" stroke-width="1.6"/>
+  <path d="M-20-51q0-29 20-29t20 29q-1 25-20 28t-20-28Z" fill="#dbc086" stroke="#8e895b" stroke-width="1.8"/>
+  <path d="M12-73q12 32-7 46 18-4 15-26-1-16-8-20Z" fill="#c5a970"/>
+  <path d="M-15-65h30M-18-52h36M-14-36h28" fill="none" stroke="#b09b68" stroke-width="1.5"/>
+  <path d="M-13-65q5-8 11-9m-12 22 1 11m27-23 1 10" fill="none" stroke="#f0dca3" stroke-width="1.8"/>
+  <circle cy="-52" r="9" fill="none" stroke="#bf7757" stroke-width="2.8"/><circle cy="-52" r="3" fill="#bf7757"/>
+  <path d="M-10-1h20v5h-20Z" fill="#c2a071" stroke="#7b8159" stroke-width="1.4"/>
+</g>
+<g id="camp-weapon-rack">
+  <g stroke="#71805a" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cy="45" rx="53" ry="5" fill="#a1b18a" opacity=".23" stroke="none"/>
+    <path d="M-48-43h96v75h-96Z" fill="#d2b98a" stroke-width="1.5"/><path d="M-28-41v70m28-70v70m28-70v70" stroke="#ba9d70" stroke-width="1.2"/>
+    <path d="M-49-48h8v91h-8Zm90 0h8v91h-8Z" fill="#b59665" stroke-width="1.7"/>
+    <path d="M-52-43H52v7H-52Zm0 30H52v6H-52Zm0 42H52v6H-52Z" fill="#bba073" stroke-width="1.5"/>
+    <path d="M-47-46v86m92-86v86M-47-40h93" stroke="#e3c895" stroke-width="1.3"/>
+    <path d="M-54 41h18v5h-18Zm90 0h18v5H36Z" fill="#a58d60" stroke-width="1.5"/>
+    <g fill="#edcf8e" stroke-width="1"><circle cx="-45" cy="-39" r="1.8"/><circle cx="45" cy="-39" r="1.8"/><circle cx="-45" cy="31" r="1.8"/><circle cx="45" cy="31" r="1.8"/></g>
+  </g>
+  <g transform="translate(-29 -23) scale(.38)"><use href="#weapon-bow"/></g>
+  <g transform="translate(-4 -23) scale(.38)"><use href="#weapon-shield"/></g>
+  <g transform="translate(24 -23) scale(.38)"><use href="#weapon-katana"/></g>
+  <g transform="translate(-30 15) scale(.4)"><use href="#weapon-hammer"/></g>
+  <g transform="translate(-4 15) scale(.4)"><use href="#weapon-staff"/></g>
+  <g transform="translate(22 13) scale(.4)"><use href="#weapon-shotgun"/></g>
+</g>
+<g id="camp-parking">
+  <g stroke="#6d8b69" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cy="11" rx="94" ry="5" fill="#a1b18a" opacity=".24" stroke="none"/>
+    <path d="M-91 7v-65H91V7" fill="none" stroke-width="3"/><path d="M-93-58H93" stroke="#b6b586" stroke-width="2"/>
+    <rect x="-42" y="-66" width="84" height="23" rx="3" fill="#f0deb0" stroke="#86936a" stroke-width="1.6"/>
+    <path d="M-87 6H87v5H-87Z" fill="#c1b98c" stroke-width="1.2"/>
+    <path d="M-72 5v-9q6-9 12 0v9m32 0v-9q6-9 12 0v9m32 0v-9q6-9 12 0v9m32 0v-9q6-9 12 0v9" fill="none" stroke="#9eae87" stroke-width="2"/>
+  </g>
+  <g transform="translate(-66 2) scale(.45)"><use href="#mount-bicycle"/></g>
+  <g transform="translate(-22 2) scale(.45)"><use href="#mount-mountain"/></g>
+  <g transform="translate(22 2) scale(.45)"><use href="#mount-road"/></g>
+  <g transform="translate(66 2) scale(.45)"><use href="#mount-motor"/></g>
+  <text x="0" y="-51" text-anchor="middle" font-size="10" fill="#426658" font-family="sans-serif" letter-spacing="2">海风车行</text>
+</g>
+<!-- ASSET-SPRITES:END -->
+</defs>
+<g id="backdrop"></g>
+<g id="camera"><g id="scenery"></g><g id="ground-effects"></g><g id="drops"></g><g id="actors"></g><g id="projectiles"></g><g id="effects"></g></g>
+</svg>
+<div class="hit-flash" id="hit-flash"></div>
+<div class="hud"><div id="camp-heading" class="camp-title">海风镇<small>走一走，和老朋友打个招呼。</small></div><div class="vitals" id="run-hud" hidden><div class="health-label"><span>骑士体力</span><b id="health-text"></b></div><div class="track"><div class="fill" id="health-fill"></div></div><div class="track xp"><div class="fill" id="xp-fill"></div></div><div class="run-detail" id="run-detail"></div></div><div class="clock"><strong id="clock">营地</strong><small id="clock-note">自由步行 · E 拜访</small></div></div>
+<div class="boss-hud" id="boss-hud" hidden><span id="boss-label">寄居蟹 · 滩涂霸主</span><div class="track"><div class="fill" id="boss-fill"></div></div></div>
+<div id="save-warning" class="save-warning" hidden role="status"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="loadout" id="loadout"></div><button class="interact" id="interact" hidden></button>
+<nav id="camp-nav" class="camp-nav" aria-label="前往营地建筑"><button data-walk="board">公告栏</button><button data-walk="hall">行政厅</button><button data-walk="smith">铁匠铺</button><button data-walk="rack">武器架</button><button data-walk="garage">停车点</button><button data-walk="school">学堂</button><button data-walk="adventure">冒险入口</button></nav>
+<div class="joystick" id="joystick" aria-label="拖动摇杆移动"><div class="joystick-knob" id="joystick-knob"></div></div>
+<div class="actions"><button class="action" id="mount-button">上车<small>R</small></button><button class="action" id="jump-button">跳跃<small>空格</small></button><button class="action" id="dash-button">闪避<small>SHIFT</small></button><button class="action" id="interact-button">交互<small>E</small></button><button class="action" id="skill-button">蓄力<small>按住 K</small></button><button class="action main" id="attack-button">攻击<small>按住 J</small></button></div>
+</main>
+<footer class="footer"><span id="footer-controls">WASD 移动 · J 攻击 · K 特色 · 空格 跳跃 · Shift 闪避 · R 上下车 · E 交互</span><span id="save-status">本地存档 · v0.3.2</span></footer>
+</div>
+<dialog id="panel" aria-labelledby="panel-title"><button class="close" id="panel-close" aria-label="关闭窗口">×</button><header class="dialog-head"><svg class="portrait" id="portrait" viewBox="0 0 90 115" aria-hidden="true"><use id="portrait-art" width="90" height="115"/></svg><div><h2 id="panel-title"></h2><p id="panel-subtitle"></p></div></header><div id="panel-content"></div></dialog>
+<!-- ASSET-CATALOG:START -->
+<script type="application/json" id="asset-catalog">{"schemaVersion":1,"libraryVersion":"1.1.0","date":"2026-10-27","creator":"ScarfQian","baselineGameVersion":"0.3.0","source":"assets/sprites.svg","gameVersion":"0.3.2","policy":{"status":"按用户要求优化现有造型，r2 待用户确认；历史素材保留原样","identity":"id 与 runtimeKey 不改名、不复用；外观变化递增条目 revision 并记录修改编号","edit":"改 canonical 源后运行 python3 tools/sync_assets.py；游戏入口生成区与图鉴不直接改","reference":"需要新姿态、地图、敌潮、装备组合时优先实例化现有资产。重新设计轮廓须由用户明确提出；日常数值调整不自动改外形。"},"styleGuide":{"palette":{"outline":"#426558","body":"#fff9e6","sage":"#8faa91","coral":"#d88a65","wood":"#b89c6c","metal":"#78988a","magic":"#75b5a5","brass":"#dfb466"},"line":"圆头圆角的闭合轮廓；角色/装备外轮廓约 1.5—2 SVG 单位，建筑约 2—3；内部线条较细。按实际展示尺寸保留识别细节，避免过密装饰。","perspective":"鹈鹕、武器和车辆朝右侧面；NPC与建筑为正面插画；怪物保留原朝向，补足羽毛、尖刺、关节与壳体结构。","units":"游戏 SVG 设计单位。卡片 viewBox 仅负责展示，不作为碰撞尺寸。人物(0,0)为地面脚点，Y向下、z向上。","layers":["地面影子","车辆","腿","躯干","围巾","帽子","手持武器","前臂"],"rules":["人物与装备分层；不为换装复制整个人物","精英蟹与普通蟹有明确变体关系，居民在建筑和对话中共享","卡片仅列实际存在的姿态；缺失姿态标待设计，不能凭说明宣称帧动画齐全","历史卡不自动接入当前玩法；海贝货币无独立图形，不虚构图标","上喙和喉囊为相接的闭合形状，嘴根在眼睛前下方，不从眼睛引线","用单层阴影与少量高光区分羽毛、木、金属、织物；不增加光晕或写实纹理","围巾动画只改变 tail 图层变换，轮廓与纹样由资产源保持","轮廓改变只影响图形；碰撞、伤害、价格、存档 ID 不随美术调整"]},"helpers":[{"id":"wheel-lines","purpose":"LEG-001 的旧轮辐"},{"id":"water-pattern","purpose":"保留的水面纹理，当前横版背景未引用"},{"id":"sand-pattern","purpose":"当前海滩地面纹理"},{"id":"crab-limbs","purpose":"MON-001 / MON-005 共用蟹足与蟹钳"},{"id":"crab-face","purpose":"MON-001 / MON-005 共用眼柄与表情"},{"id":"wheel-city","purpose":"MNT-001 两轮共用"},{"id":"wheel-trail","purpose":"MNT-002 两轮共用"},{"id":"wheel-road","purpose":"MNT-003 两轮共用"},{"id":"wheel-motor","purpose":"MNT-004 两轮共用"}],"entries":[{"id":"CHR-001","kind":"character","name":"鹈鹕骑士","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"pelican","definition":{"rig":"rig-pelican","defaultLoadout":{"weapon":"bow","hat":"sailor","scarf":"red","mount":"bicycle"},"anchors":{"ground":[0,0],"body":[0,-31],"hand":[21,-40],"weaponScale":0.72,"hat":"人物本地坐标，帽沿 y=-84","scarf":"人物本地坐标，颈部 y=-59"},"rigParts":["root","shadow","lift","facing","bike","legs","legA","legB","body","scarf","hat","hand","arm"]},"visual":{"id":"rig-pelican","viewBox":[-54,-110,120,126],"mode":"hero","loadout":{"weapon":"bow","hat":"sailor","scarf":"red","mount":"bicycle"},"mounted":false},"identity":["奶油白长颈鹈鹕、带厚度的金黄上喙、连接下颌的柔软喉囊；眼睛与嘴根分离","翼羽浅阴影与尾羽纹理；身体、帽巾、武器和车辆继续独立挂载"],"actions":["待机/步行：腿摆动、身体轻微起伏","骑乘：两轮旋转、踏板腿","跳跃：lift 上移，shadow 留在地面","受击闪烁/攻击摆臂/围巾飘动：由 render 驱动"],"dependencies":["EQP-001","EQP-003","WPN-001","MNT-001"],"integration":["makeHero","refreshAppearance","render","stats"],"reuse":"克隆 rig-pelican；只改本实例的 data-part。镜像作用于 facing，跳跃作用于 lift。","revisionNote":"20261027-008 · 奶油白长颈鹈鹕、带厚度的金黄上喙、连接下颌的柔软喉囊；眼睛与嘴根分离"},{"id":"CHR-002","kind":"character","name":"熊猫铁匠","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"panda","definition":{"role":"铁匠铺老板，负责帽子/围巾强化","building":"BLD-003"},"visual":{"id":"camp-panda","viewBox":[0,0,90,100],"mode":"symbol"},"identity":["圆耳黑白熊猫、奶油白脸与深绿眼斑","皮革围裙有铆钉、缝线和工具口袋，铁锤有金属端面；保持铁匠身份"],"actions":["静态立绘；没有独立行走或战斗动画"],"integration":["openCampPanel","建筑内嵌 use"],"reuse":"对话头像与建筑内居民共用此 symbol；修改一次同步两处。","revisionNote":"20261027-008 · 圆耳黑白熊猫、奶油白脸与深绿眼斑"},{"id":"CHR-003","kind":"character","name":"仙鹤先生","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"crane","definition":{"role":"学堂老板，负责天赋研习","building":"BLD-006"},"visual":{"id":"camp-crane","viewBox":[0,0,90,115],"mode":"symbol"},"identity":["白色修长脖颈、红色顶冠、闭合尖喙与鼠尾草绿长袍","书本有页线与书签，衣襟和下摆分层；保持静态学者立绘"],"actions":["静态立绘；没有独立行走或战斗动画"],"integration":["openCampPanel","建筑内嵌 use"],"reuse":"对话头像与建筑内居民共用此 symbol；修改一次同步两处。","revisionNote":"20261027-008 · 白色修长脖颈、红色顶冠、闭合尖喙与鼠尾草绿长袍"},{"id":"CHR-004","kind":"character","name":"秦始皇","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"emperor","definition":{"role":"行政厅老板，发布任务","building":"BLD-002"},"visual":{"id":"camp-emperor","viewBox":[0,0,90,115],"mode":"symbol"},"identity":["方形冠冕、金色垂旒、短须与墨绿袍服","袍服有克制的金色云纹、衣褶与袖口，面部保持原比例"],"actions":["静态立绘；没有独立行走或战斗动画"],"integration":["openCampPanel","建筑内嵌 use"],"reuse":"对话头像与建筑内居民共用此 symbol；修改一次同步两处。","revisionNote":"20261027-008 · 方形冠冕、金色垂旒、短须与墨绿袍服"},{"id":"MON-001","kind":"monster","name":"螃蟹","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"crab","definition":{"hp":40,"speed":60,"r":21,"h":42,"damage":10,"xp":1,"art":"art-crab","offset":16},"visual":{"id":"art-crab","viewBox":[-38,-30,76,52],"mode":"group","scale":1,"sharedParts":["crab-limbs","crab-face"]},"identity":["珊瑚橙蟹壳、分节短足与双钳，奶油色眼柄和高光","壳体有浅亮面和下缘阴影；肢体/表情共用组件"],"actions":["地面追击，近距离预警后夹击"],"dependencies":[],"anchors":{"ground":[0,0],"artOffset":16,"height":42,"collisionRadius":21,"spawnHeight":0},"integration":["enemyKinds","spawnEnemy","updateEnemies","shotHits"],"reuse":"保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。","revisionNote":"20261027-008 · 珊瑚橙蟹壳、分节短足与双钳，奶油色眼柄和高光"},{"id":"MON-002","kind":"monster","name":"海鸥","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"gull","definition":{"hp":30,"speed":100,"r":20,"h":34,"z":35,"damage":9,"xp":1,"art":"art-gull","offset":16},"visual":{"id":"art-gull","viewBox":[-34,-28,68,50],"mode":"group","scale":1},"identity":["奶油白身、灰绿展开羽翼，羽尖分段、黄色闭合尖喙","侧面头尾与小爪清晰；既有浮动转角动画沿用"],"actions":["离地追击，翅膀摇摆"],"dependencies":[],"anchors":{"ground":[0,0],"artOffset":16,"height":34,"collisionRadius":20,"spawnHeight":35},"integration":["enemyKinds","spawnEnemy","updateEnemies","shotHits"],"reuse":"保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。","revisionNote":"20261027-008 · 奶油白身、灰绿展开羽翼，羽尖分段、黄色闭合尖喙"},{"id":"MON-003","kind":"monster","name":"海胆","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"urchin","definition":{"hp":95,"speed":38,"r":24,"h":49,"damage":15,"xp":3,"art":"art-urchin","offset":25},"visual":{"id":"art-urchin","viewBox":[-29,-29,58,58],"mode":"group","scale":1},"identity":["淡紫圆核与闭合锥形放射刺、浅色双眼","下侧阴影与少量壳面高光，尖刺在小尺寸下仍可辨认"],"actions":["慢速厚血近战"],"dependencies":[],"anchors":{"ground":[0,0],"artOffset":25,"height":49,"collisionRadius":24,"spawnHeight":0},"integration":["enemyKinds","spawnEnemy","updateEnemies","shotHits"],"reuse":"保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。","revisionNote":"20261027-008 · 淡紫圆核与闭合锥形放射刺、浅色双眼"},{"id":"MON-004","kind":"monster","name":"水母","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"jelly","definition":{"hp":60,"speed":43,"r":22,"h":52,"z":10,"damage":10,"xp":2,"art":"art-jelly","offset":26},"visual":{"id":"art-jelly","viewBox":[-24,-29,48,63],"mode":"group","scale":1},"identity":["薄荷绿伞盖、波浪下缘和四条弯曲触须","伞盖单层暗面与浅色反光，触须与伞盖连续相接"],"actions":["保持一定距离并发射弹丸"],"dependencies":[],"anchors":{"ground":[0,0],"artOffset":26,"height":52,"collisionRadius":22,"spawnHeight":10},"integration":["enemyKinds","spawnEnemy","updateEnemies","shotHits"],"reuse":"保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。","revisionNote":"20261027-008 · 薄荷绿伞盖、波浪下缘和四条弯曲触须"},{"id":"MON-005","kind":"monster","name":"精英螃蟹","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"elite","definition":{"hp":220,"speed":60,"r":31,"h":62,"damage":18,"xp":6,"art":"art-crab-elite","offset":24,"scale":1.5},"visual":{"id":"art-crab-elite","viewBox":[-58,-45,116,78],"mode":"group","scale":1.5,"sharedParts":["crab-limbs","crab-face"]},"identity":["与普通蟹共用肢体和表情，保留 1.5 倍体型","独立的鼠尾草绿多面甲壳、黄铜边和铆钉，作为同编号精英外观修订"],"actions":["较大尺寸、较高体力的近战变体"],"dependencies":["MON-001"],"anchors":{"ground":[0,0],"artOffset":24,"height":62,"collisionRadius":31,"spawnHeight":0},"integration":["enemyKinds","spawnEnemy","updateEnemies","shotHits"],"reuse":"保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。","revisionNote":"20261027-008 · 与普通蟹共用肢体和表情，保留 1.5 倍体型"},{"id":"MON-006","kind":"monster","name":"寄居蟹 · 滩涂霸主","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"boss","definition":{"hp":1250,"speed":43,"r":55,"h":104,"damage":22,"xp":20,"art":"art-boss","offset":46},"visual":{"id":"art-boss","viewBox":[-82,-78,164,132],"mode":"group","scale":1},"identity":["紫色大蟹、奶油螺旋背壳、金色王冠和宽大双钳","背壳与脸部前后分层，关节、钳口、眼柄与口部更明确"],"actions":["追击、扇形弹幕、预警冲锋；半血后加快"],"dependencies":[],"anchors":{"ground":[0,0],"artOffset":46,"height":104,"collisionRadius":55,"spawnHeight":0},"integration":["enemyKinds","spawnEnemy","updateEnemies","shotHits"],"reuse":"保持地面点、offset 和碰撞尺寸的关系；精英共享 art-crab。动作逻辑在 updateEnemies，不从卡片文字重新生成。","revisionNote":"20261027-008 · 紫色大蟹、奶油螺旋背壳、金色王冠和宽大双钳"},{"id":"WPN-001","kind":"weapon","name":"木弓","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"bow","definition":{"name":"木弓","type":"弓箭","skill":"蓄力","hold":true,"damage":28,"wind":0.1,"recovery":0.32,"range":650,"desc":"J 发射单箭；按住 K 蓄力，松开穿透射击。蓄力时减速，受击会中断。","art":"weapon-bow"},"visual":{"id":"weapon-bow","viewBox":[-25,-50,88,86],"mode":"group"},"identity":["木弓有上下弓臂、弓弦、绿握把和完整箭羽/箭头","弯曲木纹与浅色亮边；基础木弓身份不变"],"anchors":{"grip":[0,0],"mount":"CHR-001.hand","heroTransform":"translate(21 -40) rotate(actionAngle) scale(.72)"},"actions":["J 发射单箭；按住 K 蓄力，松开穿透射击。蓄力时减速，受击会中断。"],"integration":["weapons","iconWeapon","beginAttack","performAttack"],"reuse":"卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。","revisionNote":"20261027-008 · 木弓有上下弓臂、弓弦、绿握把和完整箭羽/箭头"},{"id":"WPN-002","kind":"weapon","name":"练习刀盾","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"shield","definition":{"name":"练习刀盾","type":"刀盾","skill":"举盾","hold":true,"damage":25,"wind":0.12,"recovery":0.24,"range":82,"desc":"J 两段劈砍；按住 K 举盾。只防正面，格挡消耗架势，耗尽时破防。","art":"weapon-shield"},"visual":{"id":"weapon-shield","viewBox":[-25,-50,88,86],"mode":"group"},"identity":["金属包边木盾、盾心圆钉，配有刃面和护手的短刀","刀盾仍为一套基础武器，盾面木条与短刀缠柄分别可见","图形在握点内预旋转 20°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"],"anchors":{"grip":[0,0],"mount":"CHR-001.hand","heroTransform":"translate(21 -40) rotate(actionAngle) scale(.72)","drawingRotation":20},"actions":["J 两段劈砍；按住 K 举盾。只防正面，格挡消耗架势，耗尽时破防。"],"integration":["weapons","iconWeapon","beginAttack","performAttack"],"reuse":"卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。","revisionNote":"20261027-008 · 金属包边木盾、盾心圆钉，配有刃面和护手的短刀"},{"id":"WPN-003","kind":"weapon","name":"竹柄太刀","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"katana","definition":{"name":"竹柄太刀","type":"太刀","skill":"居合","hold":true,"damage":24,"wind":0.1,"recovery":0.22,"range":112,"desc":"J 三段连斩，末段更重；按住 K 蓄势，松开前向居合。","art":"weapon-katana"},"visual":{"id":"weapon-katana","viewBox":[-25,-50,88,86],"mode":"group"},"identity":["修长弧形刀刃、浅色刃线、黄铜护手和竹柄缠带","保持太刀长而轻的轮廓，与块状巨锤区别","图形在握点内预旋转 15°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"],"anchors":{"grip":[0,0],"mount":"CHR-001.hand","heroTransform":"translate(21 -40) rotate(actionAngle) scale(.72)","drawingRotation":15},"actions":["J 三段连斩，末段更重；按住 K 蓄势，松开前向居合。"],"integration":["weapons","iconWeapon","beginAttack","performAttack"],"reuse":"卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。","revisionNote":"20261027-008 · 修长弧形刀刃、浅色刃线、黄铜护手和竹柄缠带"},{"id":"WPN-004","kind":"weapon","name":"木柄巨锤","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"hammer","definition":{"name":"木柄巨锤","type":"巨型双手武器","skill":"蓄力","hold":true,"damage":65,"wind":0.36,"recovery":0.48,"range":135,"desc":"J 大范围重砸；按住 K 蓄力，松开重击。起手较慢，击退明显。","art":"weapon-hammer"},"visual":{"id":"weapon-hammer","viewBox":[-25,-50,88,86],"mode":"group"},"identity":["粗木柄、灰绿块状锤头，锤面包边和铆钉明确","木柄有缠握带与黄铜尾帽，保留重型比例","图形在握点内预旋转 30°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"],"anchors":{"grip":[0,0],"mount":"CHR-001.hand","heroTransform":"translate(21 -40) rotate(actionAngle) scale(.72)","drawingRotation":30},"actions":["J 大范围重砸；按住 K 蓄力，松开重击。起手较慢，击退明显。"],"integration":["weapons","iconWeapon","beginAttack","performAttack"],"reuse":"卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。","revisionNote":"20261027-008 · 粗木柄、灰绿块状锤头，锤面包边和铆钉明确"},{"id":"WPN-005","kind":"weapon","name":"潮汐法杖","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"staff","definition":{"name":"潮汐法杖","type":"法杖","skill":"潮汐术","hold":false,"damage":27,"wind":0.12,"recovery":0.35,"range":570,"desc":"J 持续法弹；K 消耗 30 法力释放前方范围法术。法力自动恢复。","art":"weapon-staff"},"visual":{"id":"weapon-staff","viewBox":[-25,-50,88,86],"mode":"group"},"identity":["斜向木杖、黄铜托座和青绿切面法晶","杖身有缠握带，法晶使用亮暗面区分，仍为基础潮汐法杖","图形在握点内预旋转 35°，使站姿长刃/杖头避开嘴部；动作仍绕原手持点。"],"anchors":{"grip":[0,0],"mount":"CHR-001.hand","heroTransform":"translate(21 -40) rotate(actionAngle) scale(.72)","drawingRotation":35},"actions":["J 持续法弹；K 消耗 30 法力释放前方范围法术。法力自动恢复。"],"integration":["weapons","iconWeapon","beginAttack","performAttack"],"reuse":"卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。","revisionNote":"20261027-008 · 斜向木杖、黄铜托座和青绿切面法晶"},{"id":"WPN-006","kind":"weapon","name":"木托散弹枪","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"shotgun","definition":{"name":"木托散弹枪","type":"散弹枪","skill":"装填","hold":false,"damage":11,"wind":0.08,"recovery":0.52,"range":290,"desc":"J 发射六枚散弹，弹仓 4 发；K 装填。近距离更强，同发后续弹片伤害递减。","art":"weapon-shotgun"},"visual":{"id":"weapon-shotgun","viewBox":[-25,-50,88,86],"mode":"group"},"identity":["短粗并列枪管、木枪托和前护木","枪管高光、金属箍、扳机护圈与木纹明确，不延长成步枪"],"anchors":{"grip":[0,0],"mount":"CHR-001.hand","heroTransform":"translate(21 -40) rotate(actionAngle) scale(.72)"},"actions":["J 发射六枚散弹，弹仓 4 发；K 装填。近距离更强，同发后续弹片伤害递减。"],"integration":["weapons","iconWeapon","beginAttack","performAttack"],"reuse":"卡片、武器架缩略图与人物手持调用同一个图形。新增高级武器另分资产编号，不替换基础武器 ID。","revisionNote":"20261027-008 · 短粗并列枪管、木枪托和前护木"},{"id":"EQP-001","kind":"apparel","name":"水手帽","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"sailor","definition":{"slot":"hat","name":"水手帽","price":0,"desc":"最大体力","effectBase":10,"effectPerLevel":8,"unit":"点","art":"wear-sailor"},"visual":{"id":"wear-sailor","viewBox":[0,-105,55,32],"mode":"group"},"identity":["奶油白软帽顶、鼠尾草绿帽带与小锚徽","帽顶有折面与浅阴影，帽沿仍在人物本地 y=-84 附近"],"anchors":{"slot":"hat","mount":"CHR-001.hat","coordinateSpace":"人物本地坐标，直接挂载，不再次平移"},"actions":["静态附着帽顶"],"integration":["apparel","stats","refreshAppearance","render"],"reuse":"沿用存档 runtimeKey；换装只替换该槽，保留身体与另一装备。升级目前只改属性，不更换外观。","revisionNote":"20261027-008 · 奶油白软帽顶、鼠尾草绿帽带与小锚徽"},{"id":"EQP-002","kind":"apparel","name":"护航帽","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"guard","definition":{"slot":"hat","name":"护航帽","price":16,"desc":"每次减伤","effectBase":1,"effectPerLevel":1,"unit":"点","art":"wear-guard"},"visual":{"id":"wear-guard","viewBox":[0,-105,55,32],"mode":"group"},"identity":["灰绿加厚帽体、黄铜纵向加强条与帽沿","铆钉、侧面阴影和小圆扣使其区别于水手帽"],"anchors":{"slot":"hat","mount":"CHR-001.hat","coordinateSpace":"人物本地坐标，直接挂载，不再次平移"},"actions":["静态附着帽顶"],"integration":["apparel","stats","refreshAppearance","render"],"reuse":"沿用存档 runtimeKey；换装只替换该槽，保留身体与另一装备。升级目前只改属性，不更换外观。","revisionNote":"20261027-008 · 灰绿加厚帽体、黄铜纵向加强条与帽沿"},{"id":"EQP-003","kind":"apparel","name":"红帆围巾","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"red","definition":{"slot":"scarf","name":"红帆围巾","price":0,"desc":"武器伤害","effectBase":6,"effectPerLevel":4,"unit":"%","art":"wear-red"},"visual":{"id":"wear-red","viewBox":[-30,-73,62,29],"mode":"group"},"identity":["珊瑚红颈巾、短开叉飘带、浅色缝线和包结","纹样与飘带作为同一 tail 图层运动，不再仅换色"],"anchors":{"slot":"scarf","mount":"CHR-001.scarf","coordinateSpace":"人物本地坐标，直接挂载，不再次平移","tailPivot":[10,-55]},"actions":["data-part=tail 随角色相位轻摆"],"integration":["apparel","stats","refreshAppearance","render"],"reuse":"克隆原图形；颈圈固定，tail 为包含轮廓和纹样的组，绕 (10,-55) 摆动，不写回统一路径。","revisionNote":"20261027-008 · 珊瑚红颈巾、短开叉飘带、浅色缝线和包结"},{"id":"EQP-004","kind":"apparel","name":"海风围巾","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"breeze","definition":{"slot":"scarf","name":"海风围巾","price":16,"desc":"移动速度","effectBase":6,"effectPerLevel":3,"unit":"%","art":"wear-breeze"},"visual":{"id":"wear-breeze","viewBox":[-39,-74,71,31],"mode":"group"},"identity":["青绿颈巾、较长尖尾与奶油色海浪纹","飘带使用独立轮廓，包结和边线与红帆围巾区分"],"anchors":{"slot":"scarf","mount":"CHR-001.scarf","coordinateSpace":"人物本地坐标，直接挂载，不再次平移","tailPivot":[10,-55]},"actions":["data-part=tail 随角色相位轻摆"],"integration":["apparel","stats","refreshAppearance","render"],"reuse":"克隆原图形；颈圈固定，tail 为包含轮廓和纹样的组，绕 (10,-55) 摆动，不写回统一路径。","revisionNote":"20261027-008 · 青绿颈巾、较长尖尾与奶油色海浪纹"},{"id":"MNT-001","kind":"mount","name":"普通自行车","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"bicycle","definition":{"name":"普通自行车","speed":1.3,"stomp":false,"ram":false,"auto":false,"color":"#d77f61","desc":"经典红车架。骑乘速度 ×1.30，保留普通跳跃与闪避。","art":"mount-bicycle"},"visual":{"id":"mount-bicycle","viewBox":[-51,-57,106,66],"mode":"group"},"identity":["珊瑚红经典车架、奶油轮胎、直把、链罩和挡泥板","木色握把、座垫亮边与链轮踏板；两轮中心沿用既定坐标"],"anchors":{"ground":[0,0],"rearWheel":[-29,-13],"frontWheel":[29,-13],"seat":[-12,-39]},"actions":["经典红车架。骑乘速度 ×1.30，保留普通跳跃与闪避。","轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"],"integration":["mounts","bikeArt","refreshAppearance","jump","dash","updatePlayer","render"],"reuse":"车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。","revisionNote":"20261027-008 · 珊瑚红经典车架、奶油轮胎、直把、链罩和挡泥板"},{"id":"MNT-002","kind":"mount","name":"山地车","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"mountain","definition":{"name":"山地车","speed":1.35,"stomp":true,"ram":false,"auto":false,"color":"#73916d","desc":"粗胎与避震。速度 ×1.35；空格跳起并落地震击，冷却 4 秒。","art":"mount-mountain"},"visual":{"id":"mount-mountain","viewBox":[-51,-57,106,66],"mode":"group"},"identity":["鼠尾草绿车架、颗粒粗胎、前叉避震和中置弹簧","粗轮、金属前叉与宽直把构成山地轮廓；不新增机械玩法"],"anchors":{"ground":[0,0],"rearWheel":[-29,-13],"frontWheel":[29,-13],"seat":[-12,-39]},"actions":["粗胎与避震。速度 ×1.35；空格跳起并落地震击，冷却 4 秒。","轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"],"integration":["mounts","bikeArt","refreshAppearance","jump","dash","updatePlayer","render"],"reuse":"车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。","revisionNote":"20261027-008 · 鼠尾草绿车架、颗粒粗胎、前叉避震和中置弹簧"},{"id":"MNT-003","kind":"mount","name":"公路车","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"road","definition":{"name":"公路车","speed":1.65,"stomp":false,"ram":true,"auto":false,"color":"#6497a2","desc":"轻量弯把。常规速度最快，×1.65；Shift 前向冲撞，冷却 5 秒。","art":"mount-road"},"visual":{"id":"mount-road","viewBox":[-51,-57,106,66],"mode":"group"},"identity":["青蓝细车架、细胎密辐条与公路弯把","小水壶、轻座垫和轻链轮；保持速度型轮廓"],"anchors":{"ground":[0,0],"rearWheel":[-29,-13],"frontWheel":[29,-13],"seat":[-12,-39]},"actions":["轻量弯把。常规速度最快，×1.65；Shift 前向冲撞，冷却 5 秒。","轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"],"integration":["mounts","bikeArt","refreshAppearance","jump","dash","updatePlayer","render"],"reuse":"车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。","revisionNote":"20261027-008 · 青蓝细车架、细胎密辐条与公路弯把"},{"id":"MNT-004","kind":"mount","name":"摩托车","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"motor","definition":{"name":"摩托车","speed":1.5,"stomp":true,"ram":true,"auto":true,"color":"#b7905a","desc":"速度 ×1.50；兼具跳击与冲撞。前方有敌人时每 3 秒自动远射。","art":"mount-motor"},"visual":{"id":"mount-motor","viewBox":[-51,-57,106,66],"mode":"group"},"identity":["黄褐油箱、散热发动机、排气管、车灯与长座垫","厚胎、避震、挡泥板与小型前向射口；四种能力定义沿用"],"anchors":{"ground":[0,0],"rearWheel":[-29,-13],"frontWheel":[29,-13],"seat":[-12,-39]},"actions":["速度 ×1.50；兼具跳击与冲撞。前方有敌人时每 3 秒自动远射。","轮辐以 data-part=wheel 的局部轮心旋转；骑乘腿另属主角"],"integration":["mounts","bikeArt","refreshAppearance","jump","dash","updatePlayer","render"],"reuse":"车辆与骑士身体分开挂载；停车展示与实际骑乘共用原图。四款保持独立轮廓，修改配置不重绘车辆。","revisionNote":"20261027-008 · 黄褐油箱、散热发动机、排气管、车灯与长座垫"},{"id":"BLD-001","kind":"building","name":"公告栏","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"board","definition":{"x":180,"name":"公告栏","owner":"海风镇 · 更新日志","art":"camp-board-art","draw":{"mode":"symbol","dx":-123,"y":198,"width":246,"height":185}},"visual":{"id":"camp-board-art","viewBox":[0,0,200,195],"mode":"symbol"},"identity":["绿色瓦顶、木框与双公告纸，图钉和折角明确","立柱木纹、屋檐暗面与边角铜钉，保持双脚开放设施"],"dependencies":[],"anchors":{"streetX":180,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["海风镇 · 更新日志","静态背景设施；角色在前方行走"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 绿色瓦顶、木框与双公告纸，图钉和折角明确"},{"id":"BLD-002","kind":"building","name":"行政厅","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"hall","definition":{"x":470,"name":"行政厅","owner":"老板 · 秦始皇","art":"camp-hall-art","portrait":"camp-emperor","draw":{"mode":"symbol","dx":-123,"y":145,"width":246,"height":238}},"visual":{"id":"camp-hall-art","viewBox":[0,0,280,230],"mode":"symbol"},"identity":["双层墨绿殿顶、金色屋脊、石阶和对称灯笼","立柱、窗棂、门环与屋檐有分层；秦始皇复用 CHR-004"],"dependencies":["CHR-004"],"anchors":{"streetX":470,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["老板 · 秦始皇","静态背景设施；角色在前方行走"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 双层墨绿殿顶、金色屋脊、石阶和对称灯笼"},{"id":"BLD-003","kind":"building","name":"铁匠铺","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"smith","definition":{"x":800,"name":"铁匠铺","owner":"老板 · 熊猫","art":"camp-smith-art","portrait":"camp-panda","draw":{"mode":"symbol","dx":-123,"y":145,"width":246,"height":238}},"visual":{"id":"camp-smith-art","viewBox":[0,0,260,230],"mode":"symbol"},"identity":["珊瑚红瓦顶、砌筑烟囱、奶油墙、铁砧与暖色炉膛","补足炉口石块、檐影和木梁；熊猫复用 CHR-002，火焰和烟为静态"],"dependencies":["CHR-002"],"anchors":{"streetX":800,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["老板 · 熊猫","烟囱为已有静态路径，当前没有独立烟雾动画"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 珊瑚红瓦顶、砌筑烟囱、奶油墙、铁砧与暖色炉膛"},{"id":"BLD-004","kind":"building","name":"武器架","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"rack","definition":{"x":1010,"name":"武器架","owner":"六类基础武器 · 免费切换","art":"camp-weapon-rack","draw":{"mode":"group","dx":0,"y":325}},"visual":{"id":"camp-weapon-rack","viewBox":[-56,-58,112,110],"mode":"group"},"identity":["木板背架、双层横梁、立柱铜钉与脚座","六类基础武器全部用既有图形陈列；是开放武器架"],"dependencies":["WPN-001","WPN-002","WPN-003","WPN-004","WPN-005","WPN-006"],"anchors":{"streetX":1010,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["六类基础武器 · 免费切换","静态背景设施；角色在前方行走"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 木板背架、双层横梁、立柱铜钉与脚座"},{"id":"BLD-005","kind":"building","name":"停车点","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"garage","definition":{"x":1300,"name":"停车点","owner":"四类基础坐骑 · 自由试骑","art":"camp-parking","draw":{"mode":"group","dx":0,"y":350}},"visual":{"id":"camp-parking","viewBox":[-99,-72,198,94],"mode":"group"},"identity":["四车分位陈列、停车支架和实体“海风车行”招牌","开放设施，无封闭房屋；四车图形直接引用实际坐骑"],"dependencies":["MNT-001","MNT-002","MNT-003","MNT-004"],"anchors":{"streetX":1300,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["四类基础坐骑 · 自由试骑","静态背景设施；角色在前方行走"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 四车分位陈列、停车支架和实体“海风车行”招牌"},{"id":"BLD-006","kind":"building","name":"学堂","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"school","definition":{"x":1600,"name":"学堂","owner":"老板 · 仙鹤","art":"camp-school-art","portrait":"camp-crane","draw":{"mode":"symbol","dx":-123,"y":145,"width":246,"height":238}},"visual":{"id":"camp-school-art","viewBox":[0,0,260,230],"mode":"symbol"},"identity":["青绿卷檐、书本牌匾、竹叶与书窗","瓦缝、门板和台阶有层次；仙鹤复用 CHR-003"],"dependencies":["CHR-003"],"anchors":{"streetX":1600,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["老板 · 仙鹤","静态背景设施；角色在前方行走"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 青绿卷檐、书本牌匾、竹叶与书窗"},{"id":"BLD-007","kind":"building","name":"冒险入口","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"adventure","definition":{"x":1940,"name":"冒险入口","owner":"初始地图 · 海岸试炼","art":"camp-gate-art","draw":{"mode":"symbol","dx":-123,"y":145,"width":246,"height":238}},"visual":{"id":"camp-gate-art","viewBox":[0,0,230,195],"mode":"symbol"},"identity":["带绿瓦顶的木制双柱、方向牌、灯笼、小旗和石柱脚","入口小路、低矮植被和贝壳；仍为同一冒险入口"],"dependencies":["PROP-004"],"anchors":{"streetX":1940,"interactionDepth":30,"interactionDistance":100,"signY":380},"actions":["初始地图 · 海岸试炼","静态背景设施；角色在前方行走"],"integration":["places","drawScene","openCampPanel","render"],"reuse":"图形源中引用居民/陈列物，不再复制形状。位置与图形尺寸在 definition.draw 内分开登记。","revisionNote":"20261027-008 · 带绿瓦顶的木制双柱、方向牌、灯笼、小旗和石柱脚"},{"id":"PROP-001","kind":"prop","name":"练习木桩","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"dummy","definition":{"hp":999,"speed":0,"r":22,"h":78,"damage":0,"xp":0,"offset":0,"art":"art-dummy"},"visual":{"id":"art-dummy","viewBox":[-32,-84,64,92],"mode":"group"},"identity":["草编椭圆靶、珊瑚靶心、木横臂和固定底座","编织圈、木纹与右侧阴影，训练用途不变"],"actions":["受击反馈；不死亡、不掉落、不计任务击退"],"anchors":{"ground":[0,0],"height":78,"radius":22},"integration":["enemyKinds.dummy","spawnEnemy","hurtEnemy"],"reuse":"练习目标独立编号，不作为有奖励的普通怪物复用。","revisionNote":"20261027-008 · 草编椭圆靶、珊瑚靶心、木横臂和固定底座"},{"id":"PROP-002","kind":"prop","name":"营地树","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"tree","definition":{},"visual":{"id":"camp-tree","viewBox":[0,0,100,140],"mode":"symbol"},"identity":["分簇鼠尾草绿树冠、明暗叶团、分叉木干与根脚","少量叶片高光，轮廓闭合，供场景重复摆放"],"actions":["静态场景复用"],"integration":["drawScene"],"reuse":"以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。","revisionNote":"20261027-008 · 分簇鼠尾草绿树冠、明暗叶团、分叉木干与根脚"},{"id":"PROP-003","kind":"prop","name":"海岸草","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"grass","definition":{},"visual":{"id":"art-grass","viewBox":[-16,-32,38,35],"mode":"group"},"identity":["四片闭合长草叶，以长短、弧度与浅叶脉区分","整体仍为轻量海岸草丛，不增加独立动画"],"actions":["静态场景复用"],"integration":["drawScene"],"reuse":"以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。","revisionNote":"20261027-008 · 四片闭合长草叶，以长短、弧度与浅叶脉区分"},{"id":"PROP-004","kind":"prop","name":"海滩贝壳","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"shell","definition":{},"visual":{"id":"art-shell","viewBox":[-16,-21,28,28],"mode":"group"},"identity":["奶油色扇贝、扇形放射纹、波瓣壳缘和浅棕暗面","保留小尺寸装饰物和底部铰合点"],"actions":["静态场景复用"],"integration":["drawScene"],"reuse":"以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。","revisionNote":"20261027-008 · 奶油色扇贝、扇形放射纹、波瓣壳缘和浅棕暗面"},{"id":"PROP-005","kind":"prop","name":"珍珠经验","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"pearl","definition":{},"visual":{"id":"art-pearl","viewBox":[-9,-10,18,20],"mode":"group"},"identity":["薄荷菱形经验晶体、深色侧面和奶油高光","仍称珍珠经验，沿用既有掉落形状和拾取用途"],"actions":["掉落、浮动、吸附与拾取"],"integration":["dropAt / updateDrops"],"reuse":"以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。","revisionNote":"20261027-008 · 薄荷菱形经验晶体、深色侧面和奶油高光"},{"id":"PROP-006","kind":"prop","name":"体力补给","revision":2,"status":"r2 造型优化，待用户确认","runtimeKey":"heart","definition":{},"visual":{"id":"art-heart","viewBox":[-13,-14,26,25],"mode":"group"},"identity":["珊瑚色心形、奶油描边与局部高光","右侧阴影加强轮廓，仍为体力补给"],"actions":["掉落、浮动、吸附与拾取"],"integration":["dropAt / updateDrops"],"reuse":"以 use 引用统一图形；珍珠是经验物，海贝货币目前仅有文字，没有专属图形资产。","revisionNote":"20261027-008 · 珊瑚色心形、奶油描边与局部高光"},{"id":"LEG-001","kind":"legacy","name":"旧版一体骑行鹈鹕","revision":1,"status":"基线登记，未视觉验收","runtimeKey":null,"definition":{},"visual":{"id":"art-player","viewBox":[-42,-66,104,105],"mode":"group"},"identity":["当前横版角色已拆层，此一体造型仅作历史参考，禁止拿来替换 CHR-001。"],"actions":["旧版保留；当前玩法不接入"],"integration":["历史快照 / 兼容保留"],"reuse":"新增玩法如需重新启用，先明确用途；不要与当前角色、武器资产混淆。"},{"id":"LEG-002","kind":"legacy","name":"旧版鱼镖","revision":1,"status":"基线登记，未视觉验收","runtimeKey":null,"definition":{},"visual":{"id":"art-fish","viewBox":[-21,-12,36,24],"mode":"group"},"identity":["当前六基础武器不使用此主武器。"],"actions":["旧版保留；当前玩法不接入"],"integration":["历史快照 / 兼容保留"],"reuse":"新增玩法如需重新启用，先明确用途；不要与当前角色、武器资产混淆。"},{"id":"LEG-003","kind":"legacy","name":"旧版护航海星","revision":1,"status":"基线登记，未视觉验收","runtimeKey":null,"definition":{},"visual":{"id":"art-star","viewBox":[-18,-18,36,36],"mode":"group"},"identity":["当前八通用升级不生成环绕海星。"],"actions":["旧版保留；当前玩法不接入"],"integration":["历史快照 / 兼容保留"],"reuse":"新增玩法如需重新启用，先明确用途；不要与当前角色、武器资产混淆。"}],"visualRevision":{"gameVersion":"0.3.2","change":"20261027-008","activeAssets":37,"summary":"37 项活跃资产 r2：连接自然的鹈鹕长喙、清晰轮廓与分层材质；3 项历史素材保持 r1。"}}</script>
+<!-- ASSET-CATALOG:END -->
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const NS = 'http://www.w3.org/2000/svg';
+const GOAL = 180, BOSS_AT = 135, SAVE_KEY = 'pelican-knight-save-v1';
+const clamp = (n,a,b) => Math.max(a,Math.min(b,n));
+const rand = (a,b) => a+Math.random()*(b-a);
+const integer = (v,max=1000000) => Number.isFinite(v) ? clamp(Math.floor(v),0,max) : 0;
+const formatTime = n => String(Math.floor(n/60)).padStart(2,'0')+':'+String(Math.floor(n%60)).padStart(2,'0');
+const clone = value => JSON.parse(JSON.stringify(value));
+// 资产资料只来自嵌入目录；维护源为 assets/catalog.json 与 sprites.svg。
+const assetLibrary=JSON.parse($('asset-catalog').textContent);
+const assetIndex=Object.fromEntries(assetLibrary.entries.map(entry=>[entry.id,entry]));
+function contentTable(kind){
+  return Object.fromEntries(assetLibrary.entries.filter(entry=>entry.kind===kind).map(entry=>[entry.runtimeKey,{...entry.definition,assetId:entry.id}]));
+}
+const weapons=contentTable('weapon');
+const mounts=contentTable('mount');
+const apparel=Object.fromEntries(Object.entries(contentTable('apparel')).map(([id,a])=>[id,{...a,value:level=>a.effectBase+a.effectPerLevel*level}]));
+const heroAsset=assetIndex['CHR-001'];
+const talents = [
+  {id:'vigor',branch:0,name:'强健',desc:'最大体力 +10',prev:null},
+  {id:'shell',branch:0,name:'护身',desc:'每次伤害减少 1',prev:'vigor'},
+  {id:'breath',branch:0,name:'潮息',desc:'每秒恢复 0.35 体力',prev:'shell'},
+  {id:'edge',branch:1,name:'磨锋',desc:'武器伤害 +8%',prev:null},
+  {id:'tempo',branch:1,name:'节拍',desc:'武器收招缩短 10%',prev:'edge'},
+  {id:'focus',branch:1,name:'专注',desc:'武器暴击率 +10%',prev:'tempo'},
+  {id:'stride',branch:2,name:'轻步',desc:'移动速度 +7%',prev:null},
+  {id:'gather',branch:2,name:'拾珠',desc:'珍珠吸取范围 +45',prev:'stride'},
+  {id:'breathe',branch:2,name:'回转',desc:'闪避冷却缩短 20%',prev:'gather'}
+];
+const quests = [
+  {id:'first',name:'首航归来',desc:'完成一次正常冒险结算，胜负均可。',goal:1,reward:12,progress:s=>s.records.runs},
+  {id:'patrol',name:'海岸巡逻',desc:'已结算冒险累计击退 50 个敌人。',goal:50,reward:18,progress:s=>s.records.totalKills},
+  {id:'forge',name:'熊猫的手艺',desc:'在铁匠铺完成一次帽子或围巾强化。',goal:1,reward:8,progress:s=>s.records.upgrades},
+  {id:'lesson',name:'仙鹤第一课',desc:'在学堂激活一个天赋。',goal:1,reward:6,progress:s=>s.records.lessons},
+  {id:'coast',name:'守住海岸',desc:'生存 180 秒并击败寄居蟹首领。',goal:1,reward:24,progress:s=>s.records.wins}
+];
+const places=contentTable('building');
+const upgradeDefs = [
+  {id:'power',name:'锋芒',desc:'本局武器伤害 +18%。',max:5},
+  {id:'haste',name:'轻快出手',desc:'本局武器收招缩短 8%。',max:4},
+  {id:'vital',name:'随身鱼罐头',desc:'最大体力 +12，立即恢复 30。',max:5},
+  {id:'armor',name:'贝壳护甲',desc:'本局每次受到的伤害减少 1。',max:4},
+  {id:'speed',name:'海风步伐',desc:'本局移速 +8%。',max:4},
+  {id:'magnet',name:'珍珠磁铁',desc:'本局吸取范围 +35。',max:4},
+  {id:'crit',name:'幸运鸟喙',desc:'本局武器暴击率 +8%。',max:4},
+  {id:'regen',name:'潮汐呼吸',desc:'本局每秒恢复 0.4 体力。',max:3}
+];
+let saveBlocked=false, saveDirty=false, saveMessage='', save=loadSave();
+let state='camp', game, player, width=1120, last=null, cameraX=0, panelName='', offers=[];
+let audio, toastTime=0, hudClock=0, travelTarget=null, nearest=null, nextShot=1;
+const keys=new Set(), held=new Set(), touch={id:null,x:0,y:0};
+const stage=$('stage'), world=$('world'), dialog=$('panel');
+const layers=Object.fromEntries(['backdrop','scenery','ground-effects','drops','actors','projectiles','effects'].map(id=>[id,$(id)]));
+function freshSave(){
+  return {schemaVersion:1,wallet:0,loadout:clone(heroAsset.definition.defaultLoadout),
+    apparel:{sailor:0,red:0},talents:[],claimed:[],records:{runs:0,kills:0,totalKills:0,time:0,wins:0,upgrades:0,lessons:0},
+    legacyRecords:{kills:0,time:0,wins:0},settings:{sound:false},lastSettlement:null};
+}
+function loadSave(){
+  const base=freshSave();
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(!raw){
+      const legacy=JSON.parse(localStorage.getItem('pelican-coast-best-v1')||'null');
+      if(legacy)for(const k of ['kills','time','wins'])base.legacyRecords[k]=integer(legacy[k]);
+      return base;
+    }
+    const parsed=JSON.parse(raw);
+    if(!parsed || parsed.schemaVersion!==1){saveBlocked=true;saveMessage='此存档版本无法读取，原存档已保留；本次进度无法自动保存。';return base;}
+    base.wallet=integer(parsed.wallet);
+    for(const [id,value] of Object.entries(parsed.apparel||{}))if(apparel[id]&&Number.isInteger(value)&&value>=0)base.apparel[id]=Math.min(3,value);
+    const slots={weapon:weapons,hat:apparel,scarf:apparel,mount:mounts};
+    for(const slot of Object.keys(slots)){
+      const id=parsed.loadout?.[slot];
+      if(slots[slot][id] && (!['hat','scarf'].includes(slot)||(apparel[id].slot===slot && base.apparel[id]!==undefined)))base.loadout[slot]=id;
+    }
+    base.claimed=quests.filter(q=>Array.isArray(parsed.claimed)&&parsed.claimed.includes(q.id)).map(q=>q.id);
+    const valid=new Set(Array.isArray(parsed.talents)?parsed.talents:[]);
+    for(const t of talents)if(valid.has(t.id)&&(!t.prev||base.talents.includes(t.prev))&&base.talents.length<talentPoints(base))base.talents.push(t.id);
+    for(const k of Object.keys(base.records))base.records[k]=integer(parsed.records?.[k]);
+    for(const k of Object.keys(base.legacyRecords))base.legacyRecords[k]=integer(parsed.legacyRecords?.[k]);
+    base.settings.sound=parsed.settings?.sound===true;
+    base.lastSettlement=typeof parsed.lastSettlement==='string'?parsed.lastSettlement:null;
+    return base;
+  }catch(_){saveBlocked=true;saveMessage='浏览器未能读取存档，原数据未覆盖；可在行囊导出本次进度。';return base;}
+}
+function persist(next){
+  if(saveBlocked)return false;
+  try{localStorage.setItem(SAVE_KEY,JSON.stringify(next));saveDirty=false;saveMessage='';return true;}
+  catch(_){saveDirty=true;saveMessage='保存失败：进度暂留本次页面。请在行囊重试保存或导出。';return false;}
+}
+function transact(change){
+  if(saveBlocked||saveDirty){toast('请先到行囊处理存档提示，再进行购买或配置。');return false;}
+  const next=clone(save);
+  if(change(next)===false)return false;
+  if(!persist(next)){updateHUD();toast(saveMessage,5);return false;}
+  save=next;updateHUD();return true;
+}
+function talentPoints(s=save){return Math.min(6,3+s.claimed.length);}
+function equipmentEffect(id,level=save.apparel[id]||0){const a=apparel[id];return a.desc+' +'+a.value(level)+a.unit;}
+function stats(s=save,build={}){
+  const selected=new Set(s.talents), amount=id=>build[id]||0;
+  const hat=s.loadout.hat, scarf=s.loadout.scarf;
+  return {
+    maxHp:100+(hat==='sailor'?apparel.sailor.value(s.apparel.sailor||0):0)+(selected.has('vigor')?10:0)+12*amount('vital'),
+    armor:(hat==='guard'?apparel.guard.value(s.apparel.guard||0):0)+(selected.has('shell')?1:0)+amount('armor'),
+    damage:(1+(scarf==='red'?apparel.red.value(s.apparel.red||0)/100:0)+(selected.has('edge')?.08:0))*(1+.18*amount('power')),
+    speed:Math.min(340,205*(1+(scarf==='breeze'?apparel.breeze.value(s.apparel.breeze||0)/100:0)+(selected.has('stride')?.07:0)+.08*amount('speed'))),
+    recovery:Math.max(.45,(selected.has('tempo')?.9:1)*(1-.08*amount('haste'))),
+    crit:Math.min(.65,.05+(selected.has('focus')?.1:0)+.08*amount('crit')),
+    regen:(selected.has('breath')?.35:0)+.4*amount('regen'),
+    magnet:95+(selected.has('gather')?45:0)+35*amount('magnet'),
+    dodgeCd:selected.has('breathe')?2.08:2.6
+  };
+}
+function node(tag,attrs={},parent){const el=document.createElementNS(NS,tag);for(const [k,v]of Object.entries(attrs))el.setAttribute(k,v);if(parent)parent.appendChild(el);return el;}
+function sprite(id,parent,attrs={}){return node('use',{href:'#'+id,...attrs},parent);}
+function textNode(value,x,y,size,parent,fill='#426658'){const el=node('text',{x,y,'text-anchor':'middle','font-size':size,fill,'font-family':'sans-serif'},parent);el.textContent=value;return el;}
+function ground(d){return 433+d*.62;}
+function toast(value,duration=3){$('toast').textContent=value;$('toast').classList.add('visible');toastTime=duration;}
+function sound(freq=440,duration=.08,volume=.025){
+  if(!save.settings.sound)return;
+  try{audio ||= new (window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();
+    const osc=audio.createOscillator(),gain=audio.createGain();osc.frequency.value=freq;gain.gain.setValueAtTime(volume,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+duration);osc.connect(gain);gain.connect(audio.destination);osc.start();osc.stop(audio.currentTime+duration);
+  }catch(_){}
+}
+function assetMarkup(id){return $(id).innerHTML;}
+function iconWeapon(id){return assetMarkup(weapons[id].art);}
+function bikeArt(id){return assetMarkup(mounts[id].art);}
+function artPreview(id,type='weapon'){
+  return '<svg class="art" viewBox="-45 -55 110 90" aria-hidden="true">'+(type==='weapon'?iconWeapon(id):bikeArt(id))+'</svg>';
+}
+function makeHero(){
+  // 克隆固定骨架，只修改实例图层；图形源不受游戏动画影响。
+  const root=$(heroAsset.definition.rig).cloneNode(true);root.removeAttribute('id');layers.actors.appendChild(root);
+  const parts={root};
+  for(const key of heroAsset.definition.rigParts)if(key!=='root')parts[key]=root.querySelector('[data-part="'+key+'"]');
+  return parts;
+}
+function refreshAppearance(){
+  const h=player.art,l=game.loadout;
+  h.bike.innerHTML=bikeArt(l.mount);h.hand.innerHTML=iconWeapon(l.weapon);
+  h.hat.innerHTML=assetMarkup(apparel[l.hat].art);
+  h.scarf.innerHTML=assetMarkup(apparel[l.scarf].art);
+}
+function drawScene(camp){
+  layers.backdrop.innerHTML='<rect width="100%" height="640" fill="#dce9dd"/><circle cx="'+(width-145)+'" cy="122" r="42" fill="#fff2cb"/><path d="M-100 270Q160 176 340 250T760 238T1400 245V420H-100Z" fill="#b8d3bc"/><path d="M-100 304Q220 225 470 295T1010 270T1650 296V430H-100Z" fill="#a6c7b6"/><path d="M0 317H1800V540H0Z" fill="#9fc8b8"/><path d="M0 342q130-20 290 0t350 0t350 0t400 0" fill="none" stroke="#c4dfc8" stroke-width="3"/><path d="M80 112q8-14 24-8 13-23 32-5 21-4 28 14m320 27q15-14 27-3 17-20 34-2" fill="#f7f4dd"/>';
+  layers.scenery.replaceChildren();
+  const length=camp?2200:3400;
+  node('rect',{x:-100,y:360,width:length+200,height:300,fill:'url(#sand-pattern)'},layers.scenery);
+  node('path',{d:'M-100 360Q200 341 500 360T1200 360T1900 360T2600 360T3500 360',fill:'none',stroke:'#f8f1d8','stroke-width':19},layers.scenery);
+  node('path',{d:'M0 466H'+length,stroke:'#ede3c3','stroke-width':92},layers.scenery);
+  node('path',{d:'M0 488H'+length,stroke:'#d4cca8','stroke-width':2,'stroke-dasharray':'3 23'},layers.scenery);
+  if(camp){
+    for(const [id,place] of Object.entries(places)){
+      const draw=place.draw;
+      if(draw.mode==='symbol')sprite(place.art,layers.scenery,{x:place.x+draw.dx,y:draw.y,width:draw.width,height:draw.height});
+      else sprite(place.art,layers.scenery,{transform:'translate('+(place.x+draw.dx)+' '+draw.y+')'});
+      node('rect',{x:place.x-49,y:380,width:98,height:24,rx:7,fill:'#fff5d9',stroke:'#bec5a2'},layers.scenery);
+      textNode(place.name,place.x,396,12,layers.scenery);
+    }
+    textNode('练习区 · 不产生收益',1135,389,10,layers.scenery);
+    for(const x of [30,625,1450,2130])sprite('camp-tree',layers.scenery,{x:x-45,y:238,width:90,height:126});
+  }else{
+    for(let i=0;i<35;i++){const x=60+i*98;sprite(i%4===0?'art-shell':'art-grass',layers.scenery,{transform:'translate('+x+' '+(i%2?373:526)+') scale(.85)'});}
+    for(const x of [150,1050,2300,3100]){node('path',{d:'M'+x+' 420v-75m0 5h54l-10 18h-44',stroke:'#9f9871','stroke-width':4,fill:'#d9b688'},layers.scenery);}
+  }
+}
+function clearInput(){
+  keys.clear();held.clear();pointerActions.clear();touch.x=touch.y=0;touch.id=null;$('joystick-knob').style.transform='';travelTarget=null;
+  if(player){player.charge=0;player.charging=false;player.block=false;}
+}
+function makeGame(camp){
+  const build={}, derived=stats();
+  game={camp,id:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),time:0,kills:0,level:1,xp:0,need:8,build,
+    loadout:clone(save.loadout),enemies:[],shots:[],drops:[],effects:[],spawnTimer:1,events:new Set(),boss:null,bossDead:false,bossSpawned:false,settled:false,flash:0};
+  player={x:camp?700:420,d:30,z:0,vz:0,facing:1,cycle:0,moving:false,mounted:false,hp:derived.maxHp,...derived,
+    action:null,charge:0,charging:false,block:false,stun:0,inv:0,dodge:0,dodgeCdLeft:0,ram:0,ramCd:0,ramHits:new Set(),
+    stomp:false,stompCd:0,motorCd:1,switchTime:0,mana:100,guard:100,ammo:4,combo:0,comboTime:0};
+  for(const id of ['ground-effects','drops','actors','projectiles','effects'])layers[id].replaceChildren();
+  player.art=makeHero();refreshAppearance();drawScene(camp);
+  if(camp)spawnEnemy('dummy',1135,30);
+}
+function showCamp(){
+  closePanel();clearInput();state='camp';offers=[];makeGame(true);
+  $('camp-heading').hidden=false;$('camp-nav').hidden=false;$('run-hud').hidden=true;$('boss-hud').hidden=true;
+  $('header-place').textContent='海风镇 · 营地';$('pause').disabled=true;updateHUD();render();stage.focus({preventScroll:true});
+}
+function startGame(){
+  closePanel();clearInput();state='playing';offers=[];makeGame(false);
+  $('camp-heading').hidden=true;$('camp-nav').hidden=true;$('run-hud').hidden=false;
+  $('header-place').textContent='初始地图 · 海岸试炼';$('pause').disabled=false;last=null;updateHUD();render();
+  toast('坚持 180 秒并击败首领 · J 攻击 · R 上车',4);stage.focus({preventScroll:true});
+}
+
+
+function button(label,action,id='',disabled=false,kind=''){
+  return '<button '+(kind?'class="'+kind+'" ':'')+'data-action="'+action+'" data-id="'+id+'"'+(disabled?' disabled':'')+'>'+label+'</button>';
+}
+function showPanel(title,subtitle,html,portrait=''){
+  clearInput();$('panel-title').textContent=title;$('panel-subtitle').textContent=subtitle;
+  $('panel-content').innerHTML=html;$('portrait').hidden=!portrait;
+  if(portrait)$('portrait-art').setAttribute('href','#'+portrait);
+  $('panel-close').hidden=['upgrade','won','lost'].includes(state);
+  if(!dialog.open)dialog.showModal();
+}
+function closePanel(){if(dialog.open)dialog.close();panelName='';clearInput();}
+function openCampPanel(id){
+  if(state!=='camp'||!places[id])return;
+  panelName=id;const place=places[id];let html='';
+  if(id==='rack'){
+    html='<div class="cards">'+Object.entries(weapons).map(([key,w])=>'<article class="card '+(save.loadout.weapon===key?'selected':'')+'">'+artPreview(key)+'<span class="tag">'+w.type+'</span><h3>'+w.name+'</h3><p>'+w.desc+'</p>'+button(save.loadout.weapon===key?'已携带':'免费换用','weapon',key,save.loadout.weapon===key)+'</article>').join('')+'</div><p class="note">武器架右边是练习木桩。关闭窗口后靠近，用 J / K 试招；练习不产生海贝、珍珠或任务击退。</p>';
+  }else if(id==='garage'){
+    html='<div class="cards">'+Object.entries(mounts).map(([key,m])=>'<article class="card '+(save.loadout.mount===key?'selected':'')+'">'+artPreview(key,'mount')+'<h3>'+m.name+'</h3><p>'+m.desc+'</p>'+button(save.loadout.mount===key?'已选择':'选择携带','mount',key,save.loadout.mount===key)+'</article>').join('')+'</div><p class="note">四辆基础车型均可免费使用。开局默认步行，R 上下车；冷却不会因下车重置。骑乘时仍可用全部武器。营地可试骑，坐骑攻击仅在冒险中生效。</p>';
+  }else if(id==='smith'){
+    html='<p class="note">熊猫：“帽檐挡风，围巾护航。每一针、每一锤都算数。”</p><div class="ledger">持有海贝：'+save.wallet+'　·　每件装备独立保留等级，最高 +3</div>';
+    for(const slot of ['hat','scarf']){
+      html+='<h3 class="section-label">'+(slot==='hat'?'帽子':'围巾')+'</h3><div class="cards">';
+      for(const [key,a] of Object.entries(apparel).filter(([,a])=>a.slot===slot)){
+        const owned=save.apparel[key]!==undefined,level=save.apparel[key]||0,cost=12*(level+1),equipped=save.loadout[slot]===key;
+        html+='<article class="card '+(equipped?'selected':'')+'"><h3>'+a.name+(owned?' +'+level:'')+'</h3><p>'+equipmentEffect(key,level)+(level<3&&owned?'<br>下一级：'+equipmentEffect(key,level+1):'')+'</p>';
+        if(owned)html+=button(equipped?'已装备':'更换','apparel',key,equipped)+button(level>=3?'已满级':'强化 · '+cost+' 海贝','upgrade-apparel',key,level>=3||save.wallet<cost);
+        else html+=button('购买 · '+a.price+' 海贝','buy-apparel',key,save.wallet<a.price);
+        html+='</article>';
+      }
+      html+='</div>';
+    }
+    html+='<p class="note">外观即时变化，属性应用于下一次冒险。红帆围巾增强武器伤害，不增强坐骑攻击；海风围巾同时提高步行与骑乘速度。</p>';
+  }else if(id==='school'){
+    html='<div class="ledger">出战天赋 '+save.talents.length+' / '+talentPoints()+' 点 · 当前可用 '+(talentPoints()-save.talents.length)+' 点</div><p class="note">每个节点 1 点，先学前置。取消节点会同时退还其后续节点，可免费重配。领取行政厅任务逐步增加点数，上限 6 点。</p><div class="talents">';
+    for(let branch=0;branch<3;branch++){
+      html+='<section class="talent-branch"><h3 class="section-label">'+['守护','武艺','远行'][branch]+'</h3>';
+      for(const t of talents.filter(t=>t.branch===branch)){
+        const on=save.talents.includes(t.id),can=(!t.prev||save.talents.includes(t.prev))&&save.talents.length<talentPoints();
+        html+='<article class="card '+(on?'selected':'')+'"><h3>'+t.name+'</h3><p>'+t.desc+(t.prev?'<br>前置：'+talents.find(x=>x.id===t.prev).name:'<br>起始节点')+'</p>'+button(on?'取消 / 退点':'激活 · 1 点','talent',t.id,!on&&!can)+'</article>';
+      }
+      html+='</section>';
+    }
+    html+='</div>'+button('清空配置，退还点数','reset-talents','',!save.talents.length,'secondary');
+  }else if(id==='hall'){
+    html='<p class="note">秦始皇：“行必有获，功必有赏。”所有委托自动接取，按已保存的累计进度计算；每项只可领奖一次。</p><div class="cards">';
+    for(const q of quests){
+      const progress=Math.min(q.goal,q.progress(save)),claimed=save.claimed.includes(q.id),ready=progress>=q.goal;
+      html+='<article class="card '+(claimed?'selected':'')+'"><span class="tag">'+(claimed?'已完成':ready?'可领取':'进行中')+'</span><h3>'+q.name+'</h3><p>'+q.desc+'<br>进度 '+progress+' / '+q.goal+'<br>奖励 '+q.reward+' 海贝'+(talentPoints()<6?' · 增加 1 出战点':'')+'</p>'+button(claimed?'已领取':'领取奖励','claim',q.id,claimed||!ready)+'</article>';
+    }
+    html+='</div>';
+  }else if(id==='board'){
+    html='<article class="log-item"><b>v0.3.2 · 海风新装 · 2026-10-27</b>鹈鹕的长喙与喉囊重新连接；人物、怪物、武器、穿戴、车辆和建筑统一优化。海风围巾有了海浪纹，精英蟹穿上了独立甲壳。</article><article class="log-item"><b>v0.3.1 · 图形资产建档 · 2026-10-27</b>人物、怪物、装备、车辆与建筑统一编号，沿用既有造型并集中复用。</article><article class="log-item"><b>v0.3.0 · 横版启程 · 2026-10-27</b>自由步行营地与横版海岸；六类基础武器；四类坐骑；帽子与围巾的换装、购买和强化；海贝、珍珠、永久存档与结算；学堂天赋和行政厅委托。</article><article class="log-item"><b>v0.2.0 · 海风镇</b>熊猫铁匠铺、仙鹤学堂、秦始皇行政厅、公告栏与冒险入口。</article><article class="log-item"><b>v0.1.0 · 最初的海岸</b>骑行生存原型，珍珠成长、敌潮和寄居蟹首领。</article><p class="note">更多地图、高级武器和节点探险将继续扩展。</p>';
+  }else if(id==='adventure'){
+    html='<article class="card selected"><span class="tag">初始地图 · 已开放</span><h3>海岸试炼</h3><p>横版海滩，生存 180 秒并击败寄居蟹首领。首领在第 135 秒登场；时间到但首领尚存时继续战斗。</p><div class="ledger">武器：'+weapons[save.loadout.weapon].name+'<br>穿戴：'+apparel[save.loadout.hat].name+' +'+save.apparel[save.loadout.hat]+' / '+apparel[save.loadout.scarf].name+' +'+save.apparel[save.loadout.scarf]+'<br>携带：'+mounts[save.loadout.mount].name+'（出发时步行）<br>天赋：'+save.talents.length+' 个已激活</div>'+button('前往海岸 →','start','','','primary')+'</article><p class="note">每完成 30 秒获得 2 海贝，最多 12；胜利另加 6。正常失败保留已完成阶段收益。主动退出、重开、刷新或关闭页面不结算本局，且不提供中途续局。永久装备和此前结算仍会保存。</p>';
+  }
+  showPanel(place.name,place.owner,html,place.portrait);
+}
+function refreshCampPlayer(){
+  game.loadout=clone(save.loadout);Object.assign(player,stats());player.hp=player.maxHp;
+  player.action=null;player.combo=0;player.comboTime=0;player.ammo=4;player.mana=player.guard=100;
+  for(const shot of game.shots)shot.el.remove();game.shots=[];
+  refreshAppearance();updateHUD();render();
+}
+function openRecords(){
+  if(state==='playing')state='paused';
+  if(!['camp','paused','won','lost'].includes(state))return;
+  panelName='records';
+  showPanel('旅行行囊','成长保存在当前浏览器；不自动跨设备同步。',
+    '<div class="summary"><div><b>'+save.wallet+'</b><span>海贝</span></div><div><b>'+save.records.runs+'</b><span>冒险结算</span></div><div><b>'+save.records.wins+'</b><span>横版胜利</span></div></div><p class="note">最佳击退 '+save.records.kills+' · 最长 '+formatTime(save.records.time)+' · 累计击退 '+save.records.totalKills+'</p><div class="ledger">存档：'+(saveBlocked||saveDirty?saveMessage:'已保存在本地。装备、海贝、天赋与委托长期保留。')+'</div>'+button('导出存档文件','export','','','secondary')+(saveDirty&&!saveBlocked?button('重试保存当前进度','retry-save','','','primary'):'')+'<p class="note">旧俯视版纪录独立保留：最佳击退 '+save.legacyRecords.kills+' · 最长 '+formatTime(save.legacyRecords.time)+' · 胜利 '+save.legacyRecords.wins+'。旧纪录不兑换海贝，也不计入横版任务。file://、本地 HTTP 与在线版的存档相互独立。导出文件可用作备份；当前版尚无导入入口。</p>'+button(state==='camp'?'返回营地':'返回','close','','','secondary'));
+}
+function openHelp(){
+  if(state==='playing')state='paused';
+  if(!['camp','paused'].includes(state))return;
+  panelName='help';
+  showPanel('骑士手册','默认步行；靠近建筑按 E，或用下方路标自动走过去。',
+    '<dl class="keymap"><dt>WASD / 方向键</dt><dd>左右前进，前后轻移；角色面向决定攻击方向。</dd><dt>J / 攻击</dt><dd>普通攻击，可按住连续出招。近战有起手与收招。</dd><dt>K / 特色</dt><dd>弓、太刀、巨锤按住蓄力并松开；刀盾按住举盾；法杖施法；散弹枪装填。</dd><dt>空格 / 跳跃</dt><dd>独立跳跃。山地车和摩托车冷却就绪时，在冒险中触发落地震击。</dd><dt>Shift / 动作</dt><dd>步行、普通车、山地车：无敌闪避。公路车、摩托车：有伤害的冲撞，冲撞没有全程无敌。</dd><dt>R / 坐骑</dt><dd>地面且没有正在进行的动作时上下车，冷却不会重置。</dd><dt>E / 交互</dt><dd>靠近营地建筑、武器架或停车点，打开窗口。</dd><dt>P / Esc</dt><dd>暂停或关闭窗口。所有窗口冻结战斗。</dd><dt>触屏</dt><dd>左侧摇杆与右侧六个按钮；蓄力、格挡按住特色按钮。</dd></dl><p class="note">营地木桩可试武器。骑乘时也可以使用武器；帽子与围巾在铁匠铺更换。刷新/退出会放弃尚未结算的冒险。</p>'+button('明白了','close','','','primary'));
+}
+function pauseGame(){
+  if(state==='playing'){
+    state='paused';panelName='pause';
+    showPanel('海风稍歇','暂停期间计时、冷却和敌人均停止。',
+      button('继续冒险','close','','','primary')+button('放弃本局，返回营地','confirm-leave','','','secondary')+button('重开本局','confirm-restart','','','secondary')+'<p class="note">主动放弃或重开不结算海贝、任务进度与纪录。</p>');
+  }else if(state==='paused')closePanel();
+}
+function finish(won){
+  if(state!=='playing'||game.settled)return;
+  game.settled=true;state=won?'won':'lost';clearInput();player.action=null;player.stomp=false;player.ram=player.dodge=0;
+  const stages=Math.min(6,Math.floor(game.time/30)),base=stages*2,bonus=won?6:0,reward=base+bonus;
+  const next=clone(save);
+  if(next.lastSettlement!==game.id){
+    next.wallet+=reward;next.records.runs++;next.records.totalKills+=game.kills;
+    next.records.kills=Math.max(next.records.kills,game.kills);next.records.time=Math.max(next.records.time,Math.floor(game.time));
+    if(won)next.records.wins++;next.lastSettlement=game.id;
+    // 结算只发生一次。保存失败时保留内存结果与明确提示，返回营地不再发奖。
+    if(!persist(next))saveDirty=true;
+    save=next;
+  }
+  game.reward={stages,base,bonus,reward};showResult();updateHUD();sound(won?760:180,.3);
+}
+function showResult(){
+  const r=game.reward;panelName='result';
+  showPanel(state==='won'?'海岸，守住了。':'这次，先走到这里。','海风镇一直等你回来。',
+    '<div class="summary"><div><b>'+formatTime(game.time)+'</b><span>生存时间</span></div><div><b>'+game.kills+'</b><span>击退敌人</span></div><div><b>'+game.level+'</b><span>本局等级</span></div></div><div class="ledger">完成阶段 '+r.stages+' / 6：+'+r.base+' 海贝<br>通关奖励：+'+r.bonus+' 海贝<br><strong>本次获得 '+r.reward+' 海贝 · 持有 '+save.wallet+'</strong></div><p class="note">'+(saveDirty||saveBlocked?saveMessage:'收益与纪录已自动保存。局内升级已结束，永久装备和天赋保留。')+'</p>'+button('返回海风镇','camp','','','primary')+button('再战海岸','start','','','secondary')+(saveDirty?button('查看存档 / 导出','records','','','secondary'):''));
+}
+function offerUpgrades(){
+  game.xp-=game.need;game.level++;game.need=8+Math.round((game.level-1)*4.5);
+  const pool=upgradeDefs.filter(u=>(game.build[u.id]||0)<u.max);offers=[];
+  while(pool.length&&offers.length<3)offers.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);
+  if(!offers.length){player.hp=Math.min(player.maxHp,player.hp+25);return;}
+  state='upgrade';panelName='upgrade';
+  showPanel('海风带来新本领','本局成长 · 按 1 / 2 / 3 选择',
+    '<div class="cards">'+offers.map((u,i)=>'<article class="card"><span class="tag">0'+(i+1)+' · '+((game.build[u.id]||0)+1)+' / '+u.max+'</span><h3>'+u.name+'</h3><p>'+u.desc+'</p>'+button('选择','choose',String(i))+'</article>').join('')+'</div>');
+}
+function chooseUpgrade(index){
+  if(state!=='upgrade'||!offers[index])return;
+  const u=offers[index];game.build[u.id]=(game.build[u.id]||0)+1;
+  const oldHp=player.hp;Object.assign(player,stats(save,game.build));player.hp=Math.min(player.maxHp,oldHp+(u.id==='vital'?30:0));
+  offers=[];state='playing';closePanel();toast(u.name+' · 本局生效');updateHUD();
+}
+$('panel-content').addEventListener('click',event=>{
+  const b=event.target.closest('button[data-action]');if(!b||b.disabled)return;
+  const action=b.dataset.action,id=b.dataset.id;
+  if(action==='close'){if(['won','lost'].includes(state))showResult();else closePanel();return;}
+  if(action==='start'){if(['camp','won','lost'].includes(state))startGame();return;}
+  if(action==='camp'){if(['won','lost','paused'].includes(state))showCamp();return;}
+  if(action==='records'){openRecords();return;}
+  if(action==='choose'){chooseUpgrade(Number(id));return;}
+  if(action==='confirm-leave'||action==='confirm-restart'){
+    if(state!=='paused')return;panelName='confirm';
+    showPanel('放弃当前冒险？','本局未结算的海贝和任务进度将不保留。',button('继续当前冒险','close','','','primary')+button(action==='confirm-leave'?'确认返回营地':'确认重开',action==='confirm-leave'?'camp':'restart','','','secondary'));return;
+  }
+  if(action==='restart'){if(state==='paused')startGame();return;}
+  if(action==='export'){
+    const url=URL.createObjectURL(new Blob([JSON.stringify(save,null,2)],{type:'application/json'}));
+    const link=document.createElement('a');link.href=url;link.download='pelican-knight-save.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);return;
+  }
+  if(action==='retry-save'){if(persist(save)){toast('已保存当前进度');openRecords();}else toast(saveMessage,4);updateHUD();return;}
+  if(state!=='camp')return;
+  let changed=false;
+  if(action==='weapon'&&weapons[id])changed=transact(s=>{s.loadout.weapon=id;});
+  if(action==='mount'&&mounts[id])changed=transact(s=>{s.loadout.mount=id;});
+  if(action==='apparel'&&apparel[id])changed=transact(s=>{if(s.apparel[id]===undefined)return false;s.loadout[apparel[id].slot]=id;});
+  if(action==='buy-apparel'&&apparel[id])changed=transact(s=>{const a=apparel[id];if(s.apparel[id]!==undefined||s.wallet<a.price)return false;s.wallet-=a.price;s.apparel[id]=0;s.loadout[a.slot]=id;});
+  if(action==='upgrade-apparel'&&apparel[id])changed=transact(s=>{const level=s.apparel[id];if(level===undefined||level>=3||s.wallet<12*(level+1))return false;s.wallet-=12*(level+1);s.apparel[id]++;s.records.upgrades++;});
+  if(action==='talent')changed=transact(s=>{
+    const t=talents.find(t=>t.id===id);if(!t)return false;
+    if(s.talents.includes(id)){
+      s.talents=s.talents.filter(x=>x!==id);
+      // 前置取消时顺序移除后续节点，点数由已激活列表派生，避免重复退点。
+      for(const next of talents)if(next.prev&&!s.talents.includes(next.prev))s.talents=s.talents.filter(x=>x!==next.id);
+    }else{if(s.talents.length>=talentPoints(s)||(t.prev&&!s.talents.includes(t.prev)))return false;s.talents.push(id);s.records.lessons=1;}
+  });
+  if(action==='reset-talents')changed=transact(s=>{s.talents=[];});
+  if(action==='claim')changed=transact(s=>{const q=quests.find(q=>q.id===id);if(!q||s.claimed.includes(id)||q.progress(s)<q.goal)return false;s.claimed.push(id);s.wallet+=q.reward;});
+  if(changed){if(action==='mount')player.mounted=false;refreshCampPlayer();openCampPanel(panelName);sound(660);}
+});
+$('panel-close').addEventListener('click',()=>{if(!['upgrade','won','lost'].includes(state))closePanel();});
+dialog.addEventListener('cancel',event=>{if(['upgrade','won','lost'].includes(state))event.preventDefault();});
+dialog.addEventListener('close',()=>{clearInput();if(state==='paused')state='playing';stage.focus({preventScroll:true});});
+
+
+const enemyKinds={...contentTable('monster'),dummy:{...assetIndex['PROP-001'].definition,assetId:'PROP-001'}};
+function spawnEnemy(kind,x=null,d=null){
+  if(game.enemies.filter(e=>!e.dead).length>=45&&kind!=='boss')return;
+  const def=enemyKinds[kind],side=player.x>2800?-1:player.x<500?1:(Math.random()<.5?-1:1);
+  if(x===null)x=clamp(player.x+side*(width*.5+90),60,3340);
+  if(d===null)d=rand(-35,65);
+  const root=node('g',{},layers.actors);
+  node('ellipse',{rx:def.r,ry:6,fill:'#657c54',opacity:.18},root);
+  const visual=node('g',{},root);
+  sprite(def.art,visual,{transform:'translate(0 '+(-def.offset)+') scale('+(def.scale||1)+')'});
+  const hp=def.hp*(kind==='boss'||kind==='dummy'?1:1+Math.min(game.time,180)*.0018);
+  const e={...def,kind,x,d,z:def.z||0,hp,maxHp:hp,root,visual,dead:false,age:0,hit:0,stun:0,attackCd:1,wind:0,attacking:false,face:1,shootCd:rand(1.5,3),chargeCd:6,charge:0,chargeWind:0,chargeDir:1,warning:null};
+  game.enemies.push(e);
+  if(kind==='boss'){game.boss=e;game.bossSpawned=true;$('boss-hud').hidden=false;toast('寄居蟹首领登场 · 红色预警后将冲锋！',4);sound(160,.3);}
+}
+function spawnDirector(dt){
+  game.spawnTimer-=dt;
+  if(game.spawnTimer<=0){
+    game.spawnTimer=Math.max(.65,1.65-game.time*.005);
+    const pool=game.time<20?['crab','gull']:game.time<55?['crab','gull','urchin']:['crab','gull','urchin','jelly'];
+    spawnEnemy(pool[Math.floor(Math.random()*pool.length)]);
+  }
+  for(const t of [35,75,110,165])if(game.time>=t&&!game.events.has(t)){
+    game.events.add(t);for(let i=0;i<5;i++)spawnEnemy(i===4?'elite':i%2?'crab':'gull');
+    toast('潮汐来袭 · 留意两侧敌人',3);
+  }
+  if(game.time>=BOSS_AT&&!game.bossSpawned)spawnEnemy('boss');
+}
+function numberAt(x,d,z,value,color='#477962'){
+  const el=textNode(String(value),x,ground(d)-z,15,layers.effects,color);
+  el.classList.add('floating-damage');game.effects.push({el,kind:'number',x,y:ground(d)-z,life:.65,max:.65});
+}
+function ringAt(x,d,z,r,color='#ead89c'){
+  const el=node('ellipse',{cx:x,cy:ground(d)-z,rx:5,ry:3,fill:'none',stroke:color,'stroke-width':4},layers.effects);
+  game.effects.push({el,kind:'ring',r,life:.4,max:.4});
+}
+function slashAt(x,d,z,range,face,color='#f7edbd'){
+  const el=node('path',{d:'M'+(-range*.1)+' -35Q'+range+' -60 '+range+' 0Q'+range+' 25 '+(-range*.1)+' 35',fill:color,stroke:'#c7b47b','stroke-width':1,opacity:.7,transform:'translate('+x+' '+(ground(d)-z)+') scale('+face+' 1)'},layers.effects);
+  game.effects.push({el,kind:'fade',life:.18,max:.18});
+}
+function dropAt(x,d,value,type='pearl'){
+  const el=node('g',{},layers.drops);
+  sprite(type==='heart'?'art-heart':'art-pearl',el);
+  game.drops.push({x,d,value,type,el,age:0,pull:false});
+}
+function hurtEnemy(e,damage,critical=false,knock=0){
+  if(e.dead)return;
+  e.hp-=damage;e.hit=.13;
+  numberAt(e.x,e.d,e.z+e.h+5,Math.round(damage),critical?'#b48638':'#477962');
+  if(e.kind==='dummy'){e.hp=e.maxHp;return;}
+  if(knock&&e.kind!=='boss'){e.x=clamp(e.x+player.facing*knock,50,3350);e.stun=Math.max(e.stun,.16);}
+  if(e.hp>0)return;
+  e.dead=true;e.root.remove();if(e.warning)e.warning.remove();game.kills++;
+  ringAt(e.x,e.d,e.z+14,e.r+10);
+  dropAt(e.x,e.d,e.xp);
+  if(Math.random()<.07)dropAt(e.x+rand(-20,20),e.d,12,'heart');
+  if(e.kind==='boss'){
+    game.bossDead=true;$('boss-hud').hidden=true;
+    for(let i=0;i<7;i++)dropAt(e.x+rand(-80,80),e.d+rand(-20,20),3);
+    dropAt(e.x,e.d,30,'heart');toast('首领已击败 · 坚持到退潮！',4);sound(800,.25);
+  }
+}
+function hurtPlayer(amount,sx,sd,unblockable=false){
+  const p=player;if(state!=='playing'||p.inv>0)return;
+  const front=(sx-p.x)*p.facing>=-5;
+  if(p.block&&front&&!unblockable&&Math.abs(sd-p.d)<70){
+    const cost=amount*2.4;p.guard=Math.max(0,p.guard-cost);ringAt(p.x+p.facing*23,p.d,p.z+40,28,'#9cbba1');
+    if(p.guard>0){sound(330);return;}
+    p.block=false;p.stun=.75;toast('架势耗尽 · 破防',1.5);
+  }
+  const hit=Math.max(1,amount-p.armor);
+  p.hp=Math.max(0,p.hp-hit);p.inv=.65;p.stun=Math.max(p.stun,.12);
+  p.action=null;p.charging=false;p.charge=0;p.block=false;p.stomp=false;p.ram=0;
+  game.flash=.6;numberAt(p.x,p.d,p.z+95,'−'+Math.round(hit),'#bd624f');sound(145,.12);
+}
+function melee(range,damage,knock=20,halfDepth=40,face=player.facing){
+  const p=player;slashAt(p.x,p.d,p.z+36,range,face);
+  for(const e of game.enemies){
+    const dx=(e.x-p.x)*face;
+    if(!e.dead&&e.age>.2&&dx>=-18&&dx<=range+e.r&&Math.abs(e.d-p.d)<halfDepth&&Math.abs((e.z+e.h*.5)-(p.z+38))<55)
+      hurtEnemy(e,damage,false,knock);
+  }
+}
+function areaAttack(x,d,z,r,damage,mountAttack=false){
+  ringAt(x,d,z,r,mountAttack?'#c7ad76':'#88bdb2');
+  for(const e of game.enemies)if(!e.dead&&Math.abs(e.x-x)<r+e.r&&Math.abs(e.d-d)<52&&Math.abs(e.z+e.h*.5-z)<80)hurtEnemy(e,damage,false,mountAttack?28:16);
+}
+function frontTarget(range,face=player.facing){
+  let target=null,closest=range;
+  for(const e of game.enemies){
+    const dist=(e.x-player.x)*face;
+    if(!e.dead&&e.age>.2&&dist>0&&dist<closest&&Math.abs(e.d-player.d)<42){target=e;closest=dist;}
+  }
+  return target;
+}
+function emitShot({team='hero',x=player.x,d=player.d,z=player.z+36,vx,vd=0,vz=0,damage=20,life=1.2,pierce=0,type='arrow',critical=false,group=null}){
+  const el=node('g',{},layers.projectiles);
+  if(type==='arrow')el.innerHTML='<path d="M-13 0h29m-5-4 6 4-6 4m-21-3-4 3 4 3" stroke="#5c7966" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+  else if(type==='pellet')node('circle',{r:3.2,fill:'#c89d57',stroke:'#fff2c9'},el);
+  else if(team==='enemy')node('circle',{r:6,fill:'#a184a0',stroke:'#faf0d4','stroke-width':2},el);
+  else{node('circle',{r:type==='motor'?5:8,fill:type==='motor'?'#d8af6e':'#7cb8ad',stroke:'#e5f0ca','stroke-width':2},el);}
+  const shot={id:nextShot++,team,x,d,z,vx,vd,vz,damage,life,pierce,type,critical,group,el,hits:new Set()};
+  game.shots.push(shot);return shot;
+}
+function fireWeaponShot(type,damage,range,face=player.facing,pierce=0,spread=0,group=null){
+  const speed=type==='pellet'?740:type==='orb'?460:630;
+  const target=frontTarget(range,face),startZ=player.z+36;
+  const time=target?Math.max(.15,Math.abs(target.x-player.x)/speed):1;
+  const vd=target?clamp((target.d-player.d)/time,-100,100):0;
+  const vz=target?clamp((target.z+target.h*.55-startZ)/time,-190,190):0;
+  emitShot({type,x:player.x+face*24,z:startZ,vx:speed*face,vd:vd+spread,vz,damage,life:range/speed,pierce,group});
+}
+function beginAttack(special=false,power=0){
+  const p=player,w=weapons[game.loadout.weapon];
+  if(!canControl()||p.action||p.stun>0||p.switchTime>0||p.dodge>0||p.ram>0||p.stomp||p.block||p.charging)return;
+  if(game.camp&&Math.abs(p.x-1135)>220){if(toastTime<=0)toast('走到武器架右侧的木桩旁试招');return;}
+  if(game.loadout.weapon==='shotgun'){
+    if(special||p.ammo<=0){if(p.ammo<4)p.action={kind:'reload',time:0,wind:1.25,duration:1.3,done:false};return;}
+    p.ammo--;
+  }
+  if(special&&game.loadout.weapon==='staff'){
+    if(p.mana<30){toast('法力不足 · 可继续普通攻击',1.5);return;}p.mana-=30;
+  }
+  const combo=p.comboTime>0?p.combo:0,comboMax=game.loadout.weapon==='katana'?3:game.loadout.weapon==='shield'?2:1;
+  p.combo=(combo+1)%comboMax;p.comboTime=1.1;
+  const wind=special?(game.loadout.weapon==='hammer'?.24:.12):w.wind;
+  const recovery=w.recovery*p.recovery*(special?1.45:(game.loadout.weapon==='katana'&&combo===2?1.6:1));
+  p.action={kind:'attack',time:0,wind,duration:wind+recovery,done:false,special,power,combo,face:p.facing};
+}
+function activateSkill(pressed,cancel=false){
+  const p=player,w=weapons[game.loadout.weapon];
+  if(!pressed){
+    const charge=p.charge,was=p.charging;p.block=false;p.charging=false;p.charge=0;
+    if(was&&!cancel)beginAttack(true,Math.min(charge/1.25,1));return;
+  }
+  if(!canControl()||p.action||p.stun>0||p.dodge>0||p.ram>0||p.stomp||p.switchTime>0)return;
+  if(game.loadout.weapon==='shield'){if(p.guard>8)p.block=true;else toast('架势恢复中');return;}
+  if(w.hold){if(game.camp&&Math.abs(p.x-1135)>220){toast('走到练习木桩旁试招');return;}p.charging=true;p.charge=0;}
+  else beginAttack(true);
+}
+function performAttack(a){
+  const p=player,id=game.loadout.weapon,w=weapons[id];
+  const critical=Math.random()<p.crit;
+  let damage=w.damage*p.damage*(critical?1.7:1);
+  if(a.special)damage*=1.4+a.power*1.8;
+  if(id==='bow'){fireWeaponShot('arrow',damage,w.range,a.face,a.special?2:0);}
+  else if(id==='shield'){melee(w.range,damage*(a.combo===1?1.25:1),16,38,a.face);}
+  else if(id==='katana'){melee(a.special?180:w.range,damage*(a.combo===2?1.4:1),a.special?34:12,42,a.face);}
+  else if(id==='hammer'){melee(w.range+(a.special?a.power*55:0),damage,42,55,a.face);ringAt(p.x+a.face*70,p.d,5,75);}
+  else if(id==='staff'){
+    if(a.special)areaAttack(p.x+a.face*120,p.d,p.z+30,125,damage);
+    else fireWeaponShot('orb',damage,w.range,a.face,1);
+  }else if(id==='shotgun'){
+    const group=new Map();for(let i=0;i<6;i++)fireWeaponShot('pellet',damage,w.range,a.face,0,(i-2.5)*38,group);
+  }
+  sound(id==='hammer'?190:id==='shotgun'?140:500,.07);
+}
+function jump(){
+  const p=player;if(!canControl()||p.z>0||p.action||p.stun>0||p.dodge>0||p.ram>0||p.switchTime>0||p.charging||p.block)return;
+  const m=mounts[game.loadout.mount];p.stomp=!game.camp&&p.mounted&&m.stomp&&p.stompCd<=0;
+  p.vz=p.stomp?610:445;
+  if(p.stomp)p.stompCd=4;sound(390,.08);
+}
+function dash(){
+  const p=player;if(!canControl()||p.z>0||p.action||p.stun>0||p.charging||p.block||p.switchTime>0||p.dodge>0||p.ram>0)return;
+  const ram=p.mounted&&mounts[game.loadout.mount].ram;
+  if(ram){
+    if(game.camp){toast('坐骑冲撞只在冒险中发动');return;}
+    if(p.ramCd>0)return;p.ram=.45;p.ramCd=5;p.ramHits=new Set();
+  }else{
+    if(p.dodgeCdLeft>0)return;p.dodge=.19;p.dodgeCdLeft=p.dodgeCd;p.inv=Math.max(p.inv,.24);
+  }
+  sound(320,.08);
+}
+function toggleMount(){
+  const p=player;if(!canControl()||p.z>0||p.action||p.stun>0||p.dodge>0||p.ram>0||p.charging||p.block||p.switchTime>0)return;
+  p.mounted=!p.mounted;p.switchTime=.2;refreshAppearance();toast(p.mounted?'骑乘 · '+mounts[game.loadout.mount].name:'双脚也能去远方',1.3);updateHUD();
+}
+function canControl(){return (state==='camp'||state==='playing')&&!dialog.open;}
+function updatePlayer(dt){
+  const p=player;
+  for(const key of ['stun','inv','dodge','dodgeCdLeft','ram','ramCd','stompCd','motorCd','switchTime','comboTime'])p[key]=Math.max(0,p[key]-dt);
+  p.mana=Math.min(100,p.mana+12*dt);if(!p.block)p.guard=Math.min(100,p.guard+24*dt);
+  p.hp=Math.min(p.maxHp,p.hp+p.regen*dt);
+  if(p.charging)p.charge=Math.min(1.5,p.charge+dt);
+  let mx=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'))+touch.x;
+  let md=Number(keys.has('KeyS')||keys.has('ArrowDown'))-Number(keys.has('KeyW')||keys.has('ArrowUp'))+touch.y;
+  if(Math.abs(mx)+Math.abs(md)>.1)travelTarget=null;
+  if(game.camp&&travelTarget){
+    const target=places[travelTarget],dx=target.x-p.x,dd=30-p.d;
+    if(Math.abs(dx)<7&&Math.abs(dd)<7){const id=travelTarget;travelTarget=null;openCampPanel(id);return;}
+    mx=clamp(dx/30,-1,1);md=clamp(dd/20,-1,1);
+  }
+  const norm=Math.max(1,Math.hypot(mx,md));mx/=norm;md/=norm;
+  if(Math.abs(mx)>.08&&!p.action&&p.ram<=0&&p.dodge<=0)p.facing=mx>0?1:-1;
+  let speed=p.speed*(p.mounted?mounts[game.loadout.mount].speed:1);
+  if(p.block||p.charging)speed*=.35;if(p.action)speed*=.5;if(p.stun>0||p.switchTime>0)speed=0;
+  const oldX=p.x;
+  if(p.ram>0||p.dodge>0)p.x+=p.facing*(p.ram>0?760:690)*dt;
+  else{p.x+=mx*speed*dt;p.d+=md*speed*.48*dt;}
+  p.x=clamp(p.x,65,game.camp?2135:3335);p.d=clamp(p.d,-40,75);
+  if(p.ram>0){
+    for(const e of game.enemies)if(!e.dead&&!p.ramHits.has(e)&&e.x>=Math.min(oldX,p.x)-e.r&&e.x<=Math.max(oldX,p.x)+e.r&&Math.abs(e.d-p.d)<42&&e.z<65){
+      p.ramHits.add(e);hurtEnemy(e,62,false,32);
+    }
+    if(p.x===65||p.x===3335)p.ram=0;
+  }
+  p.moving=Math.abs(p.x-oldX)>.1||Math.abs(md)>.1;p.cycle+=dt*(p.moving?(p.mounted?13:10):2);
+  if(p.z>0||p.vz>0){
+    p.z+=p.vz*dt;p.vz-=1250*dt;
+    if(p.z<=0){p.z=0;p.vz=0;if(p.stomp){areaAttack(p.x,p.d,15,135,55,true);p.stomp=false;}}
+  }
+  if(p.action){
+    const a=p.action;a.time+=dt;
+    if(!a.done&&a.time>=a.wind){a.done=true;if(a.kind==='reload')p.ammo=4;else performAttack(a);}
+    if(a.time>=a.duration)p.action=null;
+  }
+  if((keys.has('KeyJ')||held.has('attack'))&&!p.charging)beginAttack();
+  if(!game.camp&&p.mounted&&mounts[game.loadout.mount].auto&&p.motorCd<=0&&p.switchTime<=0){
+    if(frontTarget(620)){fireWeaponShot('motor',24,620);p.motorCd=3;sound(260);}
+  }
+}
+function fireEnemy(e,spread=0){
+  const dx=player.x-e.x,dd=player.d-e.d,time=Math.max(.4,Math.abs(dx)/190);
+  emitShot({team:'enemy',type:'enemy',x:e.x,d:e.d,z:e.z+e.h*.6,vx:Math.sign(dx||1)*190,vd:clamp(dd/time,-100,100)+spread,vz:clamp((player.z+35-e.z-e.h*.6)/time,-100,100),damage:e.kind==='boss'?14:10,life:4});
+}
+function updateEnemies(dt){
+  const p=player;
+  for(const e of game.enemies){
+    if(e.dead)continue;e.age+=dt;e.hit=Math.max(0,e.hit-dt);e.stun=Math.max(0,e.stun-dt);
+    if(e.kind==='dummy')continue;
+    e.attackCd-=dt;e.shootCd-=dt;e.chargeCd-=dt;
+    const dx=p.x-e.x,dd=p.d-e.d,dist=Math.hypot(dx,dd*1.8);
+    let movement=true;
+    if(e.kind==='gull')e.z=34+Math.sin(e.age*4)*8;
+    if(e.kind==='jelly'){
+      if(Math.abs(dx)<235)movement=false;
+      if(e.shootCd<=0&&Math.abs(dx)<690){e.shootCd=3.1;fireEnemy(e);}
+    }
+    if(e.kind==='boss'){
+      const enraged=e.hp<e.maxHp*.5;
+      if(e.shootCd<=0&&Math.abs(dx)<720){e.shootCd=enraged?2.5:3.6;for(const v of [-65,0,65])fireEnemy(e,v);}
+      if(e.chargeCd<=0&&!e.chargeWind&&!e.charge){
+        e.chargeCd=enraged?6:8;e.chargeWind=.9;e.chargeDir=Math.sign(dx||1);
+        e.warning=node('rect',{x:e.chargeDir>0?e.x:e.x-480,y:ground(e.d)-22,width:480,height:40,rx:16,fill:'#c97763',opacity:.3},layers['ground-effects']);
+      }
+      if(e.chargeWind>0){movement=false;e.chargeWind=Math.max(0,e.chargeWind-dt);if(e.chargeWind===0){e.charge=.72;e.warning.remove();e.warning=null;}}
+      else if(e.charge>0){
+        movement=false;e.charge=Math.max(0,e.charge-dt);
+        const before=e.x;e.x=clamp(e.x+e.chargeDir*480*dt,60,3340);
+        if(p.x>=Math.min(before,e.x)-65&&p.x<=Math.max(before,e.x)+65&&Math.abs(p.d-e.d)<45&&p.z<75)hurtPlayer(e.damage+5,e.x,e.d,true);
+      }
+    }
+    if(e.wind>0){
+      movement=false;e.wind=Math.max(0,e.wind-dt);
+      if(e.wind===0){
+        if(Math.abs(p.x-e.x)<e.r+42&&Math.abs(p.d-e.d)<38&&p.z<e.z+e.h&&p.z+65>e.z&&(p.x-e.x)*e.face>=-10)hurtPlayer(e.damage,e.x,e.d);
+        ringAt(e.x+e.face*22,e.d,e.z+20,28,'#d5a18a');e.attackCd=1.5;
+      }
+    }else if(e.attackCd<=0&&Math.abs(dx)<e.r+35&&Math.abs(dd)<33&&!e.charge&&!e.chargeWind){
+      e.wind=.43;e.face=Math.sign(dx||1);movement=false;
+    }
+    if(movement&&e.stun<=0&&e.age>.5){
+      const norm=Math.max(1,dist);
+      e.x=clamp(e.x+dx/norm*e.speed*dt,55,3345);e.d=clamp(e.d+dd/norm*e.speed*dt,-40,75);
+    }
+  }
+  const alive=game.enemies.filter(e=>!e.dead);
+  for(let i=0;i<alive.length;i++)for(let j=i+1;j<alive.length;j++){
+    const a=alive[i],b=alive[j],dx=b.x-a.x,dd=b.d-a.d;
+    if(Math.abs(dx)<(a.r+b.r)*.65&&Math.abs(dd)<20){const push=(dx>=0?1:-1)*12*dt;if(a.kind!=='boss')a.x-=push;if(b.kind!=='boss')b.x+=push;}
+  }
+  game.enemies=alive;
+}
+function shotHits(s,old,target,radius,height){
+  const dx=s.x-old.x,dd=s.d-old.d;
+  const t=clamp(((target.x-old.x)*dx+(target.d-old.d)*dd*4)/(dx*dx+dd*dd*4||1),0,1);
+  const x=old.x+t*dx,d=old.d+t*dd,z=old.z+t*(s.z-old.z);
+  return Math.abs(x-target.x)<radius+6&&Math.abs(d-target.d)<27&&z>=target.z-4&&z<=target.z+height+4;
+}
+function updateShots(dt){
+  for(const s of game.shots){
+    s.life-=dt;const old={x:s.x,d:s.d,z:s.z};
+    s.x+=s.vx*dt;s.d+=s.vd*dt;s.z+=s.vz*dt;
+    if(s.team==='hero'){
+      for(const e of game.enemies){
+        if(e.dead||s.hits.has(e)||e.age<.2||!shotHits(s,old,e,e.r,e.h))continue;
+        s.hits.add(e);let amount=s.damage;
+        if(s.group){const hits=s.group.get(e)||0;s.group.set(e,hits+1);amount*=Math.pow(.72,hits);}
+        if(s.type==='pellet')amount*=clamp(s.life/.39,.35,1);
+        hurtEnemy(e,amount,s.critical,3);
+        if(s.pierce<=0){s.life=0;break;}s.pierce--;
+      }
+    }else if(shotHits(s,old,player,18,72)){
+      hurtPlayer(s.damage,old.x,old.d);s.life=0;
+    }
+    if(s.z<0||s.x<0||s.x>3400)s.life=0;
+    if(s.life<=0)s.el.remove();
+    else s.el.setAttribute('transform','translate('+s.x+' '+(ground(s.d)-s.z)+') rotate('+(Math.atan2(s.vd*.62-s.vz,s.vx)*180/Math.PI)+')');
+  }
+  game.shots=game.shots.filter(s=>s.life>0);
+}
+function updateDrops(dt){
+  const p=player;
+  for(const drop of game.drops){
+    drop.age+=dt;const dx=p.x-drop.x,dd=p.d-drop.d,dist=Math.hypot(dx,dd*1.4);
+    if(dist<p.magnet)drop.pull=true;
+    if(drop.pull&&dist>1){const f=Math.min(1,dt*(350+dist)/dist);drop.x+=dx*f;drop.d+=dd*f;}
+    if(Math.abs(drop.x-p.x)<23&&Math.abs(drop.d-p.d)<25&&p.z<55){
+      if(drop.type==='heart'){p.hp=Math.min(p.maxHp,p.hp+drop.value);numberAt(p.x,p.d,80,'+'+drop.value,'#689b6d');}
+      else game.xp+=drop.value;drop.collected=true;drop.el.remove();
+    }else drop.el.setAttribute('transform','translate('+drop.x+' '+(ground(drop.d)-7+Math.sin(drop.age*4)*2)+')');
+  }
+  game.drops=game.drops.filter(d=>!d.collected);
+}
+function updateEffects(dt){
+  for(const e of game.effects){
+    e.life-=dt;
+    if(e.life<=0){e.el.remove();continue;}
+    const t=e.life/e.max;e.el.setAttribute('opacity',t);
+    if(e.kind==='number'){e.y-=26*dt;e.el.setAttribute('y',e.y);}
+    if(e.kind==='ring'){e.el.setAttribute('rx',e.r*(1-t));e.el.setAttribute('ry',e.r*.35*(1-t));}
+  }
+  game.effects=game.effects.filter(e=>e.life>0);game.flash=Math.max(0,game.flash-dt*3);
+}
+
+
+function render(){
+  const p=player,h=p.art;cameraX=clamp(p.x-width*.42,0,Math.max(0,(game.camp?2200:3400)-width));
+  $('camera').setAttribute('transform','translate('+(-cameraX)+' 0)');
+  h.root.setAttribute('transform','translate('+p.x+' '+ground(p.d)+')');
+  h.shadow.setAttribute('rx',Math.max(14,30-p.z*.08));h.shadow.setAttribute('opacity',Math.max(.07,.2-p.z*.0008));
+  const bob=p.z>0?0:Math.sin(p.cycle)*(p.moving?1.6:.6);
+  h.lift.setAttribute('transform','translate(0 '+(-p.z+bob)+')');
+  h.facing.setAttribute('transform','scale('+p.facing+' 1)');
+  h.bike.style.display=p.mounted?'':'none';
+  const phase=p.cycle;
+  if(p.mounted){
+    h.legA.setAttribute('d','M-5-34 7-25 '+(2+Math.cos(phase)*9)+' '+(-13+Math.sin(phase)*7));
+    h.legB.setAttribute('d','M-8-34 -3-23 '+(2-Math.cos(phase)*9)+' '+(-13-Math.sin(phase)*7));
+    const wheels=h.bike.querySelectorAll('[data-part="wheel"]');
+    wheels.forEach(wheel=>wheel.setAttribute('transform','translate('+wheel.dataset.x+' '+wheel.dataset.y+') rotate('+(phase*45)+')'));
+  }else{
+    const step=p.moving&&p.z===0?Math.sin(phase)*13:0;
+    h.legA.setAttribute('d','M-7-34 '+(-9+step*.5)+' -18 '+(-10+step)+' -2h10');
+    h.legB.setAttribute('d','M2-33 '+(3-step*.5)+' -17 '+(4-step)+' -1h10');
+  }
+  let rotation=0;
+  if(p.action?.kind==='attack'){
+    const a=p.action,t=a.time/a.duration;
+    rotation=['shield','katana','hammer'].includes(game.loadout.weapon)?-65+Math.sin(t*Math.PI)*135:Math.sin(t*Math.PI)*-14;
+  }else if(p.charging)rotation=game.loadout.weapon==='hammer'?-65:-20;
+  h.hand.setAttribute('transform','translate('+(p.block?28:21)+' -40) rotate('+rotation+') scale(.72)');
+  h.arm.setAttribute('d',p.block?'M8-46q10-5 26-1':'M8-46q9 10 16 8');
+  h.root.setAttribute('opacity',p.inv>0&&p.dodge<=0?(Math.sin(game.time*50)>0?.45:1):1);
+  const tail=h.scarf.querySelector('[data-part="tail"]'),wave=Math.sin(phase)*3;
+  // 飘带作为完整图层摆动，保留各自轮廓、缝线与纹样。
+  tail.setAttribute('transform','rotate('+wave+' 10 -55)');
+  for(const e of game.enemies){
+    e.root.setAttribute('transform','translate('+e.x+' '+ground(e.d)+')');
+    e.visual.setAttribute('transform','translate(0 '+(-e.z)+') rotate('+(e.wind>0?Math.sin(e.age*45)*4:e.kind==='gull'?Math.sin(e.age*7)*7:0)+')');
+    e.visual.style.filter=e.hit>0?'brightness(1.6)':e.wind>0?'sepia(.6)':'';
+    e.root.setAttribute('opacity',e.kind==='dummy'?1:Math.min(1,e.age*3));
+  }
+  // 地面纵深决定遮挡；跳跃只抬高身体，不改变遮挡顺序。
+  const actors=[{d:p.d,el:h.root},...game.enemies.filter(e=>!e.dead).map(e=>({d:e.d,el:e.root}))];
+  actors.sort((a,b)=>a.d-b.d);for(const a of actors)layers.actors.appendChild(a.el);
+  $('hit-flash').style.opacity=game.flash;
+  if(game.camp){
+    nearest=null;let distance=100;
+    for(const [id,place]of Object.entries(places)){
+      const dist=Math.hypot(place.x-p.x,(p.d-30)*1.5);
+      if(dist<distance){distance=dist;nearest=id;}
+    }
+    $('interact').hidden=!nearest||dialog.open;
+    if(nearest)$('interact').textContent='E · '+places[nearest].name;
+  }else{$('interact').hidden=true;nearest=null;}
+}
+function updateHUD(){
+  const p=player,w=weapons[game.loadout.weapon],m=mounts[game.loadout.mount];
+  $('wallet').textContent='海贝 '+save.wallet;
+  $('save-status').textContent=saveBlocked||saveDirty?'进度尚未持久保存':'本地存档 · v0.3.2';
+  $('save-warning').hidden=!(saveBlocked||saveDirty);$('save-warning').textContent=saveMessage;
+  $('sound').textContent='音效 '+(save.settings.sound?'开':'关');
+  $('health-text').textContent=Math.ceil(p.hp)+' / '+p.maxHp;$('health-fill').style.width=(p.hp/p.maxHp*100)+'%';
+  $('xp-fill').style.width=Math.min(100,game.xp/game.need*100)+'%';
+  $('run-detail').textContent='LV. '+game.level+' · 击退 '+game.kills+' · 待结算 '+Math.min(6,Math.floor(game.time/30))*2+' 海贝';
+  $('clock').textContent=game.camp?'营地':formatTime(Math.max(0,Math.ceil(GOAL-game.time)));
+  $('clock-note').textContent=game.camp?'自由步行 · E 拜访':game.time>=GOAL&&!game.bossDead?'击败首领，完成守护':game.bossDead?'首领已击败 · 坚持到退潮':'生存 180 秒，并击败首领';
+  if(game.boss&&!game.boss.dead){$('boss-fill').style.width=Math.max(0,game.boss.hp/game.boss.maxHp*100)+'%';$('boss-label').textContent='寄居蟹 · '+(game.boss.hp<game.boss.maxHp*.5?'狂怒':'滩涂霸主');}
+  let resource='';
+  if(game.loadout.weapon==='staff')resource='法力 '+Math.floor(p.mana)+' / 100';
+  else if(game.loadout.weapon==='shotgun')resource=p.action?.kind==='reload'?'装填中…':'弹仓 '+p.ammo+' / 4';
+  else if(game.loadout.weapon==='shield')resource='架势 '+Math.floor(p.guard)+' / 100'+(p.block?' · 正面格挡':'');
+  else resource=p.charging?'蓄力 '+Math.min(100,Math.round(p.charge/1.25*100))+'%':w.type+' · '+w.skill;
+  $('loadout').innerHTML='<b>'+w.name+'</b> · '+(p.mounted?m.name:'步行')+'<br>'+resource+'<br>'+apparel[game.loadout.hat].name+' +'+save.apparel[game.loadout.hat]+' · '+apparel[game.loadout.scarf].name+' +'+save.apparel[game.loadout.scarf];
+  const controlled=canControl();
+  for(const id of ['attack-button','skill-button','jump-button','dash-button','mount-button'])$(id).disabled=!controlled;
+  $('mount-button').innerHTML=(p.mounted?'下车':'上车')+'<small>R</small>';
+  $('jump-button').innerHTML=(p.mounted&&m.stomp&&!game.camp?(p.stompCd>0?'跳跃':'跳击'):'跳跃')+'<small>'+(p.mounted&&m.stomp&&p.stompCd>0?p.stompCd.toFixed(1)+'s':'空格')+'</small>';
+  const ram=p.mounted&&m.ram,cd=ram?p.ramCd:p.dodgeCdLeft;
+  $('dash-button').innerHTML=(ram?'冲撞':'闪避')+'<small>'+(cd>0?cd.toFixed(1)+'s':'SHIFT')+'</small>';
+  $('dash-button').disabled=!controlled||cd>0;
+  $('skill-button').innerHTML=w.skill+'<small>'+(w.hold?'按住 K':'K')+'</small>';
+  $('skill-button').classList.toggle('active',p.charging||p.block);
+  $('interact-button').disabled=!controlled||!nearest;
+  $('pause').disabled=game.camp||state==='upgrade'||state==='won'||state==='lost';
+}
+function interact(){if(canControl()&&state==='camp'&&nearest)openCampPanel(nearest);}
+function resize(){
+  const rect=stage.getBoundingClientRect();width=clamp(rect.width/Math.max(1,rect.height)*640,480,2100);
+  world.setAttribute('viewBox','0 0 '+width+' 640');
+  if(game){drawScene(game.camp);render();}
+}
+$('interact').addEventListener('click',interact);$('interact-button').addEventListener('click',interact);
+$('camp-nav').addEventListener('click',event=>{
+  const b=event.target.closest('[data-walk]');if(!b||!canControl())return;
+  travelTarget=b.dataset.walk;toast('走向'+places[travelTarget].name+' · 移动键可取消',1.5);stage.focus({preventScroll:true});
+});
+$('mount-button').addEventListener('click',toggleMount);$('jump-button').addEventListener('click',jump);$('dash-button').addEventListener('click',dash);
+$('pause').addEventListener('click',pauseGame);$('help').addEventListener('click',openHelp);$('save-button').addEventListener('click',openRecords);
+$('sound').addEventListener('click',()=>{if(transact(s=>{s.settings.sound=!s.settings.sound;}))sound(640);});
+const pointerActions=new Map();
+for(const [id,action]of [['attack-button','attack'],['skill-button','skill']]){
+  const el=$(id);
+  el.addEventListener('pointerdown',event=>{
+    if(!canControl()||pointerActions.has(action))return;event.preventDefault();el.setPointerCapture(event.pointerId);
+    pointerActions.set(action,event.pointerId);
+    if(action==='attack'){held.add('attack');beginAttack();}else activateSkill(true);
+  });
+  const release=(event,cancel=false)=>{
+    if(pointerActions.get(action)!==event.pointerId)return;pointerActions.delete(action);
+    if(action==='attack')held.delete('attack');else activateSkill(false,cancel||!canControl());
+  };
+  el.addEventListener('pointerup',event=>release(event));el.addEventListener('pointercancel',event=>release(event,true));
+  el.addEventListener('lostpointercapture',event=>release(event,true));
+  el.addEventListener('click',event=>{
+    if(event.detail!==0||!canControl())return;
+    if(action==='attack')beginAttack();
+    else if(game.loadout.weapon==='shield'){if(player.block)activateSkill(false);else activateSkill(true);}
+    else if(weapons[game.loadout.weapon].hold)beginAttack(true,0);
+    else activateSkill(true);
+  });
+}
+const stick=$('joystick');
+function moveStick(event){
+  if(event.pointerId!==touch.id)return;
+  const r=stick.getBoundingClientRect(),dx=event.clientX-r.left-r.width/2,dy=event.clientY-r.top-r.height/2;
+  const limit=r.width*.32,ratio=Math.min(1,limit/(Math.hypot(dx,dy)||1));
+  touch.x=dx*ratio/limit;touch.y=dy*ratio/limit;
+  $('joystick-knob').style.transform='translate('+(dx*ratio)+'px,'+(dy*ratio)+'px)';
+}
+stick.addEventListener('pointerdown',event=>{
+  if(!canControl()||touch.id!==null)return;event.preventDefault();touch.id=event.pointerId;stick.setPointerCapture(event.pointerId);moveStick(event);
+});
+stick.addEventListener('pointermove',moveStick);
+for(const name of ['pointerup','pointercancel','lostpointercapture'])stick.addEventListener(name,event=>{
+  if(event.pointerId!==touch.id)return;touch.id=null;touch.x=touch.y=0;$('joystick-knob').style.transform='';
+});
+window.addEventListener('keydown',event=>{
+  const code=event.code;
+  if(dialog.open){
+    if(state==='paused'&&code==='KeyP'&&!event.repeat){event.preventDefault();closePanel();return;}
+    if(state==='upgrade'&&['Digit1','Digit2','Digit3'].includes(code)&&!event.repeat){event.preventDefault();chooseUpgrade(Number(code.slice(-1))-1);}
+    return;
+  }
+  if(['Space','Enter'].includes(code)&&event.target.tagName==='BUTTON')return;
+  const controlled=['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowLeft','ArrowDown','ArrowRight','Space','ShiftLeft','ShiftRight','KeyJ','KeyK','KeyE','KeyR'];
+  if(controlled.includes(code))event.preventDefault();
+  if(event.repeat)return;
+  if(code==='Escape'||code==='KeyP'){pauseGame();return;}
+  if(!canControl())return;
+  keys.add(code);
+  if(code==='KeyE')interact();
+  if(code==='Space')jump();
+  if(code==='ShiftLeft'||code==='ShiftRight')dash();
+  if(code==='KeyR')toggleMount();
+  if(code==='KeyK')activateSkill(true);
+  if(code==='KeyJ')beginAttack();
+});
+window.addEventListener('keyup',event=>{
+  const was=keys.has(event.code);keys.delete(event.code);
+  if(event.code==='KeyK'&&was)activateSkill(false,!canControl());
+});
+function loseFocus(){
+  clearInput();pointerActions.clear();if(state==='playing')pauseGame();last=null;
+}
+window.addEventListener('blur',loseFocus);
+document.addEventListener('visibilitychange',()=>{if(document.hidden)loseFocus();last=null;});
+new ResizeObserver(resize).observe(stage);
+showCamp();resize();
+if(!saveBlocked&&!persist(save))toast(saveMessage,5);
+updateHUD();
+function frame(now){
+  const dt=last===null?0:Math.min(.033,(now-last)/1000);last=now;
+  if(canControl()){
+    game.time+=game.camp?0:dt;updatePlayer(dt);
+    // 自动走到建筑会打开窗口；本帧随即停止，不能多执行一次攻击或敌人更新。
+    if(canControl()){
+      if(!game.camp)spawnDirector(dt);
+      updateEnemies(game.camp?0:dt);
+      if(game.camp)for(const e of game.enemies){e.age+=dt;e.hit=Math.max(0,e.hit-dt);}
+      updateShots(dt);updateDrops(dt);updateEffects(dt);
+      if(!game.camp){
+        if(player.hp<=0)finish(false);
+        else if(game.time>=GOAL&&game.bossDead)finish(true);
+        else if(game.xp>=game.need)offerUpgrades();
+      }
+    }
+  }
+  if(toastTime>0){toastTime-=dt;if(toastTime<=0)$('toast').classList.remove('visible');}
+  render();hudClock-=dt;if(hudClock<=0){hudClock=.08;updateHUD();}
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+
+</script>
+</body>
+</html>

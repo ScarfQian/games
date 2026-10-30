@@ -1,0 +1,20 @@
+{
+  "name": "pelican-knight-dungeon-web",
+  "version": "0.2.0-dev.4",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "check": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vite": "8.0.10"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
